@@ -1,0 +1,17 @@
+com.example.presentation
+color black
+color white
+drawable ic_launcher_background
+drawable ic_launcher_foreground
+drawable splash_logo
+font bold
+font medium
+font regular
+mipmap ic_launcher
+mipmap ic_launcher_round
+string app_name
+string title_activity_main
+style Theme_myWorld
+style Theme_myWorld_Splash
+xml backup_rules
+xml data_extraction_rules

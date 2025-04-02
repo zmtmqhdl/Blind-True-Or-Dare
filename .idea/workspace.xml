@@ -1,0 +1,872 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="fd2281aa-b24d-4a87-9ff5-e390e58ca326" name="Changes" comment="[update] myWorld Start" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=C:\Users\zmtmq\.android\avd\Pixel_9_API_35.avd)]" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="DesignSystem" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="resourceFile" />
+        <option value="valueResourceFile" />
+        <option value="Kotlin File" />
+        <option value="Kotlin Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;zmtmqhdl&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/zmtmqhdl/MyWorld.git&quot;,
+    &quot;accountId&quot;: &quot;247cb76a-51b7-4c60-84eb-d8a8c35a37ae&quot;
+  }
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2rCgOL5vEchdJPiKYu2Fvk0rMw5" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Android App.app.executor": "Run",
+    "Android App.myWorld.app.executor": "Run",
+    "Android App.presentation.executor": "Run",
+    "Compose Preview.Preview_DesignSystemTextField_Outlined_Primary.executor": "Run",
+    "PROJECT_TRUSTED_KEY": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "ScreenRecorder.SavePath": "C:\\Users\\zmtmq",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "com.google.services.firebase.aqiPopupShown": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/zmtmq/AndroidStudioProjects/DesignSystem",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.17",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "vcs.Subversion"
+  },
+  "keyToStringList": {
+    "com.android.tools.idea.sqlite.queryhistory": [
+      "userId"
+    ]
+  }
+}]]></component>
+  <component name="PsdUISettings">
+    <option name="MODULE_TAB" value="Properties" />
+    <option name="BUILD_VARIANTS_TAB" value="Build Types" />
+    <option name="LAST_EDITED_SIGNING_CONFIG" value="debug" />
+    <option name="LAST_EDITED_BUILD_TYPE" value="release" />
+  </component>
+  <component name="RecentsManager">
+    <key name="android.template.-1686136874">
+      <recent name="com.example.presentation.activity" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\zmtmq\AndroidStudioProjects\DesignSystem\presentation\src\main\res\font" />
+      <recent name="C:\Users\zmtmq\AndroidStudioProjects\DesignSystem\presentation\src\main\res\drawable" />
+      <recent name="C:\Users\zmtmq\AndroidStudioProjects\DesignSystem\app\build\generated\res\resValues\androidTest\debug" />
+      <recent name="C:\Users\zmtmq\AndroidStudioProjects\DesignSystem\app\build\generated\res\resValues\debug" />
+      <recent name="C:\Users\zmtmq\AndroidStudioProjects\DesignSystem\presentation\src\main\res\values" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\zmtmq\AndroidStudioProjects\DesignSystem\presentation\src\main\res\values" />
+      <recent name="C:\Users\zmtmq\AndroidStudioProjects\DesignSystem\presentation\src\main\res\drawable" />
+      <recent name="C:\Users\zmtmq\AndroidStudioProjects\DesignSystem\presentation\src\main\java\com\example\presentation\screen" />
+      <recent name="C:\Users\zmtmq\AndroidStudioProjects\DesignSystem\presentation\src\main\java\com\example\presentation\screen\example" />
+      <recent name="C:\Users\zmtmq\AndroidStudioProjects\DesignSystem\presentation\src\main\res\font" />
+    </key>
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="com.example.presentation.viewModel.example" />
+    </key>
+    <key name="android.template.287115223">
+      <recent name="com.example.presentation.activity" />
+    </key>
+    <key name="K2MoveDeclarationsDialog.RECENT_PACKAGE_KEY">
+      <recent name="com.example.presentation.data" />
+      <recent name="com.example.data.model.component" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Android App.myWorld.app">
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="DesignSystem.app" />
+      <option name="ANDROID_RUN_CONFIGURATION_SCHEMA_VERSION" value="1" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ALL_USERS" value="false" />
+      <option name="ALWAYS_INSTALL_WITH_PM" value="false" />
+      <option name="ALLOW_ASSUME_VERIFIED" value="false" />
+      <option name="CLEAR_APP_STORAGE" value="false" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="RESTORE_ENABLED" value="false" />
+      <option name="RESTORE_FILE" value="" />
+      <option name="RESTORE_FRESH_INSTALL_ONLY" value="false" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Hybrid>
+      <Java>
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Java>
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Java/Kotlin Method Sample (legacy)" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
+      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="myWorld.app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="myWorld.app" />
+      <option name="ANDROID_RUN_CONFIGURATION_SCHEMA_VERSION" value="1" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ALL_USERS" value="false" />
+      <option name="ALWAYS_INSTALL_WITH_PM" value="false" />
+      <option name="ALLOW_ASSUME_VERIFIED" value="false" />
+      <option name="CLEAR_APP_STORAGE" value="false" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="RESTORE_ENABLED" value="false" />
+      <option name="RESTORE_FILE" value="" />
+      <option name="RESTORE_FRESH_INSTALL_ONLY" value="false" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Hybrid>
+      <Java>
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Java>
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Java/Kotlin Method Sample (legacy)" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
+      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Preview_DesignSystemTextField_Outlined_Primary" type="ComposePreviewRunConfiguration" singleton="false" temporary="true">
+      <module name="DesignSystem.presentation" />
+      <option name="ANDROID_RUN_CONFIGURATION_SCHEMA_VERSION" value="1" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ALL_USERS" value="false" />
+      <option name="ALWAYS_INSTALL_WITH_PM" value="false" />
+      <option name="ALLOW_ASSUME_VERIFIED" value="false" />
+      <option name="CLEAR_APP_STORAGE" value="false" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="--es composable com.example.presentation.component.DesignSystemTextFieldKt.Preview_DesignSystemTextField_Outlined_Primary" />
+      <option name="MODE" value="specific_activity" />
+      <option name="RESTORE_ENABLED" value="false" />
+      <option name="RESTORE_FILE" value="" />
+      <option name="RESTORE_FRESH_INSTALL_ONLY" value="false" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Hybrid>
+      <Java>
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Java>
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Java/Kotlin Method Sample (legacy)" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY" value="" />
+      <option name="ACTIVITY_CLASS" value="androidx.compose.ui.tooling.PreviewActivity" />
+      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="true" />
+      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
+      <compose-preview-run-configuration composable-fqn="com.example.presentation.component.DesignSystemTextFieldKt.Preview_DesignSystemTextField_Outlined_Primary" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Compose Preview.Preview_DesignSystemTextField_Outlined_Primary" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration>C:\Users\zmtmq\AppData\Roaming\Subversion</configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fd2281aa-b24d-4a87-9ff5-e390e58ca326" name="Changes" comment="" />
+      <created>1736068437661</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1736068437661</updated>
+    </task>
+    <task id="LOCAL-00058" summary="[update] BottomNavigation">
+      <option name="closed" value="true" />
+      <created>1739803107266</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1739803107267</updated>
+    </task>
+    <task id="LOCAL-00059" summary="[update] BottomNavigation">
+      <option name="closed" value="true" />
+      <created>1739888337274</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1739888337275</updated>
+    </task>
+    <task id="LOCAL-00060" summary="[update] BottomNavigation">
+      <option name="closed" value="true" />
+      <created>1740058570333</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1740058570333</updated>
+    </task>
+    <task id="LOCAL-00061" summary="[update] theme">
+      <option name="closed" value="true" />
+      <created>1740063350021</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1740063350021</updated>
+    </task>
+    <task id="LOCAL-00062" summary="[update] DesignSystemColor">
+      <option name="closed" value="true" />
+      <created>1740064957148</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1740064957148</updated>
+    </task>
+    <task id="LOCAL-00063" summary="[update] DesignSystemColor">
+      <option name="closed" value="true" />
+      <created>1740149903676</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1740149903676</updated>
+    </task>
+    <task id="LOCAL-00064" summary="[update] DesignSystemColor">
+      <option name="closed" value="true" />
+      <created>1740151475436</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1740151475436</updated>
+    </task>
+    <task id="LOCAL-00065" summary="[update] DesignSystemColor">
+      <option name="closed" value="true" />
+      <created>1740153014397</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1740153014397</updated>
+    </task>
+    <task id="LOCAL-00066" summary="[update] DesignSystemColor">
+      <option name="closed" value="true" />
+      <created>1740319960111</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1740319960111</updated>
+    </task>
+    <task id="LOCAL-00067" summary="[update] DesignSystemTheme">
+      <option name="closed" value="true" />
+      <created>1740403950120</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1740403950120</updated>
+    </task>
+    <task id="LOCAL-00068" summary="[update] DesignSystemTheme darkMode">
+      <option name="closed" value="true" />
+      <created>1740407102136</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1740407102136</updated>
+    </task>
+    <task id="LOCAL-00069" summary="[update] DesignSystemTheme Typography">
+      <option name="closed" value="true" />
+      <created>1740492734487</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1740492734487</updated>
+    </task>
+    <task id="LOCAL-00070" summary="[update] DesignSystemTheme Dp">
+      <option name="closed" value="true" />
+      <created>1740498027926</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1740498027926</updated>
+    </task>
+    <task id="LOCAL-00071" summary="[update] DesignSystemSpace, DesignSystemShape">
+      <option name="closed" value="true" />
+      <created>1740579462619</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1740579462620</updated>
+    </task>
+    <task id="LOCAL-00072" summary="[update] Fix the error">
+      <option name="closed" value="true" />
+      <created>1740580048208</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1740580048208</updated>
+    </task>
+    <task id="LOCAL-00073" summary="[update] IconPosition Enum">
+      <option name="closed" value="true" />
+      <created>1740584182856</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1740584182856</updated>
+    </task>
+    <task id="LOCAL-00074" summary="[update] NavigationBar">
+      <option name="closed" value="true" />
+      <created>1740754061743</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1740754061743</updated>
+    </task>
+    <task id="LOCAL-00075" summary="[update] NavigationBar, topBar">
+      <option name="closed" value="true" />
+      <created>1740834036654</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1740834036655</updated>
+    </task>
+    <task id="LOCAL-00076" summary="[update] convert to imageVector">
+      <option name="closed" value="true" />
+      <created>1740898754520</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1740898754520</updated>
+    </task>
+    <task id="LOCAL-00077" summary="[update] navigation">
+      <option name="closed" value="true" />
+      <created>1740995110508</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1740995110508</updated>
+    </task>
+    <task id="LOCAL-00078" summary="[update] navigation">
+      <option name="closed" value="true" />
+      <created>1741000742922</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1741000742922</updated>
+    </task>
+    <task id="LOCAL-00079" summary="[update] preview">
+      <option name="closed" value="true" />
+      <created>1741095316887</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1741095316887</updated>
+    </task>
+    <task id="LOCAL-00080" summary="[update] gradle">
+      <option name="closed" value="true" />
+      <created>1741186424699</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1741186424699</updated>
+    </task>
+    <task id="LOCAL-00081" summary="[update] preview">
+      <option name="closed" value="true" />
+      <created>1741271154965</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1741271154965</updated>
+    </task>
+    <task id="LOCAL-00082" summary="[update] preview">
+      <option name="closed" value="true" />
+      <created>1741358005225</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1741358005225</updated>
+    </task>
+    <task id="LOCAL-00083" summary="[update] preview">
+      <option name="closed" value="true" />
+      <created>1741360965916</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1741360965916</updated>
+    </task>
+    <task id="LOCAL-00084" summary="[update] preview">
+      <option name="closed" value="true" />
+      <created>1741402914345</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1741402914345</updated>
+    </task>
+    <task id="LOCAL-00085" summary="[update] icon bug fix">
+      <option name="closed" value="true" />
+      <created>1741531388235</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1741531388235</updated>
+    </task>
+    <task id="LOCAL-00086" summary="[update] bug">
+      <option name="closed" value="true" />
+      <created>1741617882089</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1741617882090</updated>
+    </task>
+    <task id="LOCAL-00087" summary="[update] button add modifier">
+      <option name="closed" value="true" />
+      <created>1741697239285</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1741697239285</updated>
+    </task>
+    <task id="LOCAL-00088" summary="[update] NavGraphBuilder update">
+      <option name="closed" value="true" />
+      <created>1741791131744</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1741791131744</updated>
+    </task>
+    <task id="LOCAL-00089" summary="[update] previewAnnotation add">
+      <option name="closed" value="true" />
+      <created>1741875433028</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1741875433028</updated>
+    </task>
+    <task id="LOCAL-00090" summary="[update] strings">
+      <option name="closed" value="true" />
+      <created>1741882582397</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1741882582397</updated>
+    </task>
+    <task id="LOCAL-00091" summary="[update] splash error">
+      <option name="closed" value="true" />
+      <created>1742135318886</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1742135318886</updated>
+    </task>
+    <task id="LOCAL-00092" summary="[update] splash error">
+      <option name="closed" value="true" />
+      <created>1742144635017</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1742144635017</updated>
+    </task>
+    <task id="LOCAL-00093" summary="[update] preview update &amp; splashScreen update">
+      <option name="closed" value="true" />
+      <created>1742222879041</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1742222879041</updated>
+    </task>
+    <task id="LOCAL-00094" summary="[update] splashScreen API">
+      <option name="closed" value="true" />
+      <created>1742304372489</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1742304372489</updated>
+    </task>
+    <task id="LOCAL-00095" summary="[update] button clip">
+      <option name="closed" value="true" />
+      <created>1742389917406</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1742389917406</updated>
+    </task>
+    <task id="LOCAL-00096" summary="[update] bottomSheet update &amp; SnackBar start">
+      <option name="closed" value="true" />
+      <created>1742475780490</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1742475780490</updated>
+    </task>
+    <task id="LOCAL-00097" summary="[update] bottomSheet update &amp; SnackBar start">
+      <option name="closed" value="true" />
+      <created>1742475808710</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1742475808710</updated>
+    </task>
+    <task id="LOCAL-00098" summary="[update] bottomSheet update &amp; SnackBar start">
+      <option name="closed" value="true" />
+      <created>1742561143706</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1742561143706</updated>
+    </task>
+    <task id="LOCAL-00099" summary="[update] textField update">
+      <option name="closed" value="true" />
+      <created>1742625962749</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1742625962749</updated>
+    </task>
+    <task id="LOCAL-00100" summary="[update] Start a SnackBar">
+      <option name="closed" value="true" />
+      <created>1742735611634</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1742735611634</updated>
+    </task>
+    <task id="LOCAL-00101" summary="[update] SnackBar update">
+      <option name="closed" value="true" />
+      <created>1742825359830</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1742825359831</updated>
+    </task>
+    <task id="LOCAL-00102" summary="[update] SnackBar update">
+      <option name="closed" value="true" />
+      <created>1742910964699</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1742910964699</updated>
+    </task>
+    <task id="LOCAL-00103" summary="[update] SnackBar update">
+      <option name="closed" value="true" />
+      <created>1742997063634</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1742997063635</updated>
+    </task>
+    <task id="LOCAL-00104" summary="[update] SnackBar update">
+      <option name="closed" value="true" />
+      <created>1743084269979</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1743084269979</updated>
+    </task>
+    <task id="LOCAL-00105" summary="[update] SnackBar update">
+      <option name="closed" value="true" />
+      <created>1743431976207</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1743431976207</updated>
+    </task>
+    <task id="LOCAL-00106" summary="[update] myWorld Start">
+      <option name="closed" value="true" />
+      <created>1743517072868</created>
+      <option name="number" value="00106" />
+      <option name="presentableId" value="LOCAL-00106" />
+      <option name="project" value="LOCAL" />
+      <updated>1743517072868</updated>
+    </task>
+    <option name="localTasksCounter" value="107" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="[update] DesignSystemTheme Dp" />
+    <MESSAGE value="[update] DesignSystemSpace, DesignSystemShape" />
+    <MESSAGE value="[update] Fix the error" />
+    <MESSAGE value="[update] IconPosition Enum" />
+    <MESSAGE value="[update] NavigationBar" />
+    <MESSAGE value="[update] NavigationBar, topBar" />
+    <MESSAGE value="[update] convert to imageVector" />
+    <MESSAGE value="[update] navigation" />
+    <MESSAGE value="[update] gradle" />
+    <MESSAGE value="[update] preview" />
+    <MESSAGE value="[update] icon bug fix" />
+    <MESSAGE value="[update] bug" />
+    <MESSAGE value="[update] button add modifier" />
+    <MESSAGE value="[update] NavGraphBuilder update" />
+    <MESSAGE value="[update] previewAnnotation add" />
+    <MESSAGE value="[update] strings" />
+    <MESSAGE value="[update] splash error" />
+    <MESSAGE value="[update] preview update &amp; splashScreen update" />
+    <MESSAGE value="[update] splashScreen API" />
+    <MESSAGE value="[update] button clip" />
+    <MESSAGE value="[update] bottomSheet update &amp; SnackBar start" />
+    <MESSAGE value="[update] textField update" />
+    <MESSAGE value="[update] Start a SnackBar" />
+    <MESSAGE value="[update] SnackBar update" />
+    <MESSAGE value="[update] myWorld Start" />
+    <option name="LAST_COMMIT_MESSAGE" value="[update] myWorld Start" />
+  </component>
+  <component name="play_dynamic_filters_status">
+    <option name="appIdToCheckInfo">
+      <map>
+        <entry key="com.example.data.test">
+          <value>
+            <CheckInfo lastCheckTimestamp="1743514328499" />
+          </value>
+        </entry>
+        <entry key="com.example.designsystem">
+          <value>
+            <CheckInfo lastCheckTimestamp="1743512356926" />
+          </value>
+        </entry>
+        <entry key="com.example.designsystem.test">
+          <value>
+            <CheckInfo lastCheckTimestamp="1743512356923" />
+          </value>
+        </entry>
+        <entry key="com.example.myWorld">
+          <value>
+            <CheckInfo lastCheckTimestamp="1743514591841" />
+          </value>
+        </entry>
+        <entry key="com.example.myWorld.test">
+          <value>
+            <CheckInfo lastCheckTimestamp="1743514591862" />
+          </value>
+        </entry>
+        <entry key="com.example.presentation">
+          <value>
+            <CheckInfo lastCheckTimestamp="1737469181016" />
+          </value>
+        </entry>
+        <entry key="com.example.presentation.test">
+          <value>
+            <CheckInfo lastCheckTimestamp="1743512368404" />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

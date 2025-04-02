@@ -1,0 +1,2 @@
+-keep,allowobfuscation,allowshrinking class com.example.presentation.viewModel.HomeViewModel
+-keep,allowobfuscation,allowshrinking class com.example.presentation.viewModel.HomeViewModel
