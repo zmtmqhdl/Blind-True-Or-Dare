@@ -1,12 +1,12 @@
-package com.example.presentation.screen
+package com.example.presentation.splash
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.navigation.compose.rememberNavController
+import com.example.presentation.screen.MyWorldScreen.PrimaryScreen
 
 @Composable
 fun SplashScreen() {
-    MyWorldScreen.PrimaryScreen() {
+    PrimaryScreen() {
         Text("Splash")
     }
 }

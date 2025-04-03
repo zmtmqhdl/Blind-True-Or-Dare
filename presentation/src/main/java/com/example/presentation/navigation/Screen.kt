@@ -7,7 +7,7 @@ sealed class Screen(
     val route: String,
     val label: String? = null,
     val selectedIcon: ImageVector = Close,
-    val unselectedIcon: ImageVector = Close
+    val unselectedIcon: ImageVector = Close,
 ) {
     data object Splash : Screen(
         route = "splash"
@@ -15,7 +15,6 @@ sealed class Screen(
 
     data object Main : Screen(
         route = "main",
-        label = "main",
         selectedIcon = Close,
         unselectedIcon = Close
     )

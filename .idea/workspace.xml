@@ -9,7 +9,12 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fd2281aa-b24d-4a87-9ff5-e390e58ca326" name="Changes" comment="[update] myWorld Start" />
+    <list default="true" id="fd2281aa-b24d-4a87-9ff5-e390e58ca326" name="Changes" comment="[update] myWorld Start">
+      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/com/example/presentation/splash/SplashViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/example/presentation/navigation/Screen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/com/example/presentation/navigation/Screen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/example/presentation/screen/SplashScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/com/example/presentation/splash/SplashScreen.kt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -81,36 +86,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Android App.app.executor": "Run",
-    "Android App.myWorld.app.executor": "Run",
-    "Android App.presentation.executor": "Run",
-    "Compose Preview.Preview_DesignSystemTextField_Outlined_Primary.executor": "Run",
-    "PROJECT_TRUSTED_KEY": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "ScreenRecorder.SavePath": "C:\\Users\\zmtmq",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "com.google.services.firebase.aqiPopupShown": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/zmtmq/AndroidStudioProjects/DesignSystem",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.17",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "vcs.Subversion"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Android App.app.executor&quot;: &quot;Run&quot;,
+    &quot;Android App.myWorld.app.executor&quot;: &quot;Run&quot;,
+    &quot;Android App.presentation.executor&quot;: &quot;Run&quot;,
+    &quot;Compose Preview.Preview_DesignSystemTextField_Outlined_Primary.executor&quot;: &quot;Run&quot;,
+    &quot;PROJECT_TRUSTED_KEY&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;ScreenRecorder.SavePath&quot;: &quot;C:\\Users\\zmtmq&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/zmtmq/AndroidStudioProjects/DesignSystem&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Subversion&quot;
   },
-  "keyToStringList": {
-    "com.android.tools.idea.sqlite.queryhistory": [
-      "userId"
+  &quot;keyToStringList&quot;: {
+    &quot;com.android.tools.idea.sqlite.queryhistory&quot;: [
+      &quot;userId&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="PsdUISettings">
     <option name="MODULE_TAB" value="Properties" />
     <option name="BUILD_VARIANTS_TAB" value="Build Types" />
@@ -142,6 +147,7 @@
       <recent name="com.example.presentation.activity" />
     </key>
     <key name="K2MoveDeclarationsDialog.RECENT_PACKAGE_KEY">
+      <recent name="com.example.presentation.splash" />
       <recent name="com.example.presentation.data" />
       <recent name="com.example.data.model.component" />
     </key>
@@ -381,22 +387,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1736068437661</updated>
-    </task>
-    <task id="LOCAL-00058" summary="[update] BottomNavigation">
-      <option name="closed" value="true" />
-      <created>1739803107266</created>
-      <option name="number" value="00058" />
-      <option name="presentableId" value="LOCAL-00058" />
-      <option name="project" value="LOCAL" />
-      <updated>1739803107267</updated>
-    </task>
-    <task id="LOCAL-00059" summary="[update] BottomNavigation">
-      <option name="closed" value="true" />
-      <created>1739888337274</created>
-      <option name="number" value="00059" />
-      <option name="presentableId" value="LOCAL-00059" />
-      <option name="project" value="LOCAL" />
-      <updated>1739888337275</updated>
     </task>
     <task id="LOCAL-00060" summary="[update] BottomNavigation">
       <option name="closed" value="true" />
@@ -774,7 +764,23 @@
       <option name="project" value="LOCAL" />
       <updated>1743517072868</updated>
     </task>
-    <option name="localTasksCounter" value="107" />
+    <task id="LOCAL-00107" summary="[update] myWorld Start">
+      <option name="closed" value="true" />
+      <created>1743600980030</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
+      <option name="project" value="LOCAL" />
+      <updated>1743600980030</updated>
+    </task>
+    <task id="LOCAL-00108" summary="[update] myWorld Start">
+      <option name="closed" value="true" />
+      <created>1743601005145</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
+      <option name="project" value="LOCAL" />
+      <updated>1743601005145</updated>
+    </task>
+    <option name="localTasksCounter" value="109" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -833,7 +839,7 @@
       <map>
         <entry key="com.example.data.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1743514328499" />
+            <CheckInfo lastCheckTimestamp="1743601006261" />
           </value>
         </entry>
         <entry key="com.example.designsystem">
@@ -848,12 +854,12 @@
         </entry>
         <entry key="com.example.myWorld">
           <value>
-            <CheckInfo lastCheckTimestamp="1743514591841" />
+            <CheckInfo lastCheckTimestamp="1743601011632" />
           </value>
         </entry>
         <entry key="com.example.myWorld.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1743514591862" />
+            <CheckInfo lastCheckTimestamp="1743601011633" />
           </value>
         </entry>
         <entry key="com.example.presentation">
@@ -863,7 +869,7 @@
         </entry>
         <entry key="com.example.presentation.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1743512368404" />
+            <CheckInfo lastCheckTimestamp="1743601006261" />
           </value>
         </entry>
       </map>
