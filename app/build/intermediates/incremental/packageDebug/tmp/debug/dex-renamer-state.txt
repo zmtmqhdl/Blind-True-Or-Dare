@@ -1,4 +1,4 @@
-#Tue Apr 01 23:10:17 KST 2025
+#Thu Apr 03 22:30:32 KST 2025
 base.0=C\:\\Users\\zmtmq\\AndroidStudioProjects\\MyWorld\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
 base.1=C\:\\Users\\zmtmq\\AndroidStudioProjects\\MyWorld\\app\\build\\intermediates\\dex\\debug\\mergeLibDexDebug\\10\\classes.dex
 base.10=C\:\\Users\\zmtmq\\AndroidStudioProjects\\MyWorld\\app\\build\\intermediates\\dex\\debug\\mergeLibDexDebug\\9\\classes.dex
