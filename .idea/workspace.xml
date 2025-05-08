@@ -10,10 +10,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fd2281aa-b24d-4a87-9ff5-e390e58ca326" name="Changes" comment="[update] myWorld Start">
-      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/com/example/presentation/splash/SplashViewModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/domain/src/main/java/com/example/domain/repository/RetrofitRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/example/presentation/navigation/Screen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/com/example/presentation/navigation/Screen.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/example/presentation/screen/SplashScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/com/example/presentation/splash/SplashScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/ksp/debug/java/com/example/myWorld/di/AppModule_ProvideRetrofitRepositoryFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/generated/ksp/debug/java/com/example/myWorld/di/AppModule_ProvideRetrofitRepositoryFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compile_and_runtime_not_namespaced_r_class_jar/debug/processDebugResources/R.jar" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/compile_and_runtime_not_namespaced_r_class_jar/debug/processDebugResources/R.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/myWorld/di/RetrofitModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/myWorld/di/RetrofitModule.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/build/generated/ksp/debug/java/com/example/data/room/RoomDao_Impl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/build/generated/ksp/debug/java/com/example/data/room/RoomDatabase_Impl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/main/java/com/example/data/model/RetrofitData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/data/src/main/java/com/example/data/model/RetrofitDataDto.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/main/java/com/example/data/repository/RetrofitRepository.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/main/java/com/example/data/repository/RetrofitRepositoryImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/data/src/main/java/com/example/data/repository/RetrofitRepositoryImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/main/java/com/example/data/retrofit/RetrofitService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/data/src/main/java/com/example/data/retrofit/RetrofitService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/domain/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/libs.versions.toml" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/libs.versions.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/build/generated/ksp/debug/java/com/example/presentation/viewModel/HomeViewModel_Factory.java" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/build/generated/ksp/debug/java/com/example/presentation/viewModel/HomeViewModel_Factory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/example/presentation/component/MyWorldTextField.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/com/example/presentation/component/MyWorldTextField.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/example/presentation/viewModel/HomeViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/com/example/presentation/viewModel/HomeViewModel.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,36 +103,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Android App.app.executor&quot;: &quot;Run&quot;,
-    &quot;Android App.myWorld.app.executor&quot;: &quot;Run&quot;,
-    &quot;Android App.presentation.executor&quot;: &quot;Run&quot;,
-    &quot;Compose Preview.Preview_DesignSystemTextField_Outlined_Primary.executor&quot;: &quot;Run&quot;,
-    &quot;PROJECT_TRUSTED_KEY&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
-    &quot;ScreenRecorder.SavePath&quot;: &quot;C:\\Users\\zmtmq&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/zmtmq/AndroidStudioProjects/DesignSystem&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Subversion&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Android App.app.executor": "Run",
+    "Android App.myWorld.app.executor": "Run",
+    "Android App.presentation.executor": "Run",
+    "Compose Preview.Preview_DesignSystemTextField_Outlined_Primary.executor": "Run",
+    "PROJECT_TRUSTED_KEY": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "ScreenRecorder.SavePath": "C:\\Users\\zmtmq",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "com.google.services.firebase.aqiPopupShown": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/zmtmq/AndroidStudioProjects/DesignSystem",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.17",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "vcs.Subversion"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;com.android.tools.idea.sqlite.queryhistory&quot;: [
-      &quot;userId&quot;
+  "keyToStringList": {
+    "com.android.tools.idea.sqlite.queryhistory": [
+      "userId"
     ]
   }
-}</component>
+}]]></component>
   <component name="PsdUISettings">
     <option name="MODULE_TAB" value="Properties" />
     <option name="BUILD_VARIANTS_TAB" value="Build Types" />
@@ -147,85 +164,14 @@
       <recent name="com.example.presentation.activity" />
     </key>
     <key name="K2MoveDeclarationsDialog.RECENT_PACKAGE_KEY">
+      <recent name="com.example.domain.repository" />
       <recent name="com.example.presentation.splash" />
       <recent name="com.example.presentation.data" />
       <recent name="com.example.data.model.component" />
     </key>
   </component>
-  <component name="RunManager" selected="Android App.myWorld.app">
+  <component name="RunManager" selected="Android App.app">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
-      <module name="DesignSystem.app" />
-      <option name="ANDROID_RUN_CONFIGURATION_SCHEMA_VERSION" value="1" />
-      <option name="DEPLOY" value="true" />
-      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
-      <option name="DEPLOY_AS_INSTANT" value="false" />
-      <option name="ARTIFACT_NAME" value="" />
-      <option name="PM_INSTALL_OPTIONS" value="" />
-      <option name="ALL_USERS" value="false" />
-      <option name="ALWAYS_INSTALL_WITH_PM" value="false" />
-      <option name="ALLOW_ASSUME_VERIFIED" value="false" />
-      <option name="CLEAR_APP_STORAGE" value="false" />
-      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
-      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
-      <option name="MODE" value="default_activity" />
-      <option name="RESTORE_ENABLED" value="false" />
-      <option name="RESTORE_FILE" value="" />
-      <option name="RESTORE_FRESH_INSTALL_ONLY" value="false" />
-      <option name="CLEAR_LOGCAT" value="false" />
-      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
-      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
-      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
-      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
-      <option name="DEBUGGER_TYPE" value="Auto" />
-      <Auto>
-        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
-        <option name="SHOW_STATIC_VARS" value="true" />
-        <option name="WORKING_DIR" value="" />
-        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
-        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
-        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
-        <option name="DEBUG_SANDBOX_SDK" value="false" />
-      </Auto>
-      <Hybrid>
-        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
-        <option name="SHOW_STATIC_VARS" value="true" />
-        <option name="WORKING_DIR" value="" />
-        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
-        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
-        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
-        <option name="DEBUG_SANDBOX_SDK" value="false" />
-      </Hybrid>
-      <Java>
-        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
-        <option name="DEBUG_SANDBOX_SDK" value="false" />
-      </Java>
-      <Native>
-        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
-        <option name="SHOW_STATIC_VARS" value="true" />
-        <option name="WORKING_DIR" value="" />
-        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
-        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
-        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
-        <option name="DEBUG_SANDBOX_SDK" value="false" />
-      </Native>
-      <Profilers>
-        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
-        <option name="STARTUP_PROFILING_ENABLED" value="false" />
-        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
-        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Java/Kotlin Method Sample (legacy)" />
-        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
-        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
-      </Profilers>
-      <option name="DEEP_LINK" value="" />
-      <option name="ACTIVITY" value="" />
-      <option name="ACTIVITY_CLASS" value="" />
-      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
-      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
-      <method v="2">
-        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="myWorld.app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
       <module name="myWorld.app" />
       <option name="ANDROID_RUN_CONFIGURATION_SCHEMA_VERSION" value="1" />
       <option name="DEPLOY" value="true" />
@@ -387,14 +333,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1736068437661</updated>
-    </task>
-    <task id="LOCAL-00060" summary="[update] BottomNavigation">
-      <option name="closed" value="true" />
-      <created>1740058570333</created>
-      <option name="number" value="00060" />
-      <option name="presentableId" value="LOCAL-00060" />
-      <option name="project" value="LOCAL" />
-      <updated>1740058570333</updated>
     </task>
     <task id="LOCAL-00061" summary="[update] theme">
       <option name="closed" value="true" />
@@ -780,7 +718,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743601005145</updated>
     </task>
-    <option name="localTasksCounter" value="109" />
+    <task id="LOCAL-00109" summary="[update] myWorld Start">
+      <option name="closed" value="true" />
+      <created>1743776255069</created>
+      <option name="number" value="00109" />
+      <option name="presentableId" value="LOCAL-00109" />
+      <option name="project" value="LOCAL" />
+      <updated>1743776255069</updated>
+    </task>
+    <option name="localTasksCounter" value="110" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

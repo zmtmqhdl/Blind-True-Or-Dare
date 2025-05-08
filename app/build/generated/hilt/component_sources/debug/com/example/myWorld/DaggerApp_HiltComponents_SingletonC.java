@@ -6,17 +6,17 @@ import android.view.View;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
-import com.example.data.repository.RetrofitRepository;
 import com.example.data.repository.RoomRepository;
-import com.example.data.retrofit.RetrofitService;
 import com.example.data.room.RoomDao;
 import com.example.data.room.RoomDatabase;
-import com.example.myWorld.di.AppModule_ProvideRetrofitRepositoryFactory;
-import com.example.myWorld.di.AppModule_ProvideRetrofitServiceFactory;
 import com.example.myWorld.di.RoomModule_ProvideDatabaseFactory;
 import com.example.myWorld.di.RoomModule_ProvideExampleDaoFactory;
 import com.example.myWorld.di.RoomModule_ProvideExampleRepositoryFactory;
 import com.example.presentation.activity.MainActivity;
+import com.example.presentation.splash.SplashViewModel;
+import com.example.presentation.splash.SplashViewModel_HiltModules;
+import com.example.presentation.splash.SplashViewModel_HiltModules_BindsModule_Binds_LazyMapKey;
+import com.example.presentation.splash.SplashViewModel_HiltModules_KeyModule_Provide_LazyMapKey;
 import com.example.presentation.viewModel.HomeViewModel;
 import com.example.presentation.viewModel.HomeViewModel_HiltModules;
 import com.example.presentation.viewModel.HomeViewModel_HiltModules_BindsModule_Binds_LazyMapKey;
@@ -39,6 +39,7 @@ import dagger.hilt.android.internal.modules.ApplicationContextModule_ProvideCont
 import dagger.internal.DaggerGenerated;
 import dagger.internal.DoubleCheck;
 import dagger.internal.LazyClassKeyMap;
+import dagger.internal.MapBuilder;
 import dagger.internal.Preconditions;
 import dagger.internal.Provider;
 import java.util.Collections;
@@ -380,7 +381,7 @@ public final class DaggerApp_HiltComponents_SingletonC {
 
     @Override
     public Map<Class<?>, Boolean> getViewModelKeys() {
-      return LazyClassKeyMap.<Boolean>of(Collections.<String, Boolean>singletonMap(HomeViewModel_HiltModules_KeyModule_Provide_LazyMapKey.lazyClassKeyName, HomeViewModel_HiltModules.KeyModule.provide()));
+      return LazyClassKeyMap.<Boolean>of(MapBuilder.<String, Boolean>newMapBuilder(2).put(HomeViewModel_HiltModules_KeyModule_Provide_LazyMapKey.lazyClassKeyName, HomeViewModel_HiltModules.KeyModule.provide()).put(SplashViewModel_HiltModules_KeyModule_Provide_LazyMapKey.lazyClassKeyName, SplashViewModel_HiltModules.KeyModule.provide()).build());
     }
 
     @Override
@@ -408,6 +409,8 @@ public final class DaggerApp_HiltComponents_SingletonC {
 
     private Provider<HomeViewModel> homeViewModelProvider;
 
+    private Provider<SplashViewModel> splashViewModelProvider;
+
     private ViewModelCImpl(SingletonCImpl singletonCImpl,
         ActivityRetainedCImpl activityRetainedCImpl, SavedStateHandle savedStateHandleParam,
         ViewModelLifecycle viewModelLifecycleParam) {
@@ -422,11 +425,12 @@ public final class DaggerApp_HiltComponents_SingletonC {
     private void initialize(final SavedStateHandle savedStateHandleParam,
         final ViewModelLifecycle viewModelLifecycleParam) {
       this.homeViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 0);
+      this.splashViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 1);
     }
 
     @Override
     public Map<Class<?>, javax.inject.Provider<ViewModel>> getHiltViewModelMap() {
-      return LazyClassKeyMap.<javax.inject.Provider<ViewModel>>of(Collections.<String, javax.inject.Provider<ViewModel>>singletonMap(HomeViewModel_HiltModules_BindsModule_Binds_LazyMapKey.lazyClassKeyName, ((Provider) homeViewModelProvider)));
+      return LazyClassKeyMap.<javax.inject.Provider<ViewModel>>of(MapBuilder.<String, javax.inject.Provider<ViewModel>>newMapBuilder(2).put(HomeViewModel_HiltModules_BindsModule_Binds_LazyMapKey.lazyClassKeyName, ((Provider) homeViewModelProvider)).put(SplashViewModel_HiltModules_BindsModule_Binds_LazyMapKey.lazyClassKeyName, ((Provider) splashViewModelProvider)).build());
     }
 
     @Override
@@ -456,7 +460,10 @@ public final class DaggerApp_HiltComponents_SingletonC {
       public T get() {
         switch (id) {
           case 0: // com.example.presentation.viewModel.HomeViewModel 
-          return (T) new HomeViewModel(singletonCImpl.roomRepository(), singletonCImpl.provideRetrofitRepositoryProvider.get());
+          return (T) new HomeViewModel(singletonCImpl.roomRepository());
+
+          case 1: // com.example.presentation.splash.SplashViewModel 
+          return (T) new SplashViewModel();
 
           default: throw new AssertionError(id);
         }
@@ -540,10 +547,6 @@ public final class DaggerApp_HiltComponents_SingletonC {
 
     private Provider<RoomDatabase> provideDatabaseProvider;
 
-    private Provider<RetrofitService> provideRetrofitServiceProvider;
-
-    private Provider<RetrofitRepository> provideRetrofitRepositoryProvider;
-
     private SingletonCImpl(ApplicationContextModule applicationContextModuleParam) {
       this.applicationContextModule = applicationContextModuleParam;
       initialize(applicationContextModuleParam);
@@ -561,8 +564,6 @@ public final class DaggerApp_HiltComponents_SingletonC {
     @SuppressWarnings("unchecked")
     private void initialize(final ApplicationContextModule applicationContextModuleParam) {
       this.provideDatabaseProvider = DoubleCheck.provider(new SwitchingProvider<RoomDatabase>(singletonCImpl, 0));
-      this.provideRetrofitServiceProvider = DoubleCheck.provider(new SwitchingProvider<RetrofitService>(singletonCImpl, 2));
-      this.provideRetrofitRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<RetrofitRepository>(singletonCImpl, 1));
     }
 
     @Override
@@ -600,12 +601,6 @@ public final class DaggerApp_HiltComponents_SingletonC {
         switch (id) {
           case 0: // com.example.data.room.RoomDatabase 
           return (T) RoomModule_ProvideDatabaseFactory.provideDatabase(ApplicationContextModule_ProvideContextFactory.provideContext(singletonCImpl.applicationContextModule));
-
-          case 1: // com.example.data.repository.RetrofitRepository 
-          return (T) AppModule_ProvideRetrofitRepositoryFactory.provideRetrofitRepository(singletonCImpl.provideRetrofitServiceProvider.get());
-
-          case 2: // com.example.data.retrofit.RetrofitService 
-          return (T) AppModule_ProvideRetrofitServiceFactory.provideRetrofitService();
 
           default: throw new AssertionError(id);
         }

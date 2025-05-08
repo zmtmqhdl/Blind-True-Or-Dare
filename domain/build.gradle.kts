@@ -31,16 +31,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+
     kotlinOptions {
         jvmTarget = "17"
-    }
-
-    buildFeatures {
-        compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.3"
     }
 }
 
@@ -49,6 +42,7 @@ dependencies {
     implementation(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.androidx.runtime)
 
     // coroutines
     implementation(libs.kotlinx.coroutines.android)
@@ -56,4 +50,8 @@ dependencies {
     // hilt
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
+
+    // room
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
 }

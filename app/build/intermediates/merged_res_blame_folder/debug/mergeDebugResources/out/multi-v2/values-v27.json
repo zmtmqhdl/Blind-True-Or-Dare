@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.myWorld.app-mergeDebugResources-72:/values-v27/values-v27.xml",
+            "outputFile": "com.example.myWorld.app-mergeDebugResources-67:/values-v27/values-v27.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\zmtmq\\.gradle\\caches\\8.11.1\\transforms\\220a3a6653c2715ea58ad831f09afbe0\\transformed\\core-splashscreen-1.0.1\\res\\values-v27\\values-v27.xml",
+                    "source": "C:\\Users\\zmtmq\\.gradle\\caches\\8.14\\transforms\\963a47a0d18423a0a9124fcd130d9668\\transformed\\core-splashscreen-1.0.1\\res\\values-v27\\values-v27.xml",
                     "from": {
                         "startLines": "2,3,4,7",
                         "startColumns": "4,4,4,4",

@@ -1,29 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.myWorld.app-mergeDebugResources-72:/values-v28/values-v28.xml",
+            "outputFile": "com.example.myWorld.app-mergeDebugResources-67:/values-v28/values-v28.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\zmtmq\\.gradle\\caches\\8.11.1\\transforms\\247599ea2438ab27752e01fcded6257b\\transformed\\material-1.12.0\\res\\values-v28\\values-v28.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,153,249,344,441,529,617,705,793,880,967,1054,1141",
-                        "endLines": "2,3,4,5,6,7,8,9,10,11,12,13,17",
-                        "endColumns": "97,95,94,96,87,87,87,87,86,86,86,86,10",
-                        "endOffsets": "148,244,339,436,524,612,700,788,875,962,1049,1136,1423"
-                    },
-                    "to": {
-                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,24",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,153,249,344,441,529,617,705,793,880,967,1054,1675",
-                        "endLines": "2,3,4,5,6,7,8,9,10,11,12,13,27",
-                        "endColumns": "97,95,94,96,87,87,87,87,86,86,86,86,10",
-                        "endOffsets": "148,244,339,436,524,612,700,788,875,962,1049,1136,1957"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\zmtmq\\.gradle\\caches\\8.11.1\\transforms\\3982d521188c770b95cf4a577ed3d886\\transformed\\appcompat-1.7.0\\res\\values-v28\\values-v28.xml",
+                    "source": "C:\\Users\\zmtmq\\.gradle\\caches\\8.14\\transforms\\d17ab3ce4a303ad5499e027b2334cc6c\\transformed\\appcompat-1.7.0\\res\\values-v28\\values-v28.xml",
                     "from": {
                         "startLines": "2,3,4,8",
                         "startColumns": "4,4,4,4",
@@ -39,6 +20,25 @@
                         "endLines": "14,15,19,23",
                         "endColumns": "74,86,12,12",
                         "endOffsets": "1211,1298,1478,1670"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\zmtmq\\.gradle\\caches\\8.14\\transforms\\7d63c2542f979e483e1ac612cd74af14\\transformed\\material-1.12.0\\res\\values-v28\\values-v28.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,153,249,344,441,529,617,705,793,880,967,1054,1141",
+                        "endLines": "2,3,4,5,6,7,8,9,10,11,12,13,17",
+                        "endColumns": "97,95,94,96,87,87,87,87,86,86,86,86,10",
+                        "endOffsets": "148,244,339,436,524,612,700,788,875,962,1049,1136,1423"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,24",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,153,249,344,441,529,617,705,793,880,967,1054,1675",
+                        "endLines": "2,3,4,5,6,7,8,9,10,11,12,13,27",
+                        "endColumns": "97,95,94,96,87,87,87,87,86,86,86,86,10",
+                        "endOffsets": "148,244,339,436,524,612,700,788,875,962,1049,1136,1957"
                     }
                 }
             ]

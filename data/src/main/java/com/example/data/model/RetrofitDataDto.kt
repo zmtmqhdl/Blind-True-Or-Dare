@@ -1,6 +1,6 @@
 package com.example.data.model
 
-data class RetrofitData(
+data class RetrofitDataDto(
     val userId: Int = 0,
     val id: Int = 0,
     val title: String = "",

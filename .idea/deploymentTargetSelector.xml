@@ -16,9 +16,6 @@
       <SelectionState runConfigName="Preview_DesignSystemTextField_Outlined_Primary">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="myWorld.app">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
     </selectionStates>
   </component>
 </project>

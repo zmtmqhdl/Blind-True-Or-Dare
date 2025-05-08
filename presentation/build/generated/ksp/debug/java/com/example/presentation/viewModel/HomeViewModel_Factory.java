@@ -1,6 +1,5 @@
 package com.example.presentation.viewModel;
 
-import com.example.data.repository.RetrofitRepository;
 import com.example.data.repository.RoomRepository;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
@@ -29,32 +28,25 @@ import javax.annotation.processing.Generated;
 public final class HomeViewModel_Factory implements Factory<HomeViewModel> {
   private final Provider<RoomRepository> roomRepositoryProvider;
 
-  private final Provider<RetrofitRepository> retrofitRepositoryProvider;
-
-  public HomeViewModel_Factory(Provider<RoomRepository> roomRepositoryProvider,
-      Provider<RetrofitRepository> retrofitRepositoryProvider) {
+  public HomeViewModel_Factory(Provider<RoomRepository> roomRepositoryProvider) {
     this.roomRepositoryProvider = roomRepositoryProvider;
-    this.retrofitRepositoryProvider = retrofitRepositoryProvider;
   }
 
   @Override
   public HomeViewModel get() {
-    return newInstance(roomRepositoryProvider.get(), retrofitRepositoryProvider.get());
+    return newInstance(roomRepositoryProvider.get());
   }
 
   public static HomeViewModel_Factory create(
-      javax.inject.Provider<RoomRepository> roomRepositoryProvider,
-      javax.inject.Provider<RetrofitRepository> retrofitRepositoryProvider) {
-    return new HomeViewModel_Factory(Providers.asDaggerProvider(roomRepositoryProvider), Providers.asDaggerProvider(retrofitRepositoryProvider));
+      javax.inject.Provider<RoomRepository> roomRepositoryProvider) {
+    return new HomeViewModel_Factory(Providers.asDaggerProvider(roomRepositoryProvider));
   }
 
-  public static HomeViewModel_Factory create(Provider<RoomRepository> roomRepositoryProvider,
-      Provider<RetrofitRepository> retrofitRepositoryProvider) {
-    return new HomeViewModel_Factory(roomRepositoryProvider, retrofitRepositoryProvider);
+  public static HomeViewModel_Factory create(Provider<RoomRepository> roomRepositoryProvider) {
+    return new HomeViewModel_Factory(roomRepositoryProvider);
   }
 
-  public static HomeViewModel newInstance(RoomRepository roomRepository,
-      RetrofitRepository retrofitRepository) {
-    return new HomeViewModel(roomRepository, retrofitRepository);
+  public static HomeViewModel newInstance(RoomRepository roomRepository) {
+    return new HomeViewModel(roomRepository);
   }
 }

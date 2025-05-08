@@ -1,8 +1,8 @@
 package com.example.myWorld;
 
-import com.example.myWorld.di.AppModule;
 import com.example.myWorld.di.RoomModule;
 import com.example.presentation.activity.MainActivity_GeneratedInjector;
+import com.example.presentation.splash.SplashViewModel_HiltModules;
 import com.example.presentation.viewModel.HomeViewModel_HiltModules;
 import dagger.Binds;
 import dagger.Component;
@@ -128,7 +128,6 @@ public final class App_HiltComponents {
 
   @Component(
       modules = {
-          AppModule.class,
           ActivityRetainedCBuilderModule.class,
           ServiceCBuilderModule.class,
           ApplicationContextModule.class,
@@ -160,7 +159,8 @@ public final class App_HiltComponents {
           ViewModelCBuilderModule.class,
           HiltWrapper_ActivityRetainedComponentManager_LifecycleModule.class,
           HiltWrapper_SavedStateHandleModule.class,
-          HomeViewModel_HiltModules.KeyModule.class
+          HomeViewModel_HiltModules.KeyModule.class,
+          SplashViewModel_HiltModules.KeyModule.class
       }
   )
   @ActivityRetainedScoped
@@ -197,7 +197,8 @@ public final class App_HiltComponents {
   @Subcomponent(
       modules = {
           HiltWrapper_HiltViewModelFactory_ViewModelModule.class,
-          HomeViewModel_HiltModules.BindsModule.class
+          HomeViewModel_HiltModules.BindsModule.class,
+          SplashViewModel_HiltModules.BindsModule.class
       }
   )
   @ViewModelScoped

@@ -2,9 +2,7 @@ package com.example.presentation.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.data.model.RetrofitData
-import com.example.data.repository.RetrofitRepository
-import com.example.data.retrofit.RetrofitClient
+import com.example.data.model.RetrofitDataDto
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,7 +15,6 @@ import kotlinx.coroutines.flow.asStateFlow
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val roomRepository: RoomRepository,
-    private val retrofitRepository: RetrofitRepository
 ) : ViewModel() {
     private val _sheetState = MutableStateFlow(false)
     val sheetState: StateFlow<Boolean> = _sheetState
@@ -47,17 +44,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private val _post = MutableStateFlow<RetrofitData?>(null)
+    private val _post = MutableStateFlow<RetrofitDataDto?>(null)
     val post = _post.asStateFlow()
 
-    fun fetchPost(postId: Int) {
-        viewModelScope.launch {
-            try {
-                val response = RetrofitClient.retrofitService.get(postId)
-                _post.value = response
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-    }
 }
