@@ -12,7 +12,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.example.presentation.component.MyWorldButton
 import com.example.presentation.theme.MyWorldSpaces
-import com.example.myWorld.R
+import com.example.presentation.R
 
 @Composable
 fun MainScreen(navController: NavHostController) {
