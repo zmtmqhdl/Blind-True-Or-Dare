@@ -15,13 +15,15 @@ import com.example.presentation.theme.MyWorldTheme
 
 @Composable
 fun WaitingRoomScreen() {
-     MyWorldScreen.PrimaryScreen {
-         Column(
-             modifier = Modifier.fillMaxSize().background(
-                 color = MyWorldTheme.color.white,
-                 shape = MyWorldTheme.shape.box
-             )
-         ) {
+    MyWorldScreen.PrimaryScreen {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    color = MyWorldTheme.color.white,
+                    shape = MyWorldTheme.shape.box
+                )
+        ) {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
@@ -33,6 +35,6 @@ fun WaitingRoomScreen() {
             }
 
 
-         }
-     }
+        }
+    }
 }
