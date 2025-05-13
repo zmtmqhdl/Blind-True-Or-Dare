@@ -9,7 +9,7 @@ import com.example.presentation.main.MainScreen
 import com.example.presentation.screen.SecondScreen
 import com.example.presentation.waitingRoom.WaitingRoomScreen
 
-fun NavGraphBuilder.main() {
+fun NavGraphBuilder.main(navController: NavController) {
     composable(Screen.Main.route) {
         MainScreen()
     }

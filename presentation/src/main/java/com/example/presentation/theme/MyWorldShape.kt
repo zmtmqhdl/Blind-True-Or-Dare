@@ -12,6 +12,7 @@ object MyWorldShapes{
     val Dialog = RoundedCornerShape(MyWorldSpaces.Space2)
     val SnackBar = RoundedCornerShape(MyWorldSpaces.Space2)
     val TextField = RoundedCornerShape(MyWorldSpaces.Space4)
+    val Box = RoundedCornerShape(MyWorldSpaces.Space2)
 }
 
 @Stable
@@ -21,6 +22,7 @@ class MyWorldShape(
     val dialog: Shape,
     val snackBar: Shape,
     val textField: Shape,
+    val box: Shape
 )
 
 val LocalShape = staticCompositionLocalOf {
@@ -29,6 +31,7 @@ val LocalShape = staticCompositionLocalOf {
         button = RectangleShape,
         dialog = RectangleShape,
         snackBar = RectangleShape,
-        textField = RectangleShape
+        textField = RectangleShape,
+        box = RectangleShape
     )
 }

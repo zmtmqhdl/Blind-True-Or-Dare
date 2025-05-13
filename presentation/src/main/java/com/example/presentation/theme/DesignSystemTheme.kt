@@ -65,7 +65,8 @@ private val shape = MyWorldShape(
     button = MyWorldShapes.Button,
     dialog = MyWorldShapes.Dialog,
     snackBar = MyWorldShapes.SnackBar,
-    textField =  MyWorldShapes.TextField
+    textField =  MyWorldShapes.TextField,
+    box = MyWorldShapes.Box
 )
 
 

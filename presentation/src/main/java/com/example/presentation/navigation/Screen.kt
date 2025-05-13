@@ -15,14 +15,10 @@ sealed class Screen(
 
     data object Main : Screen(
         route = "main",
-        selectedIcon = Close,
-        unselectedIcon = Close
     )
 
     data object WaitingRoom: Screen(
         route = "waitingRoom",
-        selectedIcon = Close,
-        unselectedIcon = Close
     )
 
 

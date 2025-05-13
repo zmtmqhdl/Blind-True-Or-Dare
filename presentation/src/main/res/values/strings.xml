@@ -7,4 +7,8 @@
     <!-- main -->
     <string name="main_create_room">대기실 생성</string>
     <string name="main_join_room">대기실 입장</string>
+
+    <!-- waiting room -->
+    <string name="waiting_room_title">대기실</string>
+    <string name="waiting_room_barcode">바코드</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.example.presentation.screen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
@@ -9,11 +10,13 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import com.example.presentation.theme.MyWorldTheme
 
 object MyWorldScreen {
     @Composable
     fun PrimaryScreen(
+        color: Color = MyWorldTheme.color.white,
         content: @Composable () -> Unit
     ) {
         Column(
@@ -23,6 +26,7 @@ object MyWorldScreen {
                     end = MyWorldTheme.space.space4
                 )
                 .padding(WindowInsets.systemBars.asPaddingValues())
+                .background(color = color)
         ) {
             content()
         }
@@ -33,13 +37,15 @@ object MyWorldScreen {
         topBar: @Composable () -> Unit,
         bottomBar: @Composable () -> Unit,
         snackBarHost: @Composable () -> Unit,
+        containerColor: Color = MyWorldTheme.color.white,
         content: @Composable () -> Unit
     ) {
         Scaffold(
             modifier = Modifier.padding(WindowInsets.navigationBars.asPaddingValues()),
             topBar = topBar,
             bottomBar = bottomBar,
-            snackbarHost = snackBarHost
+            snackbarHost = snackBarHost,
+            containerColor = containerColor
         ) { innerPadding ->
             Column(
                 modifier = Modifier
