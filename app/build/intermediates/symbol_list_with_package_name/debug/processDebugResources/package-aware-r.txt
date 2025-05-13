@@ -3856,6 +3856,8 @@ string m3c_time_picker_period_toggle_description
 string m3c_time_picker_pm
 string m3c_tooltip_long_press_label
 string m3c_tooltip_pane_description
+string main_create_room
+string main_join_room
 string material_clock_display_divider
 string material_clock_toggle_content_description
 string material_hour_24h_suffix

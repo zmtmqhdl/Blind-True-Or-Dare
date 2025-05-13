@@ -9,6 +9,8 @@ int font regular 0x0
 int mipmap ic_launcher 0x0
 int mipmap ic_launcher_round 0x0
 int string app_name 0x0
+int string main_create_room 0x0
+int string main_join_room 0x0
 int string title_activity_main 0x0
 int style Theme_myWorld 0x0
 int style Theme_myWorld_Splash 0x0

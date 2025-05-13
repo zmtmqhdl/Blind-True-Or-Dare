@@ -19,6 +19,13 @@ sealed class Screen(
         unselectedIcon = Close
     )
 
+    data object WaitingRoom: Screen(
+        route = "waitingRoom",
+        selectedIcon = Close,
+        unselectedIcon = Close
+    )
+
+
     data object First : Screen(
         route = "first",
         label = "first",

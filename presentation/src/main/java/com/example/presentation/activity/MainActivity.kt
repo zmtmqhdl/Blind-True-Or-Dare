@@ -8,7 +8,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
-import com.example.presentation.screen.MainScreen
+import com.example.presentation.main.MainScreen
+import com.example.presentation.navigation.MainGraph
 import com.example.presentation.splash.SplashViewModel
 import com.example.presentation.theme.MyWorldTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,9 +27,10 @@ class MainActivity : AppCompatActivity() {
             val splashViewModel: SplashViewModel = hiltViewModel()
             val isLoading = splashViewModel.isLoading.collectAsState().value
 
+            val navController = rememberNavController()
+
             MyWorldTheme {
-                val navController = rememberNavController()
-                MainScreen(navController = navController)
+                MainGraph(navController = navController)
             }
         }
     }

@@ -3,6 +3,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <string name="app_name">MyWorld</string>
+    <string name="main_create_room">대기실 생성</string>
+    <string name="main_join_room">대기실 입장</string>
     <string name="title_activity_main">Start</string>
     <style name="Theme.myWorld" parent="Theme.AppCompat.Light.NoActionBar"/>
     <style name="Theme.myWorld.Splash">

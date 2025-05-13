@@ -1,4 +1,4 @@
-package com.example.presentation.screen
+package com.example.presentation.main
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,16 +9,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavHostController
-import com.example.presentation.component.MyWorldButton
-import com.example.presentation.theme.MyWorldSpaces
 import com.example.presentation.R
+import com.example.presentation.component.MyWorldButton
+import com.example.presentation.screen.MyWorldScreen
+import com.example.presentation.theme.MyWorldSpaces
 
 @Composable
-fun MainScreen(navController: NavHostController) {
-
+fun MainScreen() {
     MyWorldScreen.PrimaryScreen {
-
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
@@ -32,7 +30,7 @@ fun MainScreen(navController: NavHostController) {
             Spacer(modifier = Modifier.height(MyWorldSpaces.Space3))
 
             MyWorldButton.CTA.Xlarge(
-                text = stringResource(R.string.main_create_room),
+                text = stringResource(R.string.main_join_room),
                 onClick = {}
             )
         }
