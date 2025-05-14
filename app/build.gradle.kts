@@ -27,40 +27,43 @@ android {
         applicationId = "com.example.myWorld"
         minSdk = 35
         targetSdk = 35
-        versionCode = projectProperties["versionCode"].toString().toInt()
-        versionName = "${projectProperties["major"]}.${projectProperties["minor"]}.${projectProperties["patch"]}"
+        versionCode = 1
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
-        debug {
-            isShrinkResources = false
-            isMinifyEnabled = false
-            if (test) {
-                resValue("string", "app_name", "myWorld (Dev)")
-            } else {
-                resValue("string", "app_name", "myWorld")
-            }
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+    flavorDimensions += "env"
+    productFlavors {
+        create("dev") {
+            dimension = "env"
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = "-dev"
+            resValue("string", "app_name", "MyWorld (Dev)")
+            buildConfigField("Boolean", "IS_DEV", "true")
         }
-        release {
-            isShrinkResources = true
+        create("prod") {
+            dimension = "env"
+            resValue("string", "app_name", "MyWorld")
+            buildConfigField("Boolean", "IS_DEV", "false")
+        }
+    }
+
+    buildTypes {
+        getByName("debug") {
+            isMinifyEnabled = false
+            isShrinkResources = false
+        }
+        getByName("release") {
             isMinifyEnabled = true
-            if (test) {
-                resValue("string", "app_name", "myWorld (Dev)")
-            } else {
-                resValue("string", "app_name", "myWorld")
-            }
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
