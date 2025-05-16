@@ -1,16 +1,10 @@
-import java.io.FileInputStream
-import java.util.Properties
-
-val projectProperties = Properties().apply {
-    load(FileInputStream(rootProject.file("project.properties")))
-}
-
-val test = projectProperties["isTest"].toString().toBoolean()
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+
+    // firebase
+    alias(libs.plugins.firebase)
 
     // hilt
     alias(libs.plugins.hilt)
@@ -90,6 +84,9 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
+
+    // firebase
+    implementation(platform(libs.firebase.bom))
 
     // module
     implementation(project(":data"))

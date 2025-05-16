@@ -16,12 +16,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fd2281aa-b24d-4a87-9ff5-e390e58ca326" name="Changes" comment="[update] build types">
-      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/com/example/presentation/waitingRoom/WaitingRoomViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project.properties" beforeDir="false" />
-    </list>
+    <list default="true" id="fd2281aa-b24d-4a87-9ff5-e390e58ca326" name="Changes" comment="[update] build types" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -324,46 +319,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1736068437661</updated>
-    </task>
-    <task id="LOCAL-00067" summary="[update] DesignSystemTheme">
-      <option name="closed" value="true" />
-      <created>1740403950120</created>
-      <option name="number" value="00067" />
-      <option name="presentableId" value="LOCAL-00067" />
-      <option name="project" value="LOCAL" />
-      <updated>1740403950120</updated>
-    </task>
-    <task id="LOCAL-00068" summary="[update] DesignSystemTheme darkMode">
-      <option name="closed" value="true" />
-      <created>1740407102136</created>
-      <option name="number" value="00068" />
-      <option name="presentableId" value="LOCAL-00068" />
-      <option name="project" value="LOCAL" />
-      <updated>1740407102136</updated>
-    </task>
-    <task id="LOCAL-00069" summary="[update] DesignSystemTheme Typography">
-      <option name="closed" value="true" />
-      <created>1740492734487</created>
-      <option name="number" value="00069" />
-      <option name="presentableId" value="LOCAL-00069" />
-      <option name="project" value="LOCAL" />
-      <updated>1740492734487</updated>
-    </task>
-    <task id="LOCAL-00070" summary="[update] DesignSystemTheme Dp">
-      <option name="closed" value="true" />
-      <created>1740498027926</created>
-      <option name="number" value="00070" />
-      <option name="presentableId" value="LOCAL-00070" />
-      <option name="project" value="LOCAL" />
-      <updated>1740498027926</updated>
-    </task>
-    <task id="LOCAL-00071" summary="[update] DesignSystemSpace, DesignSystemShape">
-      <option name="closed" value="true" />
-      <created>1740579462619</created>
-      <option name="number" value="00071" />
-      <option name="presentableId" value="LOCAL-00071" />
-      <option name="project" value="LOCAL" />
-      <updated>1740579462620</updated>
     </task>
     <task id="LOCAL-00072" summary="[update] Fix the error">
       <option name="closed" value="true" />
@@ -717,7 +672,47 @@
       <option name="project" value="LOCAL" />
       <updated>1747149022044</updated>
     </task>
-    <option name="localTasksCounter" value="116" />
+    <task id="LOCAL-00116" summary="[update] build types">
+      <option name="closed" value="true" />
+      <created>1747239866787</created>
+      <option name="number" value="00116" />
+      <option name="presentableId" value="LOCAL-00116" />
+      <option name="project" value="LOCAL" />
+      <updated>1747239866787</updated>
+    </task>
+    <task id="LOCAL-00117" summary="[update] build types">
+      <option name="closed" value="true" />
+      <created>1747239874710</created>
+      <option name="number" value="00117" />
+      <option name="presentableId" value="LOCAL-00117" />
+      <option name="project" value="LOCAL" />
+      <updated>1747239874710</updated>
+    </task>
+    <task id="LOCAL-00118" summary="[update] build types">
+      <option name="closed" value="true" />
+      <created>1747239875654</created>
+      <option name="number" value="00118" />
+      <option name="presentableId" value="LOCAL-00118" />
+      <option name="project" value="LOCAL" />
+      <updated>1747239875654</updated>
+    </task>
+    <task id="LOCAL-00119" summary="[update] build types">
+      <option name="closed" value="true" />
+      <created>1747239876967</created>
+      <option name="number" value="00119" />
+      <option name="presentableId" value="LOCAL-00119" />
+      <option name="project" value="LOCAL" />
+      <updated>1747239876967</updated>
+    </task>
+    <task id="LOCAL-00120" summary="[update] build types">
+      <option name="closed" value="true" />
+      <created>1747239877864</created>
+      <option name="number" value="00120" />
+      <option name="presentableId" value="LOCAL-00120" />
+      <option name="project" value="LOCAL" />
+      <updated>1747239877864</updated>
+    </task>
+    <option name="localTasksCounter" value="121" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
