@@ -2,6 +2,9 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
 
+    // firebase
+    alias(libs.plugins.firebase)
+
     // ksp
     alias(libs.plugins.ksp)
 }
@@ -39,6 +42,10 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.material)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.database.ktx)
 
     // module
     implementation(project(":domain"))

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MyWorld</string>
-    <string name="main_create_room">대기실 생성</string>
-    <string name="main_join_room">대기실 입장</string>
+    <string name="main_create_room">Create Room</string>
+    <string name="main_join_room">Join Room</string>
     <string name="title_activity_main">Start</string>
+    <string name="waiting_room_barcode">Barcode</string>
+    <string name="waiting_room_title">Waiting Room</string>
 </resources>

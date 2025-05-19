@@ -2,20 +2,17 @@ package com.example.presentation.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.example.presentation.screen.FirstScreen
-import com.example.presentation.main.MainScreen
 import com.example.presentation.screen.SecondScreen
-import com.example.presentation.waitingRoom.WaitingRoomScreen
 
 fun NavGraphBuilder.main(navController: NavController) {
     composable(Screen.Main.route) {
-        MainScreen()
+        com.example.presentation.main.MainScreen()
     }
 
     composable(Screen.WaitingRoom.route) {
-        WaitingRoomScreen()
+        com.example.presentation.waitingRoom.MainScreen()
     }
 }
 

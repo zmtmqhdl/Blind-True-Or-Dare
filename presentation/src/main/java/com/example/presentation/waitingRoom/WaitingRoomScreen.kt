@@ -14,7 +14,7 @@ import com.example.presentation.screen.MyWorldScreen
 import com.example.presentation.theme.MyWorldTheme
 
 @Composable
-fun WaitingRoomScreen() {
+fun MainScreen() {
     MyWorldScreen.PrimaryScreen {
         Column(
             modifier = Modifier

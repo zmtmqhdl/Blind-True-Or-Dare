@@ -13,7 +13,5 @@ fun MainGraph(
         startDestination = Screen.Main.route
     ) {
         main(navController)
-
-
     }
 }

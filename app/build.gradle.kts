@@ -9,16 +9,16 @@ plugins {
     // hilt
     alias(libs.plugins.hilt)
 
-    // kps
+    // ksp
     alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "com.example.myWorld"
+    namespace = "com.example.yesOrNo"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.myWorld"
+        applicationId = "com.example.yesOrNo"
         minSdk = 35
         targetSdk = 35
         versionCode = 1
@@ -33,12 +33,12 @@ android {
             dimension = "env"
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
-            resValue("string", "app_name", "MyWorld (Dev)")
+            resValue("string", "app_name", "yesOrNo (Dev)")
             buildConfigField("Boolean", "IS_DEV", "true")
         }
         create("prod") {
             dimension = "env"
-            resValue("string", "app_name", "MyWorld")
+            resValue("string", "app_name", "yesOrNo")
             buildConfigField("Boolean", "IS_DEV", "false")
         }
     }
@@ -87,6 +87,7 @@ dependencies {
 
     // firebase
     implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.database.ktx)
 
     // module
     implementation(project(":data"))

@@ -14,6 +14,8 @@ string app_name
 string main_create_room
 string main_join_room
 string title_activity_main
+string waiting_room_barcode
+string waiting_room_title
 style Theme.myWorld
 style Theme.myWorld.Splash
 xml backup_rules

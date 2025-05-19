@@ -12,6 +12,8 @@ int string app_name 0x0
 int string main_create_room 0x0
 int string main_join_room 0x0
 int string title_activity_main 0x0
+int string waiting_room_barcode 0x0
+int string waiting_room_title 0x0
 int style Theme_myWorld 0x0
 int style Theme_myWorld_Splash 0x0
 int xml backup_rules 0x0
