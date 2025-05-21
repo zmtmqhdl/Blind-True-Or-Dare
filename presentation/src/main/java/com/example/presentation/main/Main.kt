@@ -6,16 +6,43 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.presentation.R
 import com.example.presentation.component.MyWorldButton
+import com.example.presentation.component.PrimaryDialog
 import com.example.presentation.screen.MyWorldScreen
 import com.example.presentation.theme.MyWorldSpaces
 
 @Composable
-fun MainScreen() {
+fun MainRoute() {
+
+    var showInputNameDialog by remember { mutableStateOf(false) }
+
+    if (showInputNameDialog) {
+        PrimaryDialog(
+            text = stringResource(R.string.main_input_nickname_dialog_text),
+            content = {
+
+            }
+        )
+    }
+
+
+    MainScreen(
+        onCreateClick = { showInputNameDialog = true }
+    )
+}
+
+@Composable
+fun MainScreen(
+    onCreateClick: () -> Unit
+) {
     MyWorldScreen.PrimaryScreen {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -24,7 +51,7 @@ fun MainScreen() {
         ) {
             MyWorldButton.CTA.Xlarge(
                 text = stringResource(R.string.main_create_room),
-                onClick = {}
+                onClick = onCreateClick
             )
 
             Spacer(modifier = Modifier.height(MyWorldSpaces.Space3))

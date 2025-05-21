@@ -1,4 +1,4 @@
-package com.example.presentation.Icon
+package com.example.presentation.component.Icon
 
 
 import androidx.compose.material3.Icon

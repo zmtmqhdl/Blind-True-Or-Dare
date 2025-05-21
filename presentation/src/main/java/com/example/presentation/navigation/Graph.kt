@@ -10,8 +10,8 @@ fun MainGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.Main.route
+        startDestination = Route.Main.route
     ) {
-        main(navController)
+        main(navController = navController)
     }
 }

@@ -6,9 +6,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
-import com.example.presentation.Icon.Back
-import com.example.presentation.Icon.Close
-import com.example.presentation.Icon.Forward
+import com.example.presentation.component.Icon.Back
+import com.example.presentation.component.Icon.Close
+import com.example.presentation.component.Icon.Forward
 import com.example.presentation.theme.MyWorldTheme
 import com.example.presentation.util.MyWorldPreview
 

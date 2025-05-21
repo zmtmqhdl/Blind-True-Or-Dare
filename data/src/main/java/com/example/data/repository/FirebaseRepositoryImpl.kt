@@ -1,5 +1,8 @@
 package com.example.data.repository
 
+import com.example.domain.model.Status
+import com.example.domain.model.User
+import com.example.domain.model.WaitingRoomData
 import com.google.firebase.database.FirebaseDatabase
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
@@ -11,17 +14,20 @@ class FirebaseRepositoryImpl @Inject constructor(
     private val database: FirebaseDatabase
 ) : FirebaseRepository {
 
-    override suspend fun createWaitingRoom() {
+    override suspend fun createWaitingRoom(nickname: String) {
         withContext(Dispatchers.IO) {
             val roomId = UUID.randomUUID().toString()
+            val userId = UUID.randomUUID().toString()
             val roomRef = database.getReference("waitingRooms").child(roomId)
 
-            val roomData = mapOf(
-                "createdAt" to System.currentTimeMillis(),
-                "status" to "waiting"
+            val waitingRoomData = WaitingRoomData(
+                status = Status.WAITING,
+                participantList = listOf(
+                    User(userId, nickname)
+                )
             )
 
-            roomRef.setValue(roomData).await()
+            roomRef.setValue(waitingRoomData).await()
         }
     }
 }

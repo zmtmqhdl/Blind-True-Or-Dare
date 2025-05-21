@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -33,55 +34,58 @@ fun PrimaryDialog(
             .background(color = MyWorldTheme.color.gray600),
         contentAlignment = Alignment.Center
     ) {
-        Column(
+        Box(
             modifier = Modifier
-                .width(280.dp)
+                .fillMaxWidth()
                 .wrapContentHeight()
+                .padding(horizontal = MyWorldTheme.space.space8)
+                .background(
+                    color = MyWorldTheme.color.white,
+                    shape = MyWorldTheme.shape.dialog
+                ),
+            contentAlignment = Alignment.Center
         ) {
-            Surface(
-                shape = MyWorldTheme.shape.dialog,
-                color = MyWorldTheme.color.white
+            Column(
+                modifier = Modifier
+                    .padding(
+                        start = MyWorldTheme.space.space4,
+                        end = MyWorldTheme.space.space4
+                    ),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Column(
-                    modifier = Modifier
-                        .width(280.dp)
-                        .padding(start = MyWorldTheme.space.space4, end = MyWorldTheme.space.space4),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Spacer(modifier = Modifier.height(MyWorldTheme.space.space4))
-                    title?.let {
-                        Text(
-                            text = it,
-                            modifier = Modifier.padding(bottom = MyWorldTheme.space.space2),
-                            color = MyWorldTheme.color.black,
-                            style = MyWorldTheme.typography.xl.bold
-                        )
-                    }
-                    certification?.let {
-                        Text(
-                            text = it,
-                            modifier = Modifier.padding(bottom = MyWorldTheme.space.space2),
-                            color = MyWorldTheme.color.primary.fontColor,
-                            style = MyWorldTheme.typography.xxl.regular
-                        )
-                    }
-                    subText?.let {
-                        Text(
-                            text = it,
-                            modifier = Modifier.padding(bottom = MyWorldTheme.space.space2),
-                            color = MyWorldTheme.color.gray600,
-                            style = MyWorldTheme.typography.s.regular
-                        )
-                    }
+                Spacer(modifier = Modifier.height(MyWorldTheme.space.space4))
+                title?.let {
                     Text(
-                        text = text,
-                        modifier = Modifier.padding(bottom = MyWorldTheme.space.space4),
+                        text = it,
                         color = MyWorldTheme.color.black,
-                        style = MyWorldTheme.typography.m.regular
+                        style = MyWorldTheme.typography.xl.bold
                     )
-                    content()
-                    Spacer(modifier = Modifier.height(MyWorldTheme.space.space4))
+                    Spacer(modifier = Modifier.height(MyWorldTheme.space.space2))
                 }
+                certification?.let {
+                    Text(
+                        text = it,
+                        color = MyWorldTheme.color.primary.fontColor,
+                        style = MyWorldTheme.typography.xxl.regular
+                    )
+                    Spacer(modifier = Modifier.height(MyWorldTheme.space.space2))
+                }
+                subText?.let {
+                    Text(
+                        text = it,
+                        color = MyWorldTheme.color.gray600,
+                        style = MyWorldTheme.typography.s.regular
+                    )
+                    Spacer(modifier = Modifier.height(MyWorldTheme.space.space2))
+                }
+                Text(
+                    text = text,
+                    color = MyWorldTheme.color.black,
+                    style = MyWorldTheme.typography.m.regular
+                )
+                Spacer(modifier = Modifier.height(MyWorldTheme.space.space4))
+                content()
+                Spacer(modifier = Modifier.height(MyWorldTheme.space.space4))
             }
         }
     }

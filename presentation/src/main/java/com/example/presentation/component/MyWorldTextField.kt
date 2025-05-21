@@ -12,7 +12,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
-import com.example.presentation.Icon.Close
+import com.example.presentation.component.Icon.Close
 import com.example.presentation.theme.MyWorldTheme
 import com.example.presentation.util.MyWorldPreview
 
@@ -26,6 +26,8 @@ object MyWorldTextField {
             placeholder: String? = null,
             leadingIcon: ImageVector? = null,
             trailIcon: ImageVector? = null,
+            alwaysVisibleTrailIcon: Boolean = false,
+            onTrailIconClick: (() -> Unit)? = null,
             visualTransformation: VisualTransformation = VisualTransformation.None,
         ) {
             OutlinedTextField(
@@ -34,7 +36,24 @@ object MyWorldTextField {
                 label = { label?.let { Text(it) } },
                 placeholder = { placeholder?.let { Text(it) } },
                 leadingIcon = leadingIcon?.let { { MyWorldIcon(icon = it) } },
-                trailingIcon = trailIcon?.let { { MyWorldIcon(icon = it) } },
+                trailingIcon = trailIcon?.let {
+                    {
+                        if (alwaysVisibleTrailIcon) {
+                            MyWorldIcon(
+                                icon = it,
+                                onClick = onTrailIconClick
+                            )
+                        } else{
+                            if (value.isNotBlank()) {
+                                MyWorldIcon (
+                                    icon = it,
+                                    onClick = onTrailIconClick
+                                )
+                            }
+                        }
+
+                    }
+                },
                 visualTransformation = visualTransformation,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email
@@ -46,15 +65,6 @@ object MyWorldTextField {
         }
     }
 }
-
-@Composable
-fun test() {
-    
-}
-
-
-
-
 
 
 @MyWorldPreview

@@ -7,6 +7,7 @@
     <!-- main -->
     <string name="main_create_room">대기실 생성</string>
     <string name="main_join_room">대기실 입장</string>
+    <string name="main_input_nickname_dialog_text">닉네임 입력</string>
 
     <!-- waiting room -->
     <string name="waiting_room_title">대기실</string>

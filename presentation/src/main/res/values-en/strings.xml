@@ -6,6 +6,7 @@
     <!-- main -->
     <string name="main_create_room">Create Room</string>
     <string name="main_join_room">Join Room</string>
+    <string name="main_input_nickname_dialog_text">Input Nickname</string>
 
     <!-- waiting room -->
     <string name="waiting_room_title">Waiting Room</string>
