@@ -26,9 +26,9 @@ fun MainRoute() {
     var waitingRoomTitle by remember { mutableStateOf("")}
 
     // dialog
-    var showInputNameDialog by remember { mutableStateOf(false) }
+    var showInputNicknameDialog by remember { mutableStateOf(false) }
 
-    if (showInputNameDialog) {
+    if (showInputNicknameDialog) {
         PrimaryDialog(
             text = stringResource(R.string.main_input_nickname_dialog_text),
             content = {
@@ -37,13 +37,13 @@ fun MainRoute() {
                     onValueChange = { waitingRoomTitle = it },
                 )
             },
-            onDismissRequest = { showInputNameDialog = false }
+            onDismissRequest = { showInputNicknameDialog = false }
         )
     }
 
 
     MainScreen(
-        onCreateClick = { showInputNameDialog = true },
+        onCreateClick = { showInputNicknameDialog = true },
         onJoinClick = {}
     )
 }

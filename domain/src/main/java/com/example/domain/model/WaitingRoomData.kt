@@ -10,6 +10,11 @@ data class User(
     val nickname: String = "",
 )
 
+data class CreateWaitingRoomData(
+    val roomId: String = "",
+    val userId: String = ""
+)
+
 enum class Status {
     WAITING,
     PLAYING
