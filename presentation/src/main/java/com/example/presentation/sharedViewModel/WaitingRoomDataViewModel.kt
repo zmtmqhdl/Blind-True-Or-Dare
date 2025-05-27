@@ -12,6 +12,8 @@ class WaitingRoomDataViewModel @Inject constructor(
     private val firebaseRepository: FirebaseRepository
 ) : MyWorldViewModel(tag = "WaitingRoomDataViewModel") {
 
+
+
     fun createWaitingRoom(nickname: String) {
         logD("""
             [fun createWaitingRoom parameter]
@@ -20,7 +22,17 @@ class WaitingRoomDataViewModel @Inject constructor(
         viewModelScope.launch {
             firebaseRepository.createWaitingRoom(
                 nickname = nickname
-            )
+            ).onSuccess {
+                logD("""
+                    [fun createWaitingRoom success]
+                        
+                """.trimIndent())
+            }.onFailure {
+                logD("""
+                    [fun createWaitingRoom failure]
+                        
+                """.trimIndent())
+            }
         }
     }
 }

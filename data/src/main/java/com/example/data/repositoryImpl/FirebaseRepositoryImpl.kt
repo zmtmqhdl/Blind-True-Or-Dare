@@ -13,25 +13,18 @@ class FirebaseRepositoryImpl @Inject constructor(
     private val firebaseDatabase: FirebaseDatabase
 ) : FirebaseRepository {
 
-    override suspend fun createWaitingRoom(nickname: String): CreateWaitingRoomData {
+    override suspend fun createWaitingRoom(nickname: String): Result<CreateWaitingRoomData> = runCatching {
         val roomId = UUID.randomUUID().toString()
         val userId = UUID.randomUUID().toString()
         val reference = firebaseDatabase.getReference("waitingRoom").child(roomId)
 
         val waitingRoomData = WaitingRoomData(
             status = Status.WAITING,
-            participantList = listOf(
-                User(
-                    id = userId,
-                    nickname = nickname)
-            )
+            participantList = listOf(User(id = userId, nickname = nickname))
         )
 
         reference.setValue(waitingRoomData).await()
 
-        return CreateWaitingRoomData(
-            roomId = roomId,
-            userId = userId
-        )
+        CreateWaitingRoomData(roomId = roomId, userId = userId)
     }
 }
