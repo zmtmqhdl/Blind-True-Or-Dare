@@ -80,5 +80,8 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
 
     // splash
-    implementation("androidx.core:core-splashscreen:1.0.1")
+    implementation(libs.androidx.core.splashscreen)
+
+    // zxing
+    implementation(libs.zxing)
 }
