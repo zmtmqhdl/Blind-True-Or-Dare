@@ -18,7 +18,7 @@ import com.example.presentation.component.MyWorldButton
 import com.example.presentation.component.MyWorldTextField
 import com.example.presentation.component.PrimaryDialog
 import com.example.presentation.screen.MyWorldScreen
-import com.example.presentation.theme.MyWorldSpaces
+import com.example.presentation.theme.ProjectSpaces
 
 @Composable
 fun MainRoute() {
@@ -27,7 +27,6 @@ fun MainRoute() {
 
     // dialog
     var showInputNicknameDialog by remember { mutableStateOf(false) }
-
     if (showInputNicknameDialog) {
         PrimaryDialog(
             text = stringResource(R.string.main_input_nickname_dialog_text),
@@ -41,7 +40,7 @@ fun MainRoute() {
         )
     }
 
-
+    // screen
     MainScreen(
         onCreateClick = { showInputNicknameDialog = true },
         onJoinClick = {}
@@ -64,7 +63,7 @@ fun MainScreen(
                 onClick = onCreateClick
             )
 
-            Spacer(modifier = Modifier.height(MyWorldSpaces.Space3))
+            Spacer(modifier = Modifier.height(ProjectSpaces.Space3))
 
             MyWorldButton.CTA.Xlarge(
                 text = stringResource(R.string.main_join_room),

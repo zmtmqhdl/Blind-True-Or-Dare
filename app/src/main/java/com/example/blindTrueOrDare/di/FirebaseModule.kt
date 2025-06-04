@@ -1,4 +1,4 @@
-package com.example.yesOrNo.di
+package com.example.blindTrueOrDare.di
 
 import com.example.data.repositoryImpl.FirebaseRepository
 import com.example.data.repositoryImpl.FirebaseRepositoryImpl

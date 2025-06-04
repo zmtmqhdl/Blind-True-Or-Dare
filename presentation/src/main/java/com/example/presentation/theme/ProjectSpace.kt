@@ -5,7 +5,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-object MyWorldSpaces{
+object ProjectSpaces{
     val Space0 = 2.dp
     val Space1 = 4.dp
     val Space2 = 8.dp
@@ -22,7 +22,7 @@ object MyWorldSpaces{
 }
 
 @Stable
-class MyWorldSpace(
+class ProjectSpace(
     val space0: Dp,
     val space1: Dp,
     val space2: Dp,
@@ -39,7 +39,7 @@ class MyWorldSpace(
 )
 
 val LocalSpace = staticCompositionLocalOf {
-    MyWorldSpace(
+    ProjectSpace(
         space0 = Dp.Unspecified,
         space1 = Dp.Unspecified,
         space2 = Dp.Unspecified,

@@ -16,6 +16,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import com.example.presentation.theme.MyWorldTheme
+import com.example.presentation.theme.ProjectTheme
 import com.example.presentation.util.MyWorldPreview
 import kotlinx.coroutines.launch
 
@@ -185,7 +186,7 @@ object MyWorldBottomSheet {
 @MyWorldPreview
 @Composable
 private fun MyWorldBottomSheet_Modal_Single_SingleArrangement_Preview() {
-    MyWorldTheme {
+    ProjectTheme {
         MyWorldBottomSheet.Modal.Single.SingleArrangement(
             title = "title",
             text = "text",
@@ -200,7 +201,7 @@ private fun MyWorldBottomSheet_Modal_Single_SingleArrangement_Preview() {
 @MyWorldPreview
 @Composable
 private fun MyWorldBottomSheet_Modal_Double_ColumnArrangement_Preview() {
-    MyWorldTheme {
+    ProjectTheme {
         MyWorldBottomSheet.Modal.Double.ColumnArrangement(
             title = "title",
             text = "text",
@@ -217,7 +218,7 @@ private fun MyWorldBottomSheet_Modal_Double_ColumnArrangement_Preview() {
 @MyWorldPreview
 @Composable
 private fun MyWorldBottomSheet_Modal_Double_RowArrangement_Preview() {
-    MyWorldTheme {
+    ProjectTheme {
         MyWorldBottomSheet.Modal.Double.RowArrangement(
             title = "title",
             text = "text",

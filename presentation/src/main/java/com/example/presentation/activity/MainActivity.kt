@@ -10,7 +10,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 import com.example.presentation.navigation.MainGraph
 import com.example.presentation.splash.SplashViewModel
-import com.example.presentation.theme.MyWorldTheme
+import com.example.presentation.theme.ProjectTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
             val navController = rememberNavController()
 
-            MyWorldTheme {
+            ProjectTheme {
                 MainGraph(navController = navController)
             }
         }

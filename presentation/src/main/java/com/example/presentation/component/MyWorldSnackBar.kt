@@ -21,8 +21,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import com.example.presentation.component.Icon.Person
 import com.example.presentation.common.IconPosition
-import com.example.presentation.theme.MyWorldColorSet
+import com.example.presentation.theme.ProjectColorSet
 import com.example.presentation.theme.MyWorldTheme
+import com.example.presentation.theme.ProjectTheme
 import com.example.presentation.util.MyWorldPreview
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -70,7 +71,7 @@ fun MyWorldSnackBar(
     icon: ImageVector? = null,
     iconColor: Color = MyWorldTheme.color.black,
     containerColor: Color = MyWorldTheme.color.white,
-    color: MyWorldColorSet = MyWorldTheme.color.primary
+    color: ProjectColorSet = MyWorldTheme.color.primary
 ) {
     SnackbarHost(
         hostState = snackBarHostState,
@@ -118,7 +119,7 @@ fun MyWorldSnackBarPreview() {
         snackBarHostState.showSnackbar("message")
     }
 
-    MyWorldTheme {
+    ProjectTheme {
         MyWorldSnackBar(
             snackBarHostState = snackBarHostState,
             icon = Person,

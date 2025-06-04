@@ -19,7 +19,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "myWorld"
+rootProject.name = "blindTrueOrDare"
 include(":app")
 include(":data")
 include(":presentation")

@@ -5,12 +5,9 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -22,8 +19,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import com.example.presentation.common.IconPosition
-import com.example.presentation.theme.MyWorldColorSet
+import com.example.presentation.theme.ProjectColorSet
 import com.example.presentation.theme.MyWorldTheme
+import com.example.presentation.theme.ProjectTheme
 import com.example.presentation.util.MyWorldPreview
 
 @Composable
@@ -32,7 +30,7 @@ fun PrimaryButton(
     onClick: () -> Unit,
     modifier: Modifier? = null,
     state: Boolean,
-    color: MyWorldColorSet,
+    color: ProjectColorSet,
     width: Dp? = null,
     height: Dp,
     space: Dp,
@@ -610,7 +608,7 @@ object MyWorldButton {
 @MyWorldPreview
 @Composable
 private fun MyWorldButton_CTA_Xlarge_Preview() {
-    MyWorldTheme {
+    ProjectTheme {
         MyWorldButton.CTA.Xlarge(
             text = "Xlarge",
             onClick = { },
@@ -621,7 +619,7 @@ private fun MyWorldButton_CTA_Xlarge_Preview() {
 @MyWorldPreview
 @Composable
 private fun MyWorldButton_CTA_Large_Preview() {
-    MyWorldTheme {
+    ProjectTheme {
         MyWorldButton.CTA.Large(
             text = "Large",
             onClick = { },
@@ -632,7 +630,7 @@ private fun MyWorldButton_CTA_Large_Preview() {
 @MyWorldPreview
 @Composable
 private fun MyWorldButton_CTA_Medium_Preview() {
-    MyWorldTheme {
+    ProjectTheme {
         MyWorldButton.CTA.Medium(
             text = "Medium",
             onClick = { },
@@ -643,7 +641,7 @@ private fun MyWorldButton_CTA_Medium_Preview() {
 @MyWorldPreview
 @Composable
 private fun MyWorldButton_CTA_Small_Preview() {
-    MyWorldTheme {
+    ProjectTheme {
         MyWorldButton.CTA.Small(
             text = "Small",
             onClick = { },
@@ -654,7 +652,7 @@ private fun MyWorldButton_CTA_Small_Preview() {
 @MyWorldPreview
 @Composable
 private fun MyWorldButton_CTA_Tiny_Preview() {
-    MyWorldTheme {
+    ProjectTheme {
         MyWorldButton.CTA.Tiny(
             text = "Tiny",
             onClick = { },
@@ -665,7 +663,7 @@ private fun MyWorldButton_CTA_Tiny_Preview() {
 @MyWorldPreview
 @Composable
 private fun MyWorldButton_Primary_Xlarge_Preview() {
-    MyWorldTheme {
+    ProjectTheme {
         MyWorldButton.Primary.Xlarge(
             text = "Xlarge",
             onClick = { },
@@ -676,7 +674,7 @@ private fun MyWorldButton_Primary_Xlarge_Preview() {
 @MyWorldPreview
 @Composable
 private fun MyWorldButton_Primary_Large_Preview() {
-    MyWorldTheme {
+    ProjectTheme {
         MyWorldButton.Primary.Large(
             text = "Large",
             onClick = { },
@@ -687,7 +685,7 @@ private fun MyWorldButton_Primary_Large_Preview() {
 @MyWorldPreview
 @Composable
 private fun MyWorldButton_Primary_Medium_Preview() {
-    MyWorldTheme {
+    ProjectTheme {
         MyWorldButton.Primary.Medium(
             text = "Medium",
             onClick = { },
@@ -698,7 +696,7 @@ private fun MyWorldButton_Primary_Medium_Preview() {
 @Preview(showBackground = true)
 @Composable
 private fun MyWorldButton_Primary_Small_Preview() {
-    MyWorldTheme {
+    ProjectTheme {
         MyWorldButton.Primary.Small(
             text = "Small",
             onClick = { },
@@ -709,7 +707,7 @@ private fun MyWorldButton_Primary_Small_Preview() {
 @MyWorldPreview
 @Composable
 private fun MyWorldButton_Primary_Tiny_Preview() {
-    MyWorldTheme {
+    ProjectTheme {
         MyWorldButton.Primary.Tiny(
             text = "Tiny",
             onClick = { },
@@ -720,7 +718,7 @@ private fun MyWorldButton_Primary_Tiny_Preview() {
 @MyWorldPreview
 @Composable
 private fun MyWorldButton_Secondary_Xlarge_Preview() {
-    MyWorldTheme {
+    ProjectTheme {
         MyWorldButton.Secondary.Xlarge(
             text = "Xlarge",
             onClick = { },
@@ -731,7 +729,7 @@ private fun MyWorldButton_Secondary_Xlarge_Preview() {
 @MyWorldPreview
 @Composable
 private fun MyWorldButton_Secondary_Large_Preview() {
-    MyWorldTheme {
+    ProjectTheme {
         MyWorldButton.Secondary.Large(
             text = "Large",
             onClick = { },
@@ -742,7 +740,7 @@ private fun MyWorldButton_Secondary_Large_Preview() {
 @MyWorldPreview
 @Composable
 private fun MyWorldButton_Secondary_Medium_Preview() {
-    MyWorldTheme {
+    ProjectTheme {
         MyWorldButton.Secondary.Medium(
             text = "Medium",
             onClick = { },
@@ -753,7 +751,7 @@ private fun MyWorldButton_Secondary_Medium_Preview() {
 @MyWorldPreview
 @Composable
 private fun MyWorldButton_Secondary_Small_Preview() {
-    MyWorldTheme {
+    ProjectTheme {
         MyWorldButton.Secondary.Small(
             text = "Small",
             onClick = { },
@@ -764,7 +762,7 @@ private fun MyWorldButton_Secondary_Small_Preview() {
 @MyWorldPreview
 @Composable
 private fun MyWorldButton_Secondary_Tiny_Preview() {
-    MyWorldTheme {
+    ProjectTheme {
         MyWorldButton.Secondary.Tiny(
             text = "Tiny",
             onClick = { },
@@ -775,7 +773,7 @@ private fun MyWorldButton_Secondary_Tiny_Preview() {
 @MyWorldPreview
 @Composable
 private fun MyWorldButton_Warning_Xlarge_Preview() {
-    MyWorldTheme {
+    ProjectTheme {
         MyWorldButton.Warning.Xlarge(
             text = "Xlarge",
             onClick = { },
@@ -786,7 +784,7 @@ private fun MyWorldButton_Warning_Xlarge_Preview() {
 @MyWorldPreview
 @Composable
 private fun MyWorldButton_Warning_Large_Preview() {
-    MyWorldTheme {
+    ProjectTheme {
         MyWorldButton.Warning.Large(
             text = "Large",
             onClick = { },
@@ -797,7 +795,7 @@ private fun MyWorldButton_Warning_Large_Preview() {
 @MyWorldPreview
 @Composable
 private fun MyWorldButton_Warning_Medium_Preview() {
-    MyWorldTheme {
+    ProjectTheme {
         MyWorldButton.Warning.Medium(
             text = "Medium",
             onClick = { },
@@ -808,7 +806,7 @@ private fun MyWorldButton_Warning_Medium_Preview() {
 @MyWorldPreview
 @Composable
 private fun MyWorldButton_Warning_Small_Preview() {
-    MyWorldTheme {
+    ProjectTheme {
         MyWorldButton.Warning.Small(
             text = "Small",
             onClick = { },
@@ -819,7 +817,7 @@ private fun MyWorldButton_Warning_Small_Preview() {
 @MyWorldPreview
 @Composable
 private fun MyWorldButton_Warning_Tiny_Preview() {
-    MyWorldTheme {
+    ProjectTheme {
         MyWorldButton.Warning.Tiny(
             text = "Tiny",
             onClick = { },

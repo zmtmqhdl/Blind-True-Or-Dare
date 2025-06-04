@@ -6,17 +6,17 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 
-object MyWorldShapes{
-    val BottomSheet = RoundedCornerShape(MyWorldSpaces.Space4)
-    val Button = RoundedCornerShape(MyWorldSpaces.Space2)
-    val Dialog = RoundedCornerShape(MyWorldSpaces.Space2)
-    val SnackBar = RoundedCornerShape(MyWorldSpaces.Space2)
-    val TextField = RoundedCornerShape(MyWorldSpaces.Space4)
-    val Box = RoundedCornerShape(MyWorldSpaces.Space2)
+object ProjectShapes{
+    val BottomSheet = RoundedCornerShape(ProjectSpaces.Space4)
+    val Button = RoundedCornerShape(ProjectSpaces.Space2)
+    val Dialog = RoundedCornerShape(ProjectSpaces.Space2)
+    val SnackBar = RoundedCornerShape(ProjectSpaces.Space2)
+    val TextField = RoundedCornerShape(ProjectSpaces.Space4)
+    val Box = RoundedCornerShape(ProjectSpaces.Space2)
 }
 
 @Stable
-class MyWorldShape(
+class ProjectShape(
     val button: Shape,
     val bottomSheet: Shape,
     val dialog: Shape,
@@ -26,7 +26,7 @@ class MyWorldShape(
 )
 
 val LocalShape = staticCompositionLocalOf {
-    MyWorldShape(
+    ProjectShape(
         bottomSheet = RectangleShape,
         button = RectangleShape,
         dialog = RectangleShape,

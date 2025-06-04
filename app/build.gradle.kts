@@ -14,11 +14,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.yesOrNo"
+    namespace = "com.example.blindTrueOrDare"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.yesOrNo"
+        applicationId = "com.example.blindTrueOrDare"
         minSdk = 35
         targetSdk = 35
         versionCode = 1
@@ -33,12 +33,12 @@ android {
             dimension = "env"
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
-            resValue("string", "app_name", "yesOrNo (Dev)")
+            resValue("string", "app_name", "blindTrueOrDare (Dev)")
             buildConfigField("Boolean", "IS_DEV", "true")
         }
         create("prod") {
             dimension = "env"
-            resValue("string", "app_name", "yesOrNo")
+            resValue("string", "app_name", "blindTrueOrDare")
             buildConfigField("Boolean", "IS_DEV", "false")
         }
     }

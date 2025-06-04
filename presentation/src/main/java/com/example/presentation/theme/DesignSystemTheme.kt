@@ -5,73 +5,73 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 
-private val lightColor = MyWorldColor(
-    primary = MyWorldColors.Light.Primary,
-    secondary = MyWorldColors.Light.Secondary,
-    tertiary = MyWorldColors.Light.Tertiary,
-    warning = MyWorldColors.Light.Warning,
-    alarm = MyWorldColors.Light.Alarm,
-    success = MyWorldColors.Light.Success,
-    caution = MyWorldColors.Light.Caution,
-    disable = MyWorldColors.Light.Caution,
-    white = MyWorldColors.Light.white,
-    black = MyWorldColors.Light.black,
-    gray600 = MyWorldColors.Light.gray600,
+private val lightColor = ProjectColor(
+    primary = ProjectColors.Light.Primary,
+    secondary = ProjectColors.Light.Secondary,
+    tertiary = ProjectColors.Light.Tertiary,
+    warning = ProjectColors.Light.Warning,
+    alarm = ProjectColors.Light.Alarm,
+    success = ProjectColors.Light.Success,
+    caution = ProjectColors.Light.Caution,
+    disable = ProjectColors.Light.Caution,
+    white = ProjectColors.Light.white,
+    black = ProjectColors.Light.black,
+    gray600 = ProjectColors.Light.gray600,
 )
 
-private val darkColor = MyWorldColor(
-    primary = MyWorldColors.Dark.Primary,
-    secondary = MyWorldColors.Dark.Secondary,
-    tertiary = MyWorldColors.Dark.Tertiary,
-    warning = MyWorldColors.Dark.Warning,
-    alarm = MyWorldColors.Dark.Alarm,
-    success = MyWorldColors.Dark.Success,
-    caution = MyWorldColors.Dark.Caution,
-    disable = MyWorldColors.Dark.Caution,
-    white = MyWorldColors.Dark.white,
-    black = MyWorldColors.Dark.black,
-    gray600 = MyWorldColors.Dark.gray600,
+private val darkColor = ProjectColor(
+    primary = ProjectColors.Dark.Primary,
+    secondary = ProjectColors.Dark.Secondary,
+    tertiary = ProjectColors.Dark.Tertiary,
+    warning = ProjectColors.Dark.Warning,
+    alarm = ProjectColors.Dark.Alarm,
+    success = ProjectColors.Dark.Success,
+    caution = ProjectColors.Dark.Caution,
+    disable = ProjectColors.Dark.Caution,
+    white = ProjectColors.Dark.white,
+    black = ProjectColors.Dark.black,
+    gray600 = ProjectColors.Dark.gray600,
 )
 
-private val typograpy = MyWorldTypography(
-    xxxl = MyWorldTextStyles.XXXL,
-    xxl = MyWorldTextStyles.XXL,
-    xl = MyWorldTextStyles.XL,
-    l = MyWorldTextStyles.L,
-    m = MyWorldTextStyles.M,
-    s = MyWorldTextStyles.S,
-    xs = MyWorldTextStyles.XS,
-    xxs = MyWorldTextStyles.XXS,
+private val typograpy = ProjectTypography(
+    xxxl = ProjectTextStyles.XXXL,
+    xxl = ProjectTextStyles.XXL,
+    xl = ProjectTextStyles.XL,
+    l = ProjectTextStyles.L,
+    m = ProjectTextStyles.M,
+    s = ProjectTextStyles.S,
+    xs = ProjectTextStyles.XS,
+    xxs = ProjectTextStyles.XXS,
 )
 
-private val space = MyWorldSpace(
-    space0 = MyWorldSpaces.Space0,
-    space1 = MyWorldSpaces.Space1,
-    space2 = MyWorldSpaces.Space2,
-    space3 = MyWorldSpaces.Space3,
-    space4 = MyWorldSpaces.Space4,
-    space5 = MyWorldSpaces.Space5,
-    space6 = MyWorldSpaces.Space6,
-    space7 = MyWorldSpaces.Space7,
-    space8 = MyWorldSpaces.Space8,
-    space9 = MyWorldSpaces.Space9,
-    space10 = MyWorldSpaces.Space10,
-    space11 = MyWorldSpaces.Space11,
-    space12 = MyWorldSpaces.Space12,
+private val space = ProjectSpace(
+    space0 = ProjectSpaces.Space0,
+    space1 = ProjectSpaces.Space1,
+    space2 = ProjectSpaces.Space2,
+    space3 = ProjectSpaces.Space3,
+    space4 = ProjectSpaces.Space4,
+    space5 = ProjectSpaces.Space5,
+    space6 = ProjectSpaces.Space6,
+    space7 = ProjectSpaces.Space7,
+    space8 = ProjectSpaces.Space8,
+    space9 = ProjectSpaces.Space9,
+    space10 = ProjectSpaces.Space10,
+    space11 = ProjectSpaces.Space11,
+    space12 = ProjectSpaces.Space12,
 )
 
-private val shape = MyWorldShape(
-    bottomSheet = MyWorldShapes.BottomSheet,
-    button = MyWorldShapes.Button,
-    dialog = MyWorldShapes.Dialog,
-    snackBar = MyWorldShapes.SnackBar,
-    textField =  MyWorldShapes.TextField,
-    box = MyWorldShapes.Box
+private val shape = ProjectShape(
+    bottomSheet = ProjectShapes.BottomSheet,
+    button = ProjectShapes.Button,
+    dialog = ProjectShapes.Dialog,
+    snackBar = ProjectShapes.SnackBar,
+    textField =  ProjectShapes.TextField,
+    box = ProjectShapes.Box
 )
 
 
 @Composable
-fun MyWorldTheme(
+fun ProjectTheme(
     isDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
@@ -87,22 +87,22 @@ fun MyWorldTheme(
 }
 
 object MyWorldTheme {
-    val color: MyWorldColor
+    val color: ProjectColor
         @Composable
         @ReadOnlyComposable
         get() = LocalColor.current
 
-    val shape: MyWorldShape
+    val shape: ProjectShape
         @Composable
         @ReadOnlyComposable
         get() = LocalShape.current
 
-    val space: MyWorldSpace
+    val space: ProjectSpace
         @Composable
         @ReadOnlyComposable
         get() = LocalSpace.current
 
-    val typography: MyWorldTypography
+    val typography: ProjectTypography
         @Composable
         @ReadOnlyComposable
         get() = LocalTypography.current

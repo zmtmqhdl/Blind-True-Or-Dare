@@ -6,13 +6,13 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
 @Immutable
-data class MyWorldColorSet(
+data class ProjectColorSet(
     val fontColor: Color,
     val background: Color,
     val outline: Color
 ) {
     companion object {
-        val Unspecified = MyWorldColorSet(
+        val Unspecified = ProjectColorSet(
             fontColor = Color.Unspecified,
             background = Color.Unspecified,
             outline = Color.Unspecified
@@ -93,44 +93,44 @@ val DarkBlack = Color(0xFF000000)
 val DarkGray600 = Color(0xFF757575)
 
 
-object MyWorldColors{
+object ProjectColors{
     object Light {
-        val Primary = MyWorldColorSet(
+        val Primary = ProjectColorSet(
             fontColor = LightPrimaryFontColor,
             background = LightPrimaryBackground,
             outline = LightPrimaryOutline
         )
-        val Secondary = MyWorldColorSet(
+        val Secondary = ProjectColorSet(
             fontColor = LightSecondaryFontColor,
             background = LightSecondaryBackground,
             outline = LightSecondaryOutline
         )
-        val Tertiary = MyWorldColorSet(
+        val Tertiary = ProjectColorSet(
             fontColor = LightTertiaryFontColor,
             background = LightTertiaryBackground,
             outline = LightTertiaryOutline
         )
-        val Warning = MyWorldColorSet(
+        val Warning = ProjectColorSet(
             fontColor = LightWarningFontColor,
             background = LightWarningBackground,
             outline = LightWarningOutline
         )
-        val Alarm = MyWorldColorSet(
+        val Alarm = ProjectColorSet(
             fontColor = LightAlarmFontColor,
             background = LightAlarmBackground,
             outline = LightAlarmOutline
         )
-        val Success = MyWorldColorSet(
+        val Success = ProjectColorSet(
             fontColor = LightSuccessFontColor,
             background = LightSuccessBackground,
             outline = LightSuccessOutline
         )
-        val Caution = MyWorldColorSet(
+        val Caution = ProjectColorSet(
             fontColor = LightCautionFontColor,
             background = LightCautionBackground,
             outline = LightCautionOutline
         )
-        val Disable = MyWorldColorSet(
+        val Disable = ProjectColorSet(
             fontColor = LightDisableFontColor,
             background = LightDisableBackground,
             outline = LightDisableOutline
@@ -140,42 +140,42 @@ object MyWorldColors{
         val gray600 = LightGray600
     }
     object Dark {
-        val Primary = MyWorldColorSet(
+        val Primary = ProjectColorSet(
             fontColor = DarkPrimaryFontColor,
             background = DarkPrimaryBackground,
             outline = DarkPrimaryOutline
         )
-        val Secondary = MyWorldColorSet(
+        val Secondary = ProjectColorSet(
             fontColor = DarkSecondaryFontColor,
             background = DarkSecondaryBackground,
             outline = DarkSecondaryOutline
         )
-        val Tertiary = MyWorldColorSet(
+        val Tertiary = ProjectColorSet(
             fontColor = DarkTertiaryFontColor,
             background = DarkTertiaryBackground,
             outline = DarkTertiaryOutline
         )
-        val Warning = MyWorldColorSet(
+        val Warning = ProjectColorSet(
             fontColor = DarkWarningFontColor,
             background = DarkWarningBackground,
             outline = DarkWarningOutline
         )
-        val Alarm = MyWorldColorSet(
+        val Alarm = ProjectColorSet(
             fontColor = DarkAlarmFontColor,
             background = DarkAlarmBackground,
             outline = DarkAlarmOutline
         )
-        val Success = MyWorldColorSet(
+        val Success = ProjectColorSet(
             fontColor = DarkSuccessFontColor,
             background = DarkSuccessBackground,
             outline = DarkSuccessOutline
         )
-        val Caution = MyWorldColorSet(
+        val Caution = ProjectColorSet(
             fontColor = DarkCautionFontColor,
             background = DarkCautionBackground,
             outline = DarkCautionOutline
         )
-        val Disable = MyWorldColorSet(
+        val Disable = ProjectColorSet(
             fontColor = DarkDisableFontColor,
             background = DarkDisableBackground,
             outline = DarkDisableOutline
@@ -187,30 +187,30 @@ object MyWorldColors{
 }
 
 @Stable
-class MyWorldColor(
-    val primary: MyWorldColorSet,
-    val secondary: MyWorldColorSet,
-    val tertiary: MyWorldColorSet,
-    val warning: MyWorldColorSet,
-    val alarm: MyWorldColorSet,
-    val success: MyWorldColorSet,
-    val caution: MyWorldColorSet,
-    val disable: MyWorldColorSet,
+class ProjectColor(
+    val primary: ProjectColorSet,
+    val secondary: ProjectColorSet,
+    val tertiary: ProjectColorSet,
+    val warning: ProjectColorSet,
+    val alarm: ProjectColorSet,
+    val success: ProjectColorSet,
+    val caution: ProjectColorSet,
+    val disable: ProjectColorSet,
     val white: Color,
     val black: Color,
     val gray600: Color
 )
 
 val LocalColor = staticCompositionLocalOf {
-    MyWorldColor(
-        primary = MyWorldColorSet.Unspecified,
-        secondary = MyWorldColorSet.Unspecified,
-        tertiary = MyWorldColorSet.Unspecified,
-        warning = MyWorldColorSet.Unspecified,
-        alarm = MyWorldColorSet.Unspecified,
-        success = MyWorldColorSet.Unspecified,
-        caution = MyWorldColorSet.Unspecified,
-        disable = MyWorldColorSet.Unspecified,
+    ProjectColor(
+        primary = ProjectColorSet.Unspecified,
+        secondary = ProjectColorSet.Unspecified,
+        tertiary = ProjectColorSet.Unspecified,
+        warning = ProjectColorSet.Unspecified,
+        alarm = ProjectColorSet.Unspecified,
+        success = ProjectColorSet.Unspecified,
+        caution = ProjectColorSet.Unspecified,
+        disable = ProjectColorSet.Unspecified,
         white = Color.Unspecified,
         black = Color.Unspecified,
         gray600 = Color.Unspecified
