@@ -1,18 +1,17 @@
 package com.example.domain.model
 
+import android.graphics.Bitmap
+
 data class WaitingRoomData(
+    val roomId: String,
+    val hostId: String,
+    val participantList: List<User> = emptyList<User>(),
     val status: Status = Status.WAITING,
-    val participantList: List<User> = emptyList<User>()
 )
 
 data class User(
     val id: String = "",
     val nickname: String = "",
-)
-
-data class CreateWaitingRoomData(
-    val roomId: String = "",
-    val userId: String = ""
 )
 
 enum class Status {

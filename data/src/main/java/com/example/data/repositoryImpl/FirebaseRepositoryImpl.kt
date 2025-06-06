@@ -1,8 +1,6 @@
 package com.example.data.repositoryImpl
 
-import com.example.domain.model.CreateWaitingRoomData
-import com.example.domain.model.Status
-import com.example.domain.model.User
+import android.util.Log
 import com.example.domain.model.WaitingRoomData
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -16,20 +14,13 @@ class FirebaseRepositoryImpl @Inject constructor(
     private val firebaseDatabase: FirebaseDatabase
 ) : FirebaseRepository {
 
-    override suspend fun createWaitingRoom(nickname: String): Result<CreateWaitingRoomData> =
+    override suspend fun createWaitingRoom(waitingRoomData: WaitingRoomData): Result<WaitingRoomData> =
         runCatching {
-            val roomId = UUID.randomUUID().toString()
-            val userId = UUID.randomUUID().toString()
-            val reference = firebaseDatabase.getReference("waitingRoom").child(roomId)
-
-            val waitingRoomData = WaitingRoomData(
-                status = Status.WAITING,
-                participantList = listOf(User(id = userId, nickname = nickname))
-            )
+            val reference = firebaseDatabase.getReference("waitingRoom").child(waitingRoomData.roomId)
 
             reference.setValue(waitingRoomData).await()
 
-            CreateWaitingRoomData(roomId = roomId, userId = userId)
+            waitingRoomData
         }
 
     override suspend fun getWaitingRoom(roomId: String, update: (WaitingRoomData?) -> Unit) {

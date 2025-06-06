@@ -22,9 +22,8 @@ import androidx.compose.ui.text.style.TextAlign
 import com.example.presentation.component.Icon.Person
 import com.example.presentation.common.IconPosition
 import com.example.presentation.theme.ProjectColorSet
-import com.example.presentation.theme.MyWorldTheme
 import com.example.presentation.theme.ProjectTheme
-import com.example.presentation.util.MyWorldPreview
+import com.example.presentation.core.ProjectPreview
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -42,7 +41,7 @@ fun SnackBar(
 
     CoroutineScope(Dispatchers.Main).launch {
         snackBarHostState.showSnackbar(
-            MyWorldSnackBarVisuals(
+            ProjectSnackBarVisuals(
                 backgroundColor = backgroundColor,
                 duration = duration,
                 icon = icon,
@@ -54,7 +53,7 @@ fun SnackBar(
     }
 }
 
-data class MyWorldSnackBarVisuals(
+data class ProjectSnackBarVisuals(
     override val actionLabel: String? = null,
     val backgroundColor: Color? = null,
     override val duration: SnackbarDuration = SnackbarDuration.Short,
@@ -66,12 +65,12 @@ data class MyWorldSnackBarVisuals(
 ) : SnackbarVisuals
 
 @Composable
-fun MyWorldSnackBar(
+fun ProjectSnackBar(
     snackBarHostState: SnackbarHostState,
     icon: ImageVector? = null,
-    iconColor: Color = MyWorldTheme.color.black,
-    containerColor: Color = MyWorldTheme.color.white,
-    color: ProjectColorSet = MyWorldTheme.color.primary
+    iconColor: Color = ProjectTheme.color.black,
+    containerColor: Color = ProjectTheme.color.white,
+    color: ProjectColorSet = ProjectTheme.color.primary
 ) {
     SnackbarHost(
         hostState = snackBarHostState,
@@ -80,18 +79,18 @@ fun MyWorldSnackBar(
                 modifier = Modifier
                     .fillMaxWidth()
                     .border(
-                        width = MyWorldTheme.space.space0,
+                        width = ProjectTheme.space.space0,
                         color = color.outline,
-                        shape = MyWorldTheme.shape.snackBar
+                        shape = ProjectTheme.shape.snackBar
                     )
-                    .background(color = containerColor, shape = MyWorldTheme.shape.snackBar)
+                    .background(color = containerColor, shape = ProjectTheme.shape.snackBar)
             ) {
                 Row(
-                    modifier = Modifier.padding(MyWorldTheme.space.space4),
+                    modifier = Modifier.padding(ProjectTheme.space.space4),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     icon?.let {
-                        MyWorldIcon(
+                        ProjectIcon(
                             icon = icon,
                             color = iconColor,
                             iconPosition = IconPosition.LEFT
@@ -101,7 +100,7 @@ fun MyWorldSnackBar(
                         text = snackBarData.visuals.message,
                         color = color.fontColor,
                         textAlign = TextAlign.Center,
-                        style = MyWorldTheme.typography.s.medium
+                        style = ProjectTheme.typography.s.medium
                     )
                 }
             }
@@ -109,9 +108,9 @@ fun MyWorldSnackBar(
     )
 }
 
-@MyWorldPreview
+@ProjectPreview
 @Composable
-fun MyWorldSnackBarPreview() {
+fun ProjectSnackBarPreview() {
 
     val snackBarHostState = remember { SnackbarHostState() }
 
@@ -120,10 +119,10 @@ fun MyWorldSnackBarPreview() {
     }
 
     ProjectTheme {
-        MyWorldSnackBar(
+        ProjectSnackBar(
             snackBarHostState = snackBarHostState,
             icon = Person,
-            iconColor = MyWorldTheme.color.primary.fontColor
+            iconColor = ProjectTheme.color.primary.fontColor
         )
     }
 }

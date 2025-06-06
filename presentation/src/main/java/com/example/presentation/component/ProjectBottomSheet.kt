@@ -15,9 +15,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import com.example.presentation.theme.MyWorldTheme
 import com.example.presentation.theme.ProjectTheme
-import com.example.presentation.util.MyWorldPreview
+import com.example.presentation.core.ProjectPreview
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -51,37 +50,37 @@ fun PrimaryModal(
             onDismissRequest = onDismissRequest,
             sheetState = sheetState,
             modifier = Modifier.padding(
-                start = MyWorldTheme.space.space2,
-                end = MyWorldTheme.space.space2,
-                bottom = MyWorldTheme.space.space2
+                start = ProjectTheme.space.space2,
+                end = ProjectTheme.space.space2,
+                bottom = ProjectTheme.space.space2
             ),
-            shape = MyWorldTheme.shape.bottomSheet,
-            containerColor = MyWorldTheme.color.white,
+            shape = ProjectTheme.shape.bottomSheet,
+            containerColor = ProjectTheme.color.white,
             dragHandle = null
         ) {
             Column(
                 modifier = Modifier.padding(
-                    start = MyWorldTheme.space.space4,
-                    end = MyWorldTheme.space.space4,
-                    bottom = MyWorldTheme.space.space4
+                    start = ProjectTheme.space.space4,
+                    end = ProjectTheme.space.space4,
+                    bottom = ProjectTheme.space.space4
                 )
             ) {
-                Spacer(modifier = Modifier.height(MyWorldTheme.space.space10))
+                Spacer(modifier = Modifier.height(ProjectTheme.space.space10))
                 title?.let {
                     Text(
                         text = it,
-                        modifier = Modifier.padding(bottom = MyWorldTheme.space.space2),
-                        color = MyWorldTheme.color.black,
-                        style = MyWorldTheme.typography.xl.bold
+                        modifier = Modifier.padding(bottom = ProjectTheme.space.space2),
+                        color = ProjectTheme.color.black,
+                        style = ProjectTheme.typography.xl.bold
                     )
                 }
                 Text(
                     text = text,
-                    modifier = Modifier.padding(bottom = MyWorldTheme.space.space4),
-                    color = MyWorldTheme.color.black,
-                    style = MyWorldTheme.typography.m.regular
+                    modifier = Modifier.padding(bottom = ProjectTheme.space.space4),
+                    color = ProjectTheme.color.black,
+                    style = ProjectTheme.typography.m.regular
                 )
-                Spacer(modifier = Modifier.height(MyWorldTheme.space.space6))
+                Spacer(modifier = Modifier.height(ProjectTheme.space.space6))
                 content()
             }
         }
@@ -89,7 +88,7 @@ fun PrimaryModal(
 }
 
 
-object MyWorldBottomSheet {
+object ProjectBottomSheet {
     object Modal {
         object Single {
             @Composable
@@ -107,7 +106,7 @@ object MyWorldBottomSheet {
                     onDismissRequest = onDismissRequest,
                     show = show,
                 ) {
-                    MyWorldButton.CTA.Medium(
+                    ProjectButton.CTA.Medium(
                         text = buttonText,
                         onClick = onClick,
                     )
@@ -134,12 +133,12 @@ object MyWorldBottomSheet {
                     show = show,
                 ) {
                     Column {
-                        MyWorldButton.CTA.Medium(
+                        ProjectButton.CTA.Medium(
                             text = buttonText1,
                             onClick = onClick1,
                         )
-                        Spacer(modifier = Modifier.height(MyWorldTheme.space.space3))
-                        MyWorldButton.CTA.Medium(
+                        Spacer(modifier = Modifier.height(ProjectTheme.space.space3))
+                        ProjectButton.CTA.Medium(
                             text = buttonText2,
                             onClick = onClick2,
                         )
@@ -165,13 +164,13 @@ object MyWorldBottomSheet {
                     show = show,
                 ) {
                     Row {
-                        MyWorldButton.CTA.Medium(
+                        ProjectButton.CTA.Medium(
                             text = buttonText1,
                             onClick = onClick1,
                             modifier = Modifier.weight(1f)
                         )
-                        Spacer(modifier = Modifier.width(MyWorldTheme.space.space2))
-                        MyWorldButton.CTA.Medium(
+                        Spacer(modifier = Modifier.width(ProjectTheme.space.space2))
+                        ProjectButton.CTA.Medium(
                             text = buttonText2,
                             onClick = onClick2,
                             modifier = Modifier.weight(1f)
@@ -183,11 +182,11 @@ object MyWorldBottomSheet {
     }
 }
 
-@MyWorldPreview
+@ProjectPreview
 @Composable
-private fun MyWorldBottomSheet_Modal_Single_SingleArrangement_Preview() {
+private fun ProjectBottomSheet_Modal_Single_SingleArrangement_Preview() {
     ProjectTheme {
-        MyWorldBottomSheet.Modal.Single.SingleArrangement(
+        ProjectBottomSheet.Modal.Single.SingleArrangement(
             title = "title",
             text = "text",
             onDismissRequest = {},
@@ -198,11 +197,11 @@ private fun MyWorldBottomSheet_Modal_Single_SingleArrangement_Preview() {
     }
 }
 
-@MyWorldPreview
+@ProjectPreview
 @Composable
-private fun MyWorldBottomSheet_Modal_Double_ColumnArrangement_Preview() {
+private fun ProjectBottomSheet_Modal_Double_ColumnArrangement_Preview() {
     ProjectTheme {
-        MyWorldBottomSheet.Modal.Double.ColumnArrangement(
+        ProjectBottomSheet.Modal.Double.ColumnArrangement(
             title = "title",
             text = "text",
             onDismissRequest = {},
@@ -215,11 +214,11 @@ private fun MyWorldBottomSheet_Modal_Double_ColumnArrangement_Preview() {
     }
 }
 
-@MyWorldPreview
+@ProjectPreview
 @Composable
-private fun MyWorldBottomSheet_Modal_Double_RowArrangement_Preview() {
+private fun ProjectBottomSheet_Modal_Double_RowArrangement_Preview() {
     ProjectTheme {
-        MyWorldBottomSheet.Modal.Double.RowArrangement(
+        ProjectBottomSheet.Modal.Double.RowArrangement(
             title = "title",
             text = "text",
             onDismissRequest = {},

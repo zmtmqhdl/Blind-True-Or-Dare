@@ -86,7 +86,7 @@ fun ProjectTheme(
     )
 }
 
-object MyWorldTheme {
+object ProjectTheme {
     val color: ProjectColor
         @Composable
         @ReadOnlyComposable

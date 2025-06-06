@@ -10,8 +10,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.presentation.R
-import com.example.presentation.screen.MyWorldScreen
-import com.example.presentation.theme.MyWorldTheme
+import com.example.presentation.screen.ProjectScreen
+import com.example.presentation.theme.ProjectTheme
 
 @Composable
 fun WaitingRoomRoute() {
@@ -20,13 +20,13 @@ fun WaitingRoomRoute() {
 
 @Composable
 fun WaitingRoomScreen() {
-    MyWorldScreen.PrimaryScreen {
+    ProjectScreen.PrimaryScreen {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(
-                    color = MyWorldTheme.color.white,
-                    shape = MyWorldTheme.shape.box
+                    color = ProjectTheme.color.white,
+                    shape = ProjectTheme.shape.box
                 )
         ) {
             Box(
@@ -35,7 +35,7 @@ fun WaitingRoomScreen() {
             ) {
                 Text(
                     text = stringResource(R.string.main_create_room),
-                    style = MyWorldTheme.typography.m.medium
+                    style = ProjectTheme.typography.m.medium
                 )
             }
 

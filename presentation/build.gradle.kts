@@ -82,6 +82,15 @@ dependencies {
     // splash
     implementation(libs.androidx.core.splashscreen)
 
+    // camera x
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.view)
+    implementation(libs.androidx.camera.core)
+
+    // ml kit barcode scanning
+    implementation(libs.barcode.scanning)
+
     // zxing
-    implementation(libs.zxing)
+    implementation(libs.core)
 }

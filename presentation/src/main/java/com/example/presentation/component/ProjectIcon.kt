@@ -16,15 +16,15 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
 import com.example.presentation.component.Icon.Close
 import com.example.presentation.common.IconPosition
-import com.example.presentation.theme.MyWorldTheme
-import com.example.presentation.util.MyWorldPreview
+import com.example.presentation.theme.ProjectTheme
+import com.example.presentation.core.ProjectPreview
 
 @Composable
-fun MyWorldIcon(
+fun ProjectIcon(
     icon: ImageVector,
     onClick: (() -> Unit)? = null,
-    size: Dp = MyWorldTheme.space.space4,
-    color: Color = MyWorldTheme.color.black,
+    size: Dp = ProjectTheme.space.space4,
+    color: Color = ProjectTheme.color.black,
     iconPosition: IconPosition = IconPosition.DEFAULT,
 ) {
     val modifier = if (onClick != null) {
@@ -58,14 +58,14 @@ fun MyWorldIcon(
                     modifier = modifier,
                     tint = color
                 )
-                Spacer(modifier = Modifier.width(MyWorldTheme.space.space1))
+                Spacer(modifier = Modifier.width(ProjectTheme.space.space1))
             }
 
         IconPosition.RIGHT ->
             Row(
                 modifier = Modifier.wrapContentSize()
             ) {
-                Spacer(modifier = Modifier.width(MyWorldTheme.space.space1))
+                Spacer(modifier = Modifier.width(ProjectTheme.space.space1))
                 Icon(
                     imageVector = icon,
                     contentDescription = null,
@@ -76,10 +76,10 @@ fun MyWorldIcon(
     }
 }
 
-@MyWorldPreview
+@ProjectPreview
 @Composable
-private fun MyWorldIconPreview() {
-    MyWorldIcon(
+private fun ProjectIconPreview() {
+    ProjectIcon(
         icon = Close,
         onClick = { },
     )

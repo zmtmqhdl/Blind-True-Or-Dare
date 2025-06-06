@@ -17,9 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogWindowProvider
-import com.example.presentation.theme.MyWorldTheme
 import com.example.presentation.theme.ProjectTheme
-import com.example.presentation.util.MyWorldPreview
+import com.example.presentation.core.ProjectPreview
 
 @Composable
 fun PrimaryDialog(
@@ -39,60 +38,60 @@ fun PrimaryDialog(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(horizontal = MyWorldTheme.space.space8)
+                .padding(horizontal = ProjectTheme.space.space8)
                 .background(
-                    color = MyWorldTheme.color.white,
-                    shape = MyWorldTheme.shape.dialog
+                    color = ProjectTheme.color.white,
+                    shape = ProjectTheme.shape.dialog
                 ),
             contentAlignment = Alignment.Center
         ) {
             Column(
                 modifier = Modifier
                     .padding(
-                        start = MyWorldTheme.space.space4,
-                        end = MyWorldTheme.space.space4
+                        start = ProjectTheme.space.space4,
+                        end = ProjectTheme.space.space4
                     ),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.height(MyWorldTheme.space.space4))
+                Spacer(modifier = Modifier.height(ProjectTheme.space.space4))
                 title?.let {
                     Text(
                         text = it,
-                        color = MyWorldTheme.color.black,
-                        style = MyWorldTheme.typography.xl.bold
+                        color = ProjectTheme.color.black,
+                        style = ProjectTheme.typography.xl.bold
                     )
-                    Spacer(modifier = Modifier.height(MyWorldTheme.space.space2))
+                    Spacer(modifier = Modifier.height(ProjectTheme.space.space2))
                 }
                 certification?.let {
                     Text(
                         text = it,
-                        color = MyWorldTheme.color.primary.fontColor,
-                        style = MyWorldTheme.typography.xxl.regular
+                        color = ProjectTheme.color.primary.fontColor,
+                        style = ProjectTheme.typography.xxl.regular
                     )
-                    Spacer(modifier = Modifier.height(MyWorldTheme.space.space2))
+                    Spacer(modifier = Modifier.height(ProjectTheme.space.space2))
                 }
                 subText?.let {
                     Text(
                         text = it,
-                        color = MyWorldTheme.color.gray600,
-                        style = MyWorldTheme.typography.s.regular
+                        color = ProjectTheme.color.gray600,
+                        style = ProjectTheme.typography.s.regular
                     )
-                    Spacer(modifier = Modifier.height(MyWorldTheme.space.space2))
+                    Spacer(modifier = Modifier.height(ProjectTheme.space.space2))
                 }
                 Text(
                     text = text,
-                    color = MyWorldTheme.color.black,
-                    style = MyWorldTheme.typography.m.regular
+                    color = ProjectTheme.color.black,
+                    style = ProjectTheme.typography.m.regular
                 )
-                Spacer(modifier = Modifier.height(MyWorldTheme.space.space4))
+                Spacer(modifier = Modifier.height(ProjectTheme.space.space4))
                 content()
-                Spacer(modifier = Modifier.height(MyWorldTheme.space.space4))
+                Spacer(modifier = Modifier.height(ProjectTheme.space.space4))
             }
         }
     }
 }
 
-object MyWorldDialog {
+object ProjectDialog {
     object Single {
         @Composable
         fun SingleArrangement(
@@ -111,7 +110,7 @@ object MyWorldDialog {
                 text = text,
                 onDismissRequest = onDismissRequest
             ) {
-                MyWorldButton.CTA.Medium(
+                ProjectButton.CTA.Medium(
                     text = buttonText,
                     onClick = onClick,
                 )
@@ -140,12 +139,12 @@ object MyWorldDialog {
                 onDismissRequest = onDismissRequest
             ) {
                 Column {
-                    MyWorldButton.CTA.Medium(
+                    ProjectButton.CTA.Medium(
                         text = buttonText2,
                         onClick = onClick2,
                     )
-                    Spacer(modifier = Modifier.height(MyWorldTheme.space.space3))
-                    MyWorldButton.Primary.Medium(
+                    Spacer(modifier = Modifier.height(ProjectTheme.space.space3))
+                    ProjectButton.Primary.Medium(
                         text = buttonText1,
                         onClick = onClick1,
                     )
@@ -173,13 +172,13 @@ object MyWorldDialog {
                 onDismissRequest = onDismissRequest
             ) {
                 Row {
-                    MyWorldButton.CTA.Medium(
+                    ProjectButton.CTA.Medium(
                         text = buttonText2,
                         onClick = onClick2,
                         modifier = Modifier.weight(1f)
                     )
-                    Spacer(modifier = Modifier.width(MyWorldTheme.space.space2))
-                    MyWorldButton.Primary.Medium(
+                    Spacer(modifier = Modifier.width(ProjectTheme.space.space2))
+                    ProjectButton.Primary.Medium(
                         text = buttonText1,
                         onClick = onClick1,
                         modifier = Modifier.weight(1f)
@@ -190,11 +189,11 @@ object MyWorldDialog {
     }
 }
 
-@MyWorldPreview
+@ProjectPreview
 @Composable
-private fun MyWorldDialog_Single_SingleArrangement_Preview() {
+private fun ProjectDialog_Single_SingleArrangement_Preview() {
     ProjectTheme {
-        MyWorldDialog.Single.SingleArrangement(
+        ProjectDialog.Single.SingleArrangement(
             title = "title",
             certification = "certification",
             subText = "subText",
@@ -206,11 +205,11 @@ private fun MyWorldDialog_Single_SingleArrangement_Preview() {
     }
 }
 
-@MyWorldPreview
+@ProjectPreview
 @Composable
-private fun MyWorldDialog_Double_ColumnArrangement_Preview() {
+private fun ProjectDialog_Double_ColumnArrangement_Preview() {
     ProjectTheme {
-        MyWorldDialog.Double.ColumnArrangement(
+        ProjectDialog.Double.ColumnArrangement(
             title = "title",
             certification = "certification",
             subText = "subText",
@@ -225,11 +224,11 @@ private fun MyWorldDialog_Double_ColumnArrangement_Preview() {
     }
 }
 
-@MyWorldPreview
+@ProjectPreview
 @Composable
-private fun MyWorldDialog_Double_RowArrangement_Preview() {
+private fun ProjectDialog_Double_RowArrangement_Preview() {
     ProjectTheme {
-        MyWorldDialog.Double.RowArrangement(
+        ProjectDialog.Double.RowArrangement(
             title = "title",
             certification = "certification",
             subText = "subText",

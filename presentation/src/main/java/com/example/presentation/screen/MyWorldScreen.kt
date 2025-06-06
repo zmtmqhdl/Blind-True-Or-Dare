@@ -11,19 +11,19 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.example.presentation.theme.MyWorldTheme
+import com.example.presentation.theme.ProjectTheme
 
-object MyWorldScreen {
+object ProjectScreen {
     @Composable
     fun PrimaryScreen(
-        color: Color = MyWorldTheme.color.white,
+        color: Color = ProjectTheme.color.white,
         content: @Composable () -> Unit
     ) {
         Column(
             modifier = Modifier
                 .padding(
-                    start = MyWorldTheme.space.space4,
-                    end = MyWorldTheme.space.space4
+                    start = ProjectTheme.space.space4,
+                    end = ProjectTheme.space.space4
                 )
                 .padding(WindowInsets.systemBars.asPaddingValues())
                 .background(color = color)
@@ -37,7 +37,7 @@ object MyWorldScreen {
         topBar: @Composable () -> Unit,
         bottomBar: @Composable () -> Unit,
         snackBarHost: @Composable () -> Unit,
-        containerColor: Color = MyWorldTheme.color.white,
+        containerColor: Color = ProjectTheme.color.white,
         content: @Composable () -> Unit
     ) {
         Scaffold(
@@ -51,8 +51,8 @@ object MyWorldScreen {
                 modifier = Modifier
                     .padding(innerPadding)
                     .padding(
-                        start = MyWorldTheme.space.space4,
-                        end = MyWorldTheme.space.space4
+                        start = ProjectTheme.space.space4,
+                        end = ProjectTheme.space.space4
                     )
             ) {
                 content()

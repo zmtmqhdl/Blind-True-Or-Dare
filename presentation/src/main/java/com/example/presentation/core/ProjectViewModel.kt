@@ -1,4 +1,4 @@
-package com.example.presentation.common
+package com.example.presentation.core
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

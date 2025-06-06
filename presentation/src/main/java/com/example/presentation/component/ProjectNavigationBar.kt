@@ -5,7 +5,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import com.example.presentation.navigation.Route
-import com.example.presentation.util.MyWorldPreview
+import com.example.presentation.core.ProjectPreview
 
 @Composable
 fun PrimaryNavigationBar(
@@ -21,7 +21,7 @@ fun PrimaryNavigationBar(
                     onSelectedTab(index)
                 },
                 icon = {
-                    MyWorldIcon(
+                    ProjectIcon(
                         icon = if (currentTab == index) value.selectedIcon else value.unselectedIcon
                     )
                 },
@@ -31,7 +31,7 @@ fun PrimaryNavigationBar(
     }
 }
 
-@MyWorldPreview
+@ProjectPreview
 @Composable
 private fun PrimaryNavigationBarPreview() {
     PrimaryNavigationBar(

@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun SecondScreen() {
-    MyWorldScreen.PrimaryScreen() {
+    ProjectScreen.PrimaryScreen() {
         Text("Second")
     }
 }
