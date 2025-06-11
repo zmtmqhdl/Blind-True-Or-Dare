@@ -17,6 +17,11 @@ private val lightColor = ProjectColor(
     white = ProjectColors.Light.white,
     black = ProjectColors.Light.black,
     gray600 = ProjectColors.Light.gray600,
+    background = ProjectColors.Light.background,
+    backgroundElevated = ProjectColors.Light.backgroundElevated,
+    activeIcon = ProjectColors.Light.activeIcon,
+    inactiveIcon = ProjectColors.Light.inactiveIcon,
+    text = ProjectColors.Light.text
 )
 
 private val darkColor = ProjectColor(
@@ -31,6 +36,11 @@ private val darkColor = ProjectColor(
     white = ProjectColors.Dark.white,
     black = ProjectColors.Dark.black,
     gray600 = ProjectColors.Dark.gray600,
+    background = ProjectColors.Dark.background,
+    backgroundElevated = ProjectColors.Dark.backgroundElevated,
+    activeIcon = ProjectColors.Dark.activeIcon,
+    inactiveIcon = ProjectColors.Dark.inactiveIcon,
+    text = ProjectColors.Dark.text
 )
 
 private val typograpy = ProjectTypography(

@@ -106,7 +106,7 @@ object ProjectBottomSheet {
                     onDismissRequest = onDismissRequest,
                     show = show,
                 ) {
-                    ProjectButton.CTA.Medium(
+                    ProjectButton.Primary.Medium(
                         text = buttonText,
                         onClick = onClick,
                     )
@@ -133,12 +133,12 @@ object ProjectBottomSheet {
                     show = show,
                 ) {
                     Column {
-                        ProjectButton.CTA.Medium(
+                        ProjectButton.Primary.Medium(
                             text = buttonText1,
                             onClick = onClick1,
                         )
                         Spacer(modifier = Modifier.height(ProjectTheme.space.space3))
-                        ProjectButton.CTA.Medium(
+                        ProjectButton.Primary.Medium(
                             text = buttonText2,
                             onClick = onClick2,
                         )
@@ -164,13 +164,13 @@ object ProjectBottomSheet {
                     show = show,
                 ) {
                     Row {
-                        ProjectButton.CTA.Medium(
+                        ProjectButton.Primary.Medium(
                             text = buttonText1,
                             onClick = onClick1,
                             modifier = Modifier.weight(1f)
                         )
                         Spacer(modifier = Modifier.width(ProjectTheme.space.space2))
-                        ProjectButton.CTA.Medium(
+                        ProjectButton.Primary.Medium(
                             text = buttonText2,
                             onClick = onClick2,
                             modifier = Modifier.weight(1f)

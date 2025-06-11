@@ -1,4 +1,4 @@
-package com.example.data.repositoryImpl
+package com.example.domain.repository
 
 import com.example.domain.model.WaitingRoomData
 

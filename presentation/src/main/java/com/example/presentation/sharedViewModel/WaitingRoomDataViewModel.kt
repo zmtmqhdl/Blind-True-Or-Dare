@@ -3,7 +3,7 @@ package com.example.presentation.sharedViewModel
 import android.graphics.Bitmap
 import android.graphics.Color
 import androidx.lifecycle.viewModelScope
-import com.example.data.repositoryImpl.FirebaseRepository
+import com.example.domain.repository.FirebaseRepository
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -1,6 +1,6 @@
 package com.example.blindTrueOrDare.di
 
-import com.example.data.repositoryImpl.FirebaseRepository
+import com.example.domain.repository.FirebaseRepository
 import com.example.data.repositoryImpl.FirebaseRepositoryImpl
 import com.google.firebase.database.FirebaseDatabase
 import dagger.Binds
