@@ -21,11 +21,9 @@ sealed class Route(
         route = "join"
     )
 
-
     data object WaitingRoom: Route(
         route = "waitingRoom",
     )
-
 
     data object First : Route(
         route = "first",

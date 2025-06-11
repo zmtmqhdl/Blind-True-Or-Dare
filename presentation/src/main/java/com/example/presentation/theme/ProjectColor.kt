@@ -55,6 +55,11 @@ val LightDisableOutline = Color(0xFFFDFAE3)
 val LightWhite = Color(0xFFFFFFFF)
 val LightBlack = Color(0xFF000000)
 val LightGray600 = Color(0xFF757575)
+val LightBackground = Color(0xFFF3F4F6)
+val LightBackgroundElevated = Color(0xFFFFFFFF)
+val LightActiveIcon = Color(0xFFB0B9C2)
+val LightInactiveIcon = Color(0xFF181F29)
+val LightText = Color(0xFF161D27)
 
 val DarkPrimaryFontColor = Color(0xFF067CFB)
 val DarkPrimaryBackground = Color(0xFF2B3E9B)
@@ -91,6 +96,11 @@ val DarkDisableOutline = Color(0xFFB69F59)
 val DarkWhite = Color(0xFFFFFFFF)
 val DarkBlack = Color(0xFF000000)
 val DarkGray600 = Color(0xFF757575)
+val DarkBackground = Color(0xFF101012)
+val DarkBackgroundElevated = Color(0xFF18171C)
+val DarkActiveIcon = Color(0xFF63636D)
+val DarkInactiveIcon = Color(0xFFFFFFFF)
+val DarkText = Color(0xFFFFFFFF)
 
 
 object ProjectColors{
@@ -138,6 +148,11 @@ object ProjectColors{
         val white = LightWhite
         val black = LightBlack
         val gray600 = LightGray600
+        val background = LightBackground
+        val backgroundElevated = LightBackgroundElevated
+        val activeIcon = LightActiveIcon
+        val inactiveIcon = LightInactiveIcon
+        val text = LightText
     }
     object Dark {
         val Primary = ProjectColorSet(
@@ -183,6 +198,11 @@ object ProjectColors{
         val white = DarkWhite
         val black = DarkBlack
         val gray600 = DarkGray600
+        val background = DarkBackground
+        val backgroundElevated = DarkBackgroundElevated
+        val activeIcon = DarkActiveIcon
+        val inactiveIcon = DarkInactiveIcon
+        val text = DarkText
     }
 }
 
@@ -198,7 +218,12 @@ class ProjectColor(
     val disable: ProjectColorSet,
     val white: Color,
     val black: Color,
-    val gray600: Color
+    val gray600: Color,
+    val background: Color,
+    val backgroundElevated: Color,
+    val activeIcon: Color,
+    val inactiveIcon: Color,
+    val text: Color
 )
 
 val LocalColor = staticCompositionLocalOf {
@@ -213,6 +238,11 @@ val LocalColor = staticCompositionLocalOf {
         disable = ProjectColorSet.Unspecified,
         white = Color.Unspecified,
         black = Color.Unspecified,
-        gray600 = Color.Unspecified
+        gray600 = Color.Unspecified,
+        background = Color.Unspecified,
+        backgroundElevated = Color.Unspecified,
+        activeIcon = Color.Unspecified,
+        inactiveIcon = Color.Unspecified,
+        text = Color.Unspecified
     )
 }

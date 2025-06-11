@@ -22,7 +22,7 @@ import com.example.presentation.core.ProjectPreview
 
 @Composable
 fun PrimaryDialog(
-    onDismissRequest: () -> Unit,
+    onDismissRequest: (() -> Unit) = {},
     title: String? = null,
     certification: String? = null,
     subText: String? = null,
@@ -101,7 +101,7 @@ object ProjectDialog {
             text: String,
             buttonText: String,
             onClick: () -> Unit,
-            onDismissRequest: () -> Unit,
+            onDismissRequest: (() -> Unit) = {},
         ) {
             PrimaryDialog(
                 title = title,
@@ -110,7 +110,7 @@ object ProjectDialog {
                 text = text,
                 onDismissRequest = onDismissRequest
             ) {
-                ProjectButton.CTA.Medium(
+                ProjectButton.Primary.Medium(
                     text = buttonText,
                     onClick = onClick,
                 )
@@ -129,7 +129,7 @@ object ProjectDialog {
             buttonText2: String,
             onClick1: () -> Unit,
             onClick2: () -> Unit,
-            onDismissRequest: () -> Unit,
+            onDismissRequest: (() -> Unit) = {},
         ) {
             PrimaryDialog(
                 title = title,
@@ -139,7 +139,7 @@ object ProjectDialog {
                 onDismissRequest = onDismissRequest
             ) {
                 Column {
-                    ProjectButton.CTA.Medium(
+                    ProjectButton.Primary.Medium(
                         text = buttonText2,
                         onClick = onClick2,
                     )
@@ -162,7 +162,7 @@ object ProjectDialog {
             buttonText2: String,
             onClick1: () -> Unit,
             onClick2: () -> Unit,
-            onDismissRequest: () -> Unit
+            onDismissRequest: (() -> Unit) = {},
         ) {
             PrimaryDialog(
                 title = title,
@@ -172,7 +172,7 @@ object ProjectDialog {
                 onDismissRequest = onDismissRequest
             ) {
                 Row {
-                    ProjectButton.CTA.Medium(
+                    ProjectButton.Primary.Medium(
                         text = buttonText2,
                         onClick = onClick2,
                         modifier = Modifier.weight(1f)
