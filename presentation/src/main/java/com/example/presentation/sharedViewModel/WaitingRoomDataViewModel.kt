@@ -14,27 +14,31 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.set
-import com.example.domain.model.Status
+import com.example.domain.common.onFailure
+import com.example.domain.common.onSuccess
+import com.example.domain.model.WaitingRoomStatus
 import com.example.domain.model.User
-import com.example.domain.model.WaitingRoomData
+import com.example.domain.model.WaitingRoom
+import com.example.domain.repository.RetrofitRepository
 import com.example.presentation.core.ProjectViewModel
 import java.util.UUID
 
 @HiltViewModel
 class WaitingRoomDataViewModel @Inject constructor(
+    private val retrofitRepository: RetrofitRepository,
     private val firebaseRepository: FirebaseRepository
 ) : ProjectViewModel<WaitingRoomDataState, WaitingRoomDataEvent>(
     initialState = WaitingRoomDataState(),
     viewModelTag = "WaitingRoomDataViewModel"
 ) {
 
-    private val _waitingRoomData = MutableStateFlow<WaitingRoomData?>(null)
-    val waitingRoomData: Flow<WaitingRoomData?> = _waitingRoomData.asStateFlow()
+    private val _waitingRoom = MutableStateFlow<WaitingRoom?>(null)
+    val waitingRoom: Flow<WaitingRoom?> = _waitingRoom.asStateFlow()
 
     private val _barCode = MutableStateFlow<Bitmap?>(null)
     val barCode: Flow<Bitmap?> = _barCode.asStateFlow()
 
-    fun createWaitingRoom(nickname: String) {
+    fun createWaitingRoomedd(nickname: String) {
         setState { copy(loading = true) }
         logD(
             """
@@ -46,21 +50,21 @@ class WaitingRoomDataViewModel @Inject constructor(
             val roomId = UUID.randomUUID().toString().take(8)
             val userId = UUID.randomUUID().toString()
             firebaseRepository.createWaitingRoom(
-                waitingRoomData = WaitingRoomData(
+                waitingRoom = WaitingRoom(
                     roomId = roomId,
                     hostId = userId,
-                    participantList = listOf(User(id = userId, nickname = nickname)),
-                    status = Status.WAITING,
+                    participantList = listOf(User(userId = userId, nickname = nickname)),
+                    waitingRoomStatus = WaitingRoomStatus.Waiting,
                 )
             ).onSuccess {
-                _waitingRoomData.value = it
+                _waitingRoom.value = it
                 _barCode.value = createBarCode(roomId)
                 setState { copy(loading = false) }
                 setEvent(event = WaitingRoomDataEvent.CreateWaitingRoomSuccess)
                 logD(
                     """
                     [fun createWaitingRoom success]
-                        _waitingRoomData = ${_waitingRoomData.value}
+                        _waitingRoomData = ${_waitingRoom.value}
                         _qrCode = ${_barCode.value}
                 """.trimIndent()
                 )
@@ -94,6 +98,48 @@ class WaitingRoomDataViewModel @Inject constructor(
         }
         return bmp
     }
+
+    fun createWaitingRoome(nickname: String) {
+        setState { copy(loading = true) }
+        logD(
+            """
+            [fun createWaitingRoom parameter]
+                nickname = $nickname
+        """.trimIndent()
+        )
+        viewModelScope.launch {
+            retrofitRepository.createWaitingRoom(
+                user = User(
+                    userId = UUID.randomUUID().toString(),
+                    nickname = nickname
+                )
+            ).onSuccess {
+//                _waitingRoom.value = WaitingRoom(
+//                    roomId = TODO(),
+//                    hostId = TODO(),
+//                    participantList = TODO(),
+//                    waitingRoomStatus = TODO()
+//                )
+//                _barCode.value = createBarCode(roomId)
+                setState { copy(loading = false) }
+                setEvent(event = WaitingRoomDataEvent.CreateWaitingRoomSuccess)
+                logD(
+                    """
+                        $it
+                    [fun createWaitingRoom success]
+                        _waitingRoomData = ${_waitingRoom.value}
+                        _qrCode = ${_barCode.value}
+                """.trimIndent()
+                )
+            }.onFailure {
+                setState { copy(loading = false) }
+                setEvent(event = WaitingRoomDataEvent.CreateWaitingRoomFailure)
+                logD("[fun createWaitingRoom failure]")
+            }
+        }
+    }
+
+
 }
 
 data class WaitingRoomDataState(
