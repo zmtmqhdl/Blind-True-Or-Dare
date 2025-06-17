@@ -61,7 +61,7 @@ fun MainRoute(
                 ProjectButton.Primary.Small(
                     text = stringResource(R.string.main_input_nickname_dialog_okay),
                     onClick = {
-                        waitingRoomDataViewModel.createWaitingRoome(
+                        waitingRoomDataViewModel.createWaitingRoom(
                             nickname = nickname
                         )
                         showInputNicknameDialog = false

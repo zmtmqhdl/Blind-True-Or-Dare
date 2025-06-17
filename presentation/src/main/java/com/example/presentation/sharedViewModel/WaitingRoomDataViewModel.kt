@@ -38,68 +38,7 @@ class WaitingRoomDataViewModel @Inject constructor(
     private val _barCode = MutableStateFlow<Bitmap?>(null)
     val barCode: Flow<Bitmap?> = _barCode.asStateFlow()
 
-    fun createWaitingRoomedd(nickname: String) {
-        setState { copy(loading = true) }
-        logD(
-            """
-            [fun createWaitingRoom parameter]
-                nickname = $nickname
-        """.trimIndent()
-        )
-        viewModelScope.launch {
-            val roomId = UUID.randomUUID().toString().take(8)
-            val userId = UUID.randomUUID().toString()
-            firebaseRepository.createWaitingRoom(
-                waitingRoom = WaitingRoom(
-                    roomId = roomId,
-                    hostId = userId,
-                    participantList = listOf(User(userId = userId, nickname = nickname)),
-                    waitingRoomStatus = WaitingRoomStatus.Waiting,
-                )
-            ).onSuccess {
-                _waitingRoom.value = it
-                _barCode.value = createBarCode(roomId)
-                setState { copy(loading = false) }
-                setEvent(event = WaitingRoomDataEvent.CreateWaitingRoomSuccess)
-                logD(
-                    """
-                    [fun createWaitingRoom success]
-                        _waitingRoomData = ${_waitingRoom.value}
-                        _qrCode = ${_barCode.value}
-                """.trimIndent()
-                )
-            }.onFailure {
-                setState { copy(loading = false) }
-                setEvent(event = WaitingRoomDataEvent.CreateWaitingRoomFailure)
-                logD("[fun createWaitingRoom failure]")
-            }
-        }
-    }
-
-    fun getWaitingRoom(roomId: String) {
-
-    }
-
-    fun createBarCode(roomId: String): Bitmap {
-        val width = 600
-        val height = 300
-        val bitMatrix = MultiFormatWriter().encode(
-            roomId,
-            BarcodeFormat.CODE_128,
-            width,
-            height,
-            null
-        )
-        val bmp = createBitmap(width, height, Bitmap.Config.RGB_565)
-        for (x in 0 until width) {
-            for (y in 0 until height) {
-                bmp[x, y] = if (bitMatrix[x, y]) Color.BLACK else Color.WHITE
-            }
-        }
-        return bmp
-    }
-
-    fun createWaitingRoome(nickname: String) {
+    fun createWaitingRoom(nickname: String) {
         setState { copy(loading = true) }
         logD(
             """
@@ -138,6 +77,31 @@ class WaitingRoomDataViewModel @Inject constructor(
             }
         }
     }
+
+    fun getWaitingRoom(roomId: String) {
+
+    }
+
+    fun createBarCode(roomId: String): Bitmap {
+        val width = 600
+        val height = 300
+        val bitMatrix = MultiFormatWriter().encode(
+            roomId,
+            BarcodeFormat.CODE_128,
+            width,
+            height,
+            null
+        )
+        val bmp = createBitmap(width, height, Bitmap.Config.RGB_565)
+        for (x in 0 until width) {
+            for (y in 0 until height) {
+                bmp[x, y] = if (bitMatrix[x, y]) Color.BLACK else Color.WHITE
+            }
+        }
+        return bmp
+    }
+
+
 
 
 }
