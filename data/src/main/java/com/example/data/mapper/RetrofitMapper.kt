@@ -1,7 +1,7 @@
 package com.example.data.mapper
 
 import com.example.data.model.CreateWaitingRoomResponse
-import com.example.data.model.UserDto
+import com.example.data.model.PlayerDto
 import com.example.data.model.WaitingRoomDataDto
 import com.example.data.model.WaitingRoomDto
 import com.example.domain.model.CreateWaitingRoom
@@ -9,16 +9,16 @@ import com.example.domain.model.User
 import com.example.domain.model.WaitingRoom
 import com.example.domain.model.WaitingRoomStatus
 
-fun UserDto.toDomain(): User =
+fun PlayerDto.toDomain(): User =
     User(
-        userId = userId,
+        playerId = this@toDomain.playerId,
         nickname = nickname
     )
 
 
-fun User.toDto(): UserDto =
-    UserDto(
-        userId = userId,
+fun User.toDto(): PlayerDto =
+    PlayerDto(
+        playerId = playerId,
         nickname = nickname
     )
 

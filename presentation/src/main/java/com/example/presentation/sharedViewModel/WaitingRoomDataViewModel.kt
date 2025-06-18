@@ -16,7 +16,6 @@ import androidx.core.graphics.createBitmap
 import androidx.core.graphics.set
 import com.example.domain.common.onFailure
 import com.example.domain.common.onSuccess
-import com.example.domain.model.WaitingRoomStatus
 import com.example.domain.model.User
 import com.example.domain.model.WaitingRoom
 import com.example.domain.repository.RetrofitRepository
@@ -49,7 +48,7 @@ class WaitingRoomDataViewModel @Inject constructor(
         viewModelScope.launch {
             retrofitRepository.createWaitingRoom(
                 user = User(
-                    userId = UUID.randomUUID().toString(),
+                    playerId = UUID.randomUUID().toString(),
                     nickname = nickname
                 )
             ).onSuccess {
@@ -64,7 +63,6 @@ class WaitingRoomDataViewModel @Inject constructor(
                 setEvent(event = WaitingRoomDataEvent.CreateWaitingRoomSuccess)
                 logD(
                     """
-                        $it
                     [fun createWaitingRoom success]
                         _waitingRoomData = ${_waitingRoom.value}
                         _qrCode = ${_barCode.value}

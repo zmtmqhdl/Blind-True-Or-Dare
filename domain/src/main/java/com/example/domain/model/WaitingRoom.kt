@@ -4,9 +4,6 @@ data class CreateWaitingRoom(
     val waitingRoomId: String
 )
 
-
-
-
 data class WaitingRoom(
     val roomId: String,
     val hostId: String,
@@ -15,7 +12,7 @@ data class WaitingRoom(
 )
 
 data class User(
-    val userId: String = "",
+    val playerId: String = "",
     val nickname: String = "",
 )
 
