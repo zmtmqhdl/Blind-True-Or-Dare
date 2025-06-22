@@ -18,7 +18,7 @@ data class CreateWaitingRoomResponse(
 
 
 data class WaitingRoomDto (
-    val roomId: String,
+    val waitingRoomId: String,
     val hostId: String,
     val participantList: List<PlayerDto>,
     val waitingRoomStatus: WaitingRoomStatus,
@@ -26,7 +26,7 @@ data class WaitingRoomDto (
 
 
 data class WaitingRoomDataDto (
-    val roomId: String,
+    val waitingRoomId: String,
     val hostId: String,
     val participantList: List<PlayerDto>,
     val waitingRoomStatus: WaitingRoomStatus,

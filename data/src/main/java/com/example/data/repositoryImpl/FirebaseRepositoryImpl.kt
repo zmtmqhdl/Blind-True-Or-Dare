@@ -18,7 +18,7 @@ class FirebaseRepositoryImpl @Inject constructor(
 
     override suspend fun createWaitingRoom(waitingRoom: WaitingRoom): Result<WaitingRoom> =
         runCatching {
-            val reference = firebaseDatabase.getReference("waitingRoom").child(waitingRoom.roomId)
+            val reference = firebaseDatabase.getReference("waitingRoom").child(waitingRoom.waitingRoomId)
 
             reference.setValue(waitingRoom).await()
 

@@ -80,11 +80,11 @@ class WaitingRoomDataViewModel @Inject constructor(
 
     }
 
-    fun createBarCode(roomId: String): Bitmap {
+    fun createBarCode(waitingRoomId: String): Bitmap {
         val width = 600
         val height = 300
         val bitMatrix = MultiFormatWriter().encode(
-            roomId,
+            waitingRoomId,
             BarcodeFormat.CODE_128,
             width,
             height,

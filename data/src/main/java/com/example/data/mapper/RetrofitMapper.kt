@@ -31,7 +31,7 @@ fun CreateWaitingRoomResponse.toDomain() : CreateWaitingRoom =
 
 fun WaitingRoomDataDto.toDomain(): WaitingRoom =
     WaitingRoom(
-        roomId = roomId,
+        waitingRoomId = waitingRoomId,
         hostId = hostId,
         participantList = participantList.map { it.toDomain() },
         waitingRoomStatus = WaitingRoomStatus.Waiting
@@ -39,7 +39,7 @@ fun WaitingRoomDataDto.toDomain(): WaitingRoom =
 
 fun WaitingRoom.toDto(): WaitingRoomDataDto =
     WaitingRoomDataDto(
-        roomId = roomId,
+        waitingRoomId = waitingRoomId,
         hostId = hostId,
         participantList = participantList.map { it.toDto()},
         waitingRoomStatus = WaitingRoomStatus.Waiting
@@ -51,7 +51,7 @@ fun WaitingRoom.toDto(): WaitingRoomDataDto =
 
 fun WaitingRoomDto.toWaitingRoom(): WaitingRoom =
     WaitingRoom(
-        roomId = roomId,
+        waitingRoomId = waitingRoomId,
         hostId = hostId,
         participantList = participantList.map { it.toDomain() },
         waitingRoomStatus = WaitingRoomStatus.Waiting
