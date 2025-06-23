@@ -9,7 +9,7 @@ data class PlayerDto(
 )
 
 data class CreateWaitingRoomRequest(
-    val user: PlayerDto
+    val player: PlayerDto
 )
 
 data class CreateWaitingRoomResponse(

@@ -5,18 +5,18 @@ import com.example.data.model.PlayerDto
 import com.example.data.model.WaitingRoomDataDto
 import com.example.data.model.WaitingRoomDto
 import com.example.domain.model.CreateWaitingRoom
-import com.example.domain.model.User
+import com.example.domain.model.Player
 import com.example.domain.model.WaitingRoom
 import com.example.domain.model.WaitingRoomStatus
 
-fun PlayerDto.toDomain(): User =
-    User(
+fun PlayerDto.toDomain(): Player =
+    Player(
         playerId = this@toDomain.playerId,
         nickname = nickname
     )
 
 
-fun User.toDto(): PlayerDto =
+fun Player.toDto(): PlayerDto =
     PlayerDto(
         playerId = playerId,
         nickname = nickname

@@ -18,23 +18,25 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
 import com.example.presentation.R
-import com.example.presentation.component.ProjectButton
-import com.example.presentation.component.ProjectTextField
 import com.example.presentation.component.PrimaryDialog
+import com.example.presentation.component.ProjectButton
 import com.example.presentation.component.ProjectDialog
 import com.example.presentation.component.ProjectScreen
-import com.example.presentation.sharedViewModel.WaitingRoomDataEvent
-import com.example.presentation.sharedViewModel.WaitingRoomDataViewModel
+import com.example.presentation.component.ProjectTextField
 import com.example.presentation.theme.ProjectSpaces
 import com.example.presentation.theme.ProjectTheme
+import com.example.presentation.waitingRoom.WaitingRoomEvent
+import com.example.presentation.waitingRoom.WaitingRoomViewModel
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @Composable
 fun MainRoute(
-    waitingRoomDataViewModel: WaitingRoomDataViewModel,
+    mainViewModel: MainViewModel,
+    waitingRoomViewModel: WaitingRoomViewModel,
     navigateToWaitingRoom: () -> Unit
 ) {
-    val state by waitingRoomDataViewModel.state.collectAsState()
+    val isLoading by mainViewModel.isLoading.collectAsState()
 
     // local state
     var nickname by remember { mutableStateOf("") }
@@ -61,7 +63,7 @@ fun MainRoute(
                 ProjectButton.Primary.Small(
                     text = stringResource(R.string.main_input_nickname_dialog_okay),
                     onClick = {
-                        waitingRoomDataViewModel.createWaitingRoom(
+                        mainViewModel.createWaitingRoom(
                             nickname = nickname
                         )
                         showInputNicknameDialog = false
@@ -89,21 +91,49 @@ fun MainRoute(
 
     // launched effect
     LaunchedEffect(Unit) {
-        waitingRoomDataViewModel.event.collectLatest { event ->
-            when (event) {
-                WaitingRoomDataEvent.CreateWaitingRoomSuccess -> {
-                    navigateToWaitingRoom()
+        launch {
+            mainViewModel.event.collectLatest { event ->
+                when (event) {
+                    is MainEvent.CreateWaitingRoomSuccess -> {
+                        waitingRoomViewModel.connectWaitingRoom(
+                            waitingRoomId = event.waitingRoomId,
+                            playerId = event.playerId
+                        )
+                    }
+                    is MainEvent.CreateWaitingRoomFailure -> {
+                        showCreateWaitingRoomFailureDialog = true
+                    }
+                    else -> {}
                 }
-                WaitingRoomDataEvent.CreateWaitingRoomFailure -> {
-                    showCreateWaitingRoomFailureDialog = true
+            }
+        }
+
+        launch {
+            waitingRoomViewModel.event.collectLatest { event ->
+                when (event) {
+                    is WaitingRoomEvent.ConnectWaitingRoomSuccess -> {
+                        navigateToWaitingRoom()
+                    }
+                    else -> {}
                 }
-                else -> {}
+            }
+        }
+
+
+        launch {
+            waitingRoomViewModel.socketMessage.collectLatest { message ->
+                message?.let {
+
+                }
             }
         }
     }
 
+
+
     // screen
     MainScreen(
+        loading = isLoading,
         onCreateClick = { showInputNicknameDialog = true },
         onJoinClick = {}
     )
@@ -111,10 +141,13 @@ fun MainRoute(
 
 @Composable
 fun MainScreen(
+    loading: Boolean,
     onCreateClick: () -> Unit,
     onJoinClick: () -> Unit
 ) {
-    ProjectScreen.PrimaryScreen {
+    ProjectScreen.PrimaryScreen(
+        loading = loading
+    ) {
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,

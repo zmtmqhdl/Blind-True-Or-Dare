@@ -7,11 +7,11 @@ data class CreateWaitingRoom(
 data class WaitingRoom(
     val waitingRoomId: String,
     val hostId: String,
-    val participantList: List<User> = emptyList<User>(),
+    val participantList: List<Player> = emptyList<Player>(),
     val waitingRoomStatus: WaitingRoomStatus
 )
 
-data class User(
+data class Player(
     val playerId: String = "",
     val nickname: String = "",
 )

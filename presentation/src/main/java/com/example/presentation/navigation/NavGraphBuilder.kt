@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import com.example.presentation.main.MainRoute
 import com.example.presentation.screen.FirstScreen
 import com.example.presentation.screen.SecondScreen
-import com.example.presentation.sharedViewModel.WaitingRoomDataViewModel
+import com.example.presentation.main.MainViewModel
 import com.example.presentation.waitingRoom.WaitingRoomRoute
 
 fun NavGraphBuilder.main(navController: NavController) {
@@ -17,10 +17,9 @@ fun NavGraphBuilder.main(navController: NavController) {
             navController.getBackStackEntry(Route.Main.route)
         }
 
-        val waitingRoomDataViewModel: WaitingRoomDataViewModel = hiltViewModel(parentEntry)
-
         MainRoute(
-            waitingRoomDataViewModel = waitingRoomDataViewModel,
+            mainViewModel = hiltViewModel(parentEntry),
+            waitingRoomViewModel = hiltViewModel(parentEntry),
             navigateToWaitingRoom ={  navController.navigate(route = Route.WaitingRoom.route) }
         )
     }
@@ -30,7 +29,7 @@ fun NavGraphBuilder.main(navController: NavController) {
             navController.getBackStackEntry(Route.Main.route)
         }
 
-        val waitingRoomDataViewModel: WaitingRoomDataViewModel = hiltViewModel(parentEntry)
+        val mainViewModel: MainViewModel = hiltViewModel(parentEntry)
 
 
     }
