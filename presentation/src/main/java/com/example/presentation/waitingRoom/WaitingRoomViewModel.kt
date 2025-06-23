@@ -25,7 +25,7 @@ class WaitingRoomViewModel @Inject constructor(
     initialState = WaitingRoomState(),
     viewModelTag = "WaitingRoomViewModel"
 ) {
-    val isLoading: StateFlow<Boolean> = state
+    val loading: StateFlow<Boolean> = state
         .map { it.loading }
         .stateIn(
             scope = viewModelScope,
@@ -48,20 +48,34 @@ class WaitingRoomViewModel @Inject constructor(
         waitingRoomId: String,
         playerId: String
     ) {
-        logD("""
-            [fun connectWaitingRoom success]
+        setState { copy(loading = true) }
+        logD(
+            """
+            [fun connectWaitingRoom parameter]
                 waitingRoomId = $waitingRoomId,
                 playerId = $playerId
-        """.trimIndent())
+        """.trimIndent()
+        )
         webSocketClient = WebSocketClient(
             waitingRoomId = waitingRoomId,
             playerId = playerId,
             onMessage = { message ->
                 _socketMessage.value = message
             },
-            onOpen = { WaitingRoomEvent.ConnectWaitingRoomSuccess },
+            onOpen = {
+                setState { copy(loading = false) }
+                setEvent(
+                    event = WaitingRoomEvent.ConnectWaitingRoomSuccess
+                )
+                logD("[fun connectWaitingRoom success]")
+            },
             onFailure = { throwable ->
-                logD("WebSocket 실패: ${throwable.message}")
+                setState { copy(loading = false) }
+                setEvent(
+                    event = WaitingRoomEvent.ConnectWaitingRoomFailure
+                )
+                logD("[fun connectWaitingRoom failure]")
+
             }
         ).also {
             it.connect()
@@ -94,6 +108,6 @@ data class WaitingRoomState(
 
 sealed class WaitingRoomEvent {
     object Idle : WaitingRoomEvent()
-    object ConnectWaitingRoomSuccess: WaitingRoomEvent()
-    object ConnectWaitingRoomFailure: WaitingRoomEvent()
+    object ConnectWaitingRoomSuccess : WaitingRoomEvent()
+    object ConnectWaitingRoomFailure : WaitingRoomEvent()
 }

@@ -36,7 +36,11 @@ fun MainRoute(
     waitingRoomViewModel: WaitingRoomViewModel,
     navigateToWaitingRoom: () -> Unit
 ) {
-    val isLoading by mainViewModel.isLoading.collectAsState()
+    // main view model local state
+    val mainViewModelLoading by mainViewModel.loading.collectAsState()
+
+    // waiting room view model local state
+    val waitingRoomViewModelLoading by waitingRoomViewModel.loading.collectAsState()
 
     // local state
     var nickname by remember { mutableStateOf("") }
@@ -89,7 +93,7 @@ fun MainRoute(
         )
     }
 
-    // launched effect
+    // side effect
     LaunchedEffect(Unit) {
         launch {
             mainViewModel.event.collectLatest { event ->
@@ -118,22 +122,13 @@ fun MainRoute(
                 }
             }
         }
-
-
-        launch {
-            waitingRoomViewModel.socketMessage.collectLatest { message ->
-                message?.let {
-
-                }
-            }
-        }
     }
 
 
 
     // screen
     MainScreen(
-        loading = isLoading,
+        loading = mainViewModelLoading || waitingRoomViewModelLoading,
         onCreateClick = { showInputNicknameDialog = true },
         onJoinClick = {}
     )

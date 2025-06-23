@@ -22,7 +22,7 @@ class MainViewModel @Inject constructor(
     initialState = MainState(),
     viewModelTag = "MainViewModel"
 ) {
-    val isLoading: StateFlow<Boolean> = state
+    val loading: StateFlow<Boolean> = state
         .map { it.loading }
         .stateIn(
             scope = viewModelScope,
@@ -30,7 +30,9 @@ class MainViewModel @Inject constructor(
             initialValue = false
         )
 
-    fun createWaitingRoom(nickname: String) {
+    fun createWaitingRoom(
+        nickname: String
+    ) {
         setState { copy(loading = true) }
         logD(
             """
@@ -62,7 +64,10 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun getWaitingRoom(roomId: String) {
+    fun getWaitingRoom(
+        waitingRoomId: String,
+
+    ) {
 
     }
 }
