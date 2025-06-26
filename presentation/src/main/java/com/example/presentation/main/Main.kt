@@ -124,8 +124,6 @@ fun MainRoute(
         }
     }
 
-
-
     // screen
     MainScreen(
         loading = mainViewModelLoading || waitingRoomViewModelLoading,
