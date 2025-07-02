@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         setContent {
 
             val splashViewModel: SplashViewModel = hiltViewModel()
-            val isLoading = splashViewModel.isLoading.collectAsState().value
+
 
             val navController = rememberNavController()
 
