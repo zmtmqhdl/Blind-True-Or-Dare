@@ -1,24 +1,29 @@
 package com.example.data.client
 
+import com.example.data.toDto
+import com.example.domain.model.Player
+import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
+import java.net.URLEncoder
 
 object SocketManager {
     private val client: OkHttpClient
         get() = OkHttpClient()
     private var webSocket: WebSocket? = null
 
-    // 콜백 등록용
     private val listeners = mutableListOf<(String) -> Unit>()
 
-    fun connect(waitingRoomId: String, playerId: String, onSuccess: () -> Unit = {}, onFailure: (Throwable) -> Unit = {}) {
-        if (webSocket != null) return // 이미 연결되어 있으면 재연결 안함
+    fun connect(waitingRoomId: String, player: Player, onSuccess: () -> Unit = {}, onFailure: (Throwable) -> Unit = {}) {
+        if (webSocket != null) return
 
+        val playerJson = Json.encodeToString(player.toDto())
+        val encodedPlayerJson = URLEncoder.encode(playerJson, "UTF-8")
         val request = Request.Builder()
-            .url("ws://10.0.2.2:8080/game?roomId=$waitingRoomId&userId=$playerId")
+            .url("ws://10.0.2.2:8080/createWaitingRoom?waitingRoomId=$waitingRoomId&player=$encodedPlayerJson")
             .build()
 
         webSocket = client.newWebSocket(request, object : WebSocketListener() {

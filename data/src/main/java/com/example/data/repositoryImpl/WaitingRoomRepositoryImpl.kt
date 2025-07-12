@@ -35,4 +35,12 @@ class WaitingRoomRepositoryImpl(
                 ).toDto()
             ).toDomain()
         }
+
+    override fun saveWaitingRoom(waitingRoom: WaitingRoom) {
+        _waitingRoom.value = waitingRoom
+    }
+
+    override fun saveBarCode(barcode: Bitmap) {
+        _barCode.value = barcode
+    }
 }

@@ -12,6 +12,8 @@ interface WaitingRoomRepository {
     val waitingRoom: StateFlow<WaitingRoom?>
     val barCode: StateFlow<Bitmap?>
 
+    fun saveWaitingRoom(waitingRoom: WaitingRoom)
+    fun saveBarCode(barcode: Bitmap)
 
 
     suspend fun createWaitingRoom(

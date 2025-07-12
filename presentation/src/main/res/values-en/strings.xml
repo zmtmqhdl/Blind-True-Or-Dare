@@ -3,11 +3,15 @@
     <string name="app_name">Blind True or Dare</string>
     <string name="title_activity_main">Start</string>
 
+    <!-- component -->
+    <string name="component_create">Create</string>
+    <string name="component_enter">Enter</string>
+    <string name="component_nickname">Nickname</string>
+    <string name="component_waiting_room_id">Waiting Room Id</string>
+
     <!-- main -->
     <string name="main_create_room">Create Room</string>
     <string name="main_join_room">Join Room</string>
-    <string name="main_input_nickname_dialog_text">Input Nickname</string>
-    <string name="main_input_nickname_dialog_okay">Okay</string>
 
     <!-- waiting room -->
     <string name="waiting_room_title">Waiting Room</string>

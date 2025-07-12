@@ -6,6 +6,8 @@ plugins {
 
     // ksp
     alias(libs.plugins.ksp)
+
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -64,4 +66,8 @@ dependencies {
 
     // okhttp3
     implementation(libs.logging.interceptor)
+
+    // serialization
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.retrofit2.kotlinx.serialization.converter)
 }

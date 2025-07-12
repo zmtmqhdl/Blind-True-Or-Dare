@@ -33,16 +33,17 @@ fun MainRoute(
 ) {
     // local state
     var nickname by remember { mutableStateOf("") }
+    var waitingRoomId by remember { mutableStateOf("") }
     val focusRequester = remember { FocusRequester() }
 
     // dialog
-    var showInputNicknameDialog by remember { mutableStateOf(false) }
-    if (showInputNicknameDialog) {
+    var createWaitingRoomDialog by remember { mutableStateOf(false) }
+    if (createWaitingRoomDialog) {
         LaunchedEffect(Unit) {
             focusRequester.requestFocus()
         }
         PrimaryDialog(
-            text = stringResource(R.string.main_input_nickname_dialog_text),
+            text = stringResource(R.string.main_create_room),
             content = {
                 ProjectTextField.OutlinedTextField(
                     value = nickname,
@@ -54,31 +55,88 @@ fun MainRoute(
                 Spacer(modifier = Modifier.height(ProjectTheme.space.space4))
 
                 ProjectButton.Primary.Small(
-                    text = stringResource(R.string.main_input_nickname_dialog_okay),
+                    text = stringResource(R.string.component_create),
                     onClick = {
                         mainViewModel.createWaitingRoom(
                             nickname = nickname
                         )
-                        showInputNicknameDialog = false
+                        createWaitingRoomDialog = false
                     },
                     enabled = nickname.isNotEmpty()
                 )
             },
             onDismissRequest = {
                 nickname = ""
-                showInputNicknameDialog = false
+                createWaitingRoomDialog = false
             }
         )
     }
 
-    var showCreateWaitingRoomFailureDialog by remember { mutableStateOf(false) }
-    if (showCreateWaitingRoomFailureDialog) {
+    var joinWaitingRoomDialog by remember { mutableStateOf(false) }
+    if (joinWaitingRoomDialog) {
+        LaunchedEffect(Unit) {
+            focusRequester.requestFocus()
+        }
+        PrimaryDialog(
+            text = stringResource(R.string.main_join_room),
+            content = {
+                ProjectTextField.OutlinedTextField(
+                    value = nickname,
+                    onValueChange = { nickname = it },
+                    modifier = Modifier.focusRequester(focusRequester = focusRequester),
+                    textCenter = true
+                )
+
+                Spacer(modifier = Modifier.height(ProjectTheme.space.space4))
+
+                ProjectTextField.OutlinedTextField(
+                    value = waitingRoomId,
+                    onValueChange = { waitingRoomId = it },
+                    modifier = Modifier.focusRequester(focusRequester = focusRequester),
+                    textCenter = true
+                )
+
+                Spacer(modifier = Modifier.height(ProjectTheme.space.space4))
+
+                ProjectButton.Primary.Small(
+                    text = stringResource(R.string.component_enter),
+                    onClick = {
+                        mainViewModel.joinWaitingRoom(
+                            nickname = nickname,
+                            waitingRoomId = waitingRoomId
+                        )
+                        joinWaitingRoomDialog = false
+                    },
+                    enabled = nickname.isNotEmpty()
+                )
+            },
+            onDismissRequest = {
+                nickname = ""
+                waitingRoomId = ""
+                joinWaitingRoomDialog = false
+            }
+        )
+    }
+
+    var createWaitingRoomFailureDialog by remember { mutableStateOf(false) }
+    if (createWaitingRoomFailureDialog) {
         ProjectDialog.Single.SingleArrangement(
             title = "",
             text = "",
             buttonText = "",
-            onClick = { showCreateWaitingRoomFailureDialog = false },
-            onDismissRequest = { showCreateWaitingRoomFailureDialog = false }
+            onClick = { createWaitingRoomFailureDialog = false },
+            onDismissRequest = { createWaitingRoomFailureDialog = false }
+        )
+    }
+
+    var joinWaitingRoomFailureDialog by remember { mutableStateOf(false) }
+    if (joinWaitingRoomFailureDialog) {
+        ProjectDialog.Single.SingleArrangement(
+            title = "",
+            text = "",
+            buttonText = "",
+            onClick = { joinWaitingRoomFailureDialog = false },
+            onDismissRequest = { joinWaitingRoomFailureDialog = false }
         )
     }
 
@@ -92,7 +150,15 @@ fun MainRoute(
                     }
 
                     is MainEvent.CreateWaitingRoomFailure -> {
-                        showCreateWaitingRoomFailureDialog = true
+                        createWaitingRoomFailureDialog = true
+                    }
+
+                    is MainEvent.JoinWaitingRoomSuccess -> {
+                        navigateToWaitingRoom()
+                    }
+
+                    is MainEvent.JoinWaitingRoomFailure -> {
+                        joinWaitingRoomFailureDialog = true
                     }
                 }
             }
@@ -101,8 +167,8 @@ fun MainRoute(
 
     // screen
     MainScreen(
-        onCreateClick = { showInputNicknameDialog = true },
-        onJoinClick = {}
+        onCreateClick = { createWaitingRoomDialog = true },
+        onJoinClick = { joinWaitingRoomDialog = true}
     )
 }
 

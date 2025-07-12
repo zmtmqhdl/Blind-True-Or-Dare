@@ -32,17 +32,16 @@ class MainViewModel @Inject constructor(
         """.trimIndent()
         )
         viewModelScope.launch {
-            val playerId = UUID.randomUUID().toString()
+            val player = Player(
+                playerId = UUID.randomUUID().toString(),
+                nickname = nickname
+            )
             waitingRoomRepository.createWaitingRoom(
-                player = Player(
-                    playerId = playerId,
-                    nickname = nickname
-                )
+                player = player
             ).onSuccess {
-                
                 SocketManager.connect(
                     waitingRoomId = it.waitingRoomId,
-                    playerId = playerId,
+                    player = player,
                     onSuccess = {
                         viewModelScope.launch {
                             loadingRepository.hide()
@@ -67,6 +66,39 @@ class MainViewModel @Inject constructor(
             }
         }
     }
+
+    fun joinWaitingRoom(
+        nickname: String,
+        waitingRoomId: String
+    ) {
+        loadingRepository.show()
+        logD("""
+            [fun joinWaitingRoom start]
+                nickname = $nickname
+        """.trimIndent())
+        viewModelScope.launch {
+            val player = Player(
+                playerId = UUID.randomUUID().toString(),
+                nickname = nickname
+            )
+            SocketManager.connect(
+                waitingRoomId = waitingRoomId,
+                player = player,
+                onSuccess = {
+                    viewModelScope.launch {
+                        loadingRepository.hide()
+                        setEvent(event = MainEvent.JoinWaitingRoomSuccess)
+                    }
+                },
+                onFailure = {
+                    viewModelScope.launch {
+                        loadingRepository.hide()
+                        setEvent(event = MainEvent.JoinWaitingRoomFailure)
+                    }
+                },
+            )
+        }
+    }
 }
 
 data class MainState(
@@ -76,4 +108,6 @@ data class MainState(
 sealed class MainEvent {
     object CreateWaitingRoomSuccess : MainEvent()
     object CreateWaitingRoomFailure : MainEvent()
+    object JoinWaitingRoomSuccess: MainEvent()
+    object JoinWaitingRoomFailure: MainEvent()
 }
