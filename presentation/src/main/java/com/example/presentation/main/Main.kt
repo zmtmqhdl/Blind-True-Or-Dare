@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -17,14 +16,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
+import com.example.core.component.PrimaryDialog
+import com.example.core.component.ProjectButton
+import com.example.core.component.ProjectDialog
+import com.example.core.component.ProjectTextField
+import com.example.core.theme.ProjectSpaces
+import com.example.core.theme.ProjectTheme
 import com.example.presentation.R
-import com.example.presentation.component.PrimaryDialog
-import com.example.presentation.component.ProjectButton
-import com.example.presentation.component.ProjectDialog
-import com.example.presentation.component.ProjectScreen
-import com.example.presentation.component.ProjectTextField
-import com.example.presentation.theme.ProjectSpaces
-import com.example.presentation.theme.ProjectTheme
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -33,9 +31,6 @@ fun MainRoute(
     mainViewModel: MainViewModel,
     navigateToWaitingRoom: () -> Unit
 ) {
-    // main view model local state
-    val mainViewModelLoading by mainViewModel.loading.collectAsState()
-
     // local state
     var nickname by remember { mutableStateOf("") }
     val focusRequester = remember { FocusRequester() }
@@ -83,7 +78,7 @@ fun MainRoute(
             text = "",
             buttonText = "",
             onClick = { showCreateWaitingRoomFailureDialog = false },
-            onDismissRequest = { showCreateWaitingRoomFailureDialog = false}
+            onDismissRequest = { showCreateWaitingRoomFailureDialog = false }
         )
     }
 
@@ -95,10 +90,10 @@ fun MainRoute(
                     is MainEvent.CreateWaitingRoomSuccess -> {
                         navigateToWaitingRoom()
                     }
+
                     is MainEvent.CreateWaitingRoomFailure -> {
                         showCreateWaitingRoomFailureDialog = true
                     }
-                    else -> {}
                 }
             }
         }
@@ -106,7 +101,6 @@ fun MainRoute(
 
     // screen
     MainScreen(
-        loading = mainViewModelLoading,
         onCreateClick = { showInputNicknameDialog = true },
         onJoinClick = {}
     )
@@ -114,29 +108,24 @@ fun MainRoute(
 
 @Composable
 fun MainScreen(
-    loading: Boolean,
     onCreateClick: () -> Unit,
     onJoinClick: () -> Unit
 ) {
-    ProjectScreen.Screen(
-        loading = loading
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            ProjectButton.Primary.Xlarge(
-                text = stringResource(R.string.main_create_room),
-                onClick = onCreateClick
-            )
+        ProjectButton.Primary.Xlarge(
+            text = stringResource(R.string.main_create_room),
+            onClick = onCreateClick
+        )
 
-            Spacer(modifier = Modifier.height(ProjectSpaces.Space3))
+        Spacer(modifier = Modifier.height(ProjectSpaces.Space3))
 
-            ProjectButton.Primary.Xlarge(
-                text = stringResource(R.string.main_join_room),
-                onClick = onJoinClick
-            )
-        }
+        ProjectButton.Primary.Xlarge(
+            text = stringResource(R.string.main_join_room),
+            onClick = onJoinClick
+        )
     }
 }

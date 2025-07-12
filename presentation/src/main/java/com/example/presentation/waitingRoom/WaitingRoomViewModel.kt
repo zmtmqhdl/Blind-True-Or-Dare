@@ -7,7 +7,8 @@ import androidx.core.graphics.set
 import androidx.lifecycle.viewModelScope
 import com.example.data.client.WebSocketClient
 import com.example.domain.model.WaitingRoom
-import com.example.presentation.core.ProjectViewModel
+import com.example.core.core.ProjectViewModel
+import com.example.domain.repository.WaitingRoomRepository
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,23 +22,24 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WaitingRoomViewModel @Inject constructor(
+    waitingRoomRepository: WaitingRoomRepository
 ) : ProjectViewModel<WaitingRoomState, WaitingRoomEvent>(
     initialState = WaitingRoomState(),
     viewModelTag = "WaitingRoomViewModel"
 ) {
-    val loading: StateFlow<Boolean> = state
-        .map { it.loading }
+    val waitingRoom: StateFlow<WaitingRoom?> = waitingRoomRepository.waitingRoom
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.Eagerly,
-            initialValue = false
+            initialValue = null
         )
 
-    private val _waitingRoom = MutableStateFlow<WaitingRoom?>(null)
-    val waitingRoom: StateFlow<WaitingRoom?> = _waitingRoom.asStateFlow()
-
-    private val _barCode = MutableStateFlow<Bitmap?>(null)
-    val barCode: StateFlow<Bitmap?> = _barCode.asStateFlow()
+    val barCode: StateFlow<Bitmap?> = waitingRoomRepository.barCode
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = null
+        )
 
     private val _socketMessage = MutableStateFlow<String?>(null)
     val socketMessage: StateFlow<String?> = _socketMessage.asStateFlow()

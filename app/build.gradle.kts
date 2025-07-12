@@ -90,6 +90,7 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":domain"))
     implementation(project(":presentation"))
+    implementation(project(":core"))
 
     // hilt
     implementation(libs.hilt)

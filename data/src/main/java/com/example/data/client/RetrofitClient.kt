@@ -1,6 +1,6 @@
 package com.example.data.client
 
-import com.example.data.api.RetrofitApi
+import com.example.data.api.BlindTrueOrDareApi
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -21,12 +21,12 @@ object RetrofitClient {
         .addInterceptor(loggingInterceptor)
         .build()
 
-    val retrofitApi: RetrofitApi by lazy {
+    val blindTrueOrDareApi: BlindTrueOrDareApi by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(RetrofitApi::class.java)
+            .create(BlindTrueOrDareApi::class.java)
     }
 }

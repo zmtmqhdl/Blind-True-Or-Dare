@@ -1,6 +1,6 @@
 package com.example.blindTrueOrDare.di
 
-import com.example.data.api.RetrofitApi
+import com.example.data.api.BlindTrueOrDareApi
 import com.example.data.client.RetrofitClient
 import com.example.data.repositoryImpl.WaitingRoomRepositoryImpl
 import com.example.domain.repository.WaitingRoomRepository
@@ -16,13 +16,13 @@ object RetrofitModule {
 
     @Provides
     @Singleton
-    fun provideRetrofitService(): RetrofitApi {
-        return RetrofitClient.retrofitApi
+    fun provideRetrofitService(): BlindTrueOrDareApi {
+        return RetrofitClient.blindTrueOrDareApi
     }
 
     @Provides
     @Singleton
-    fun provideRetrofitRepository(retrofitApi: RetrofitApi): WaitingRoomRepository {
-        return WaitingRoomRepositoryImpl(retrofitApi)
+    fun provideRetrofitRepository(blindTrueOrDareApi: BlindTrueOrDareApi): WaitingRoomRepository {
+        return WaitingRoomRepositoryImpl(blindTrueOrDareApi)
     }
 }

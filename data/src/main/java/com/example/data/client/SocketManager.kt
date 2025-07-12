@@ -27,7 +27,7 @@ object SocketManager {
             }
 
             override fun onMessage(webSocket: WebSocket, text: String) {
-                listeners.forEach { it(text) } // 등록된 모든 리스너에게 메시지 전달
+                listeners.forEach { it(text) }
             }
 
             override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {

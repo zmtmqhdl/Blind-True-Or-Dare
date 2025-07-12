@@ -10,8 +10,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.presentation.R
-import com.example.presentation.component.ProjectScreen
-import com.example.presentation.theme.ProjectTheme
+import com.example.core.component.ProjectScreen
+import com.example.core.theme.ProjectTheme
 
 @Composable
 fun WaitingRoomRoute() {

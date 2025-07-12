@@ -21,7 +21,7 @@ constructor(
     override val loading: StateFlow<Boolean> = _loading.asStateFlow()
 
     private var showTime: Long = 0L
-    private val minDurationMillis = 5000L
+    private val minDurationMillis = 1500L
     private val handler = Handler(Looper.getMainLooper())
 
     override fun show() {

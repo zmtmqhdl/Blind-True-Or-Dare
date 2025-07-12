@@ -11,6 +11,10 @@ data class WaitingRoom(
     val waitingRoomStatus: WaitingRoomStatus
 )
 
+data class CreateWaitingRoomRequest(
+    val player: Player
+)
+
 data class Player(
     val playerId: String = "",
     val nickname: String = "",
