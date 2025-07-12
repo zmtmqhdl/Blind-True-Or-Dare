@@ -19,7 +19,6 @@ fun NavGraphBuilder.main(navController: NavController) {
 
         MainRoute(
             mainViewModel = hiltViewModel(parentEntry),
-            waitingRoomViewModel = hiltViewModel(parentEntry),
             navigateToWaitingRoom ={  navController.navigate(route = Route.WaitingRoom.route) }
         )
     }

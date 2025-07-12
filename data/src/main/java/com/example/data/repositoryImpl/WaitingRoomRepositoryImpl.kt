@@ -8,11 +8,11 @@ import com.example.domain.common.ApiResponse
 import com.example.domain.common.request
 import com.example.domain.model.CreateWaitingRoom
 import com.example.domain.model.Player
-import com.example.domain.repository.RetrofitRepository
+import com.example.domain.repository.WaitingRoomRepository
 
-class RetrofitRepositoryImpl(
+class WaitingRoomRepositoryImpl(
     private val api: RetrofitApi
-) : RetrofitRepository {
+) : WaitingRoomRepository {
 
     override suspend fun createWaitingRoom(
         player: Player,

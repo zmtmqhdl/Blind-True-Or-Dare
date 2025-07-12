@@ -6,7 +6,7 @@ import com.example.presentation.component.ProjectScreen
 
 @Composable
 fun SecondScreen() {
-    ProjectScreen.PrimaryScreen() {
+    ProjectScreen.Screen() {
         Text("Second")
     }
 }

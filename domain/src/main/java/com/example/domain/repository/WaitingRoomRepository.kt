@@ -5,7 +5,11 @@ import com.example.domain.model.CreateWaitingRoom
 import com.example.domain.model.Player
 
 
-interface RetrofitRepository {
+interface WaitingRoomRepository {
+
+
+
+
     suspend fun createWaitingRoom(
         player: Player,
     ): ApiResponse<CreateWaitingRoom>

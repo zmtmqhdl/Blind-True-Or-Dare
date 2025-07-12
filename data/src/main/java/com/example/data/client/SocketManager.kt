@@ -1,0 +1,61 @@
+package com.example.data.client
+
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
+import okhttp3.WebSocket
+import okhttp3.WebSocketListener
+
+object SocketManager {
+    private val client: OkHttpClient
+        get() = OkHttpClient()
+    private var webSocket: WebSocket? = null
+
+    // 콜백 등록용
+    private val listeners = mutableListOf<(String) -> Unit>()
+
+    fun connect(waitingRoomId: String, playerId: String, onSuccess: () -> Unit = {}, onFailure: (Throwable) -> Unit = {}) {
+        if (webSocket != null) return // 이미 연결되어 있으면 재연결 안함
+
+        val request = Request.Builder()
+            .url("ws://10.0.2.2:8080/game?roomId=$waitingRoomId&userId=$playerId")
+            .build()
+
+        webSocket = client.newWebSocket(request, object : WebSocketListener() {
+            override fun onOpen(webSocket: WebSocket, response: Response) {
+                onSuccess()
+            }
+
+            override fun onMessage(webSocket: WebSocket, text: String) {
+                listeners.forEach { it(text) } // 등록된 모든 리스너에게 메시지 전달
+            }
+
+            override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
+                onFailure(t)
+            }
+
+            override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
+                webSocket.cancel()
+                this@SocketManager.webSocket = null
+            }
+        })
+    }
+
+    fun send(message: String) {
+        webSocket?.send(message)
+    }
+
+    fun close() {
+        webSocket?.close(1000, "Closing normally")
+        webSocket = null
+    }
+
+    // 메시지 수신 리스너 등록
+    fun addListener(listener: (String) -> Unit) {
+        listeners.add(listener)
+    }
+
+    fun removeListener(listener: (String) -> Unit) {
+        listeners.remove(listener)
+    }
+}

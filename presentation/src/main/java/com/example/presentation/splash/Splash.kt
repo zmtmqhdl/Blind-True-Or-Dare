@@ -2,7 +2,7 @@ package com.example.presentation.splash
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import com.example.presentation.component.ProjectScreen.PrimaryScreen
+import com.example.presentation.component.ProjectScreen.Screen
 
 @Composable
 fun SplashRoute() {
@@ -11,7 +11,7 @@ fun SplashRoute() {
 
 @Composable
 fun SplashScreen() {
-    PrimaryScreen() {
+    Screen() {
         Text("Splash")
     }
 }

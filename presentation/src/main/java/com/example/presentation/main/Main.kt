@@ -25,22 +25,16 @@ import com.example.presentation.component.ProjectScreen
 import com.example.presentation.component.ProjectTextField
 import com.example.presentation.theme.ProjectSpaces
 import com.example.presentation.theme.ProjectTheme
-import com.example.presentation.waitingRoom.WaitingRoomEvent
-import com.example.presentation.waitingRoom.WaitingRoomViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @Composable
 fun MainRoute(
     mainViewModel: MainViewModel,
-    waitingRoomViewModel: WaitingRoomViewModel,
     navigateToWaitingRoom: () -> Unit
 ) {
     // main view model local state
     val mainViewModelLoading by mainViewModel.loading.collectAsState()
-
-    // waiting room view model local state
-    val waitingRoomViewModelLoading by waitingRoomViewModel.loading.collectAsState()
 
     // local state
     var nickname by remember { mutableStateOf("") }
@@ -99,24 +93,10 @@ fun MainRoute(
             mainViewModel.event.collectLatest { event ->
                 when (event) {
                     is MainEvent.CreateWaitingRoomSuccess -> {
-                        waitingRoomViewModel.connectWaitingRoom(
-                            waitingRoomId = event.waitingRoomId,
-                            playerId = event.playerId
-                        )
+                        navigateToWaitingRoom()
                     }
                     is MainEvent.CreateWaitingRoomFailure -> {
                         showCreateWaitingRoomFailureDialog = true
-                    }
-                    else -> {}
-                }
-            }
-        }
-
-        launch {
-            waitingRoomViewModel.event.collectLatest { event ->
-                when (event) {
-                    is WaitingRoomEvent.ConnectWaitingRoomSuccess -> {
-                        navigateToWaitingRoom()
                     }
                     else -> {}
                 }
@@ -126,7 +106,7 @@ fun MainRoute(
 
     // screen
     MainScreen(
-        loading = mainViewModelLoading || waitingRoomViewModelLoading,
+        loading = mainViewModelLoading,
         onCreateClick = { showInputNicknameDialog = true },
         onJoinClick = {}
     )
@@ -138,7 +118,7 @@ fun MainScreen(
     onCreateClick: () -> Unit,
     onJoinClick: () -> Unit
 ) {
-    ProjectScreen.PrimaryScreen(
+    ProjectScreen.Screen(
         loading = loading
     ) {
         Column(

@@ -1,10 +1,11 @@
 package com.example.presentation.main
 
 import androidx.lifecycle.viewModelScope
+import com.example.data.client.SocketManager
 import com.example.domain.common.onFailure
 import com.example.domain.common.onSuccess
 import com.example.domain.model.Player
-import com.example.domain.repository.RetrofitRepository
+import com.example.domain.repository.WaitingRoomRepository
 import com.example.presentation.core.ProjectViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -17,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val retrofitRepository: RetrofitRepository
+    private val waitingRoomRepository: WaitingRoomRepository
 ) : ProjectViewModel<MainState, MainEvent>(
     initialState = MainState(),
     viewModelTag = "MainViewModel"
@@ -42,33 +43,33 @@ class MainViewModel @Inject constructor(
         )
         viewModelScope.launch {
             val playerId = UUID.randomUUID().toString()
-            retrofitRepository.createWaitingRoom(
+            waitingRoomRepository.createWaitingRoom(
                 player = Player(
                     playerId = playerId,
                     nickname = nickname
                 )
             ).onSuccess {
-                setState { copy(loading = false) }
-                setEvent(
-                    event = MainEvent.CreateWaitingRoomSuccess(
-                        waitingRoomId = it.waitingRoomId,
-                        playerId = playerId
-                    )
+                SocketManager.connect(
+                    waitingRoomId = it.waitingRoomId,
+                    playerId = playerId,
+                    onSuccess = {
+                        setState { copy(loading = false) }
+                        setEvent(event = MainEvent.CreateWaitingRoomSuccess)
+                        logD("[fun createWaitingRoom success]")
+                    },
+                    onFailure = {
+                        setState { copy(loading = false) }
+                        setEvent(event = MainEvent.CreateWaitingRoomFailure)
+                        logD("[fun createWaitingRoom failure]")
+
+                    }
                 )
-                logD("[fun createWaitingRoom success]")
             }.onFailure {
                 setState { copy(loading = false) }
                 setEvent(event = MainEvent.CreateWaitingRoomFailure)
                 logD("[fun createWaitingRoom failure]")
             }
         }
-    }
-
-    fun getWaitingRoom(
-        waitingRoomId: String,
-
-    ) {
-
     }
 }
 
@@ -77,11 +78,7 @@ data class MainState(
 )
 
 sealed class MainEvent {
-    object Idle : MainEvent()
-    class CreateWaitingRoomSuccess(
-        val waitingRoomId: String,
-        val playerId: String
-    ) : MainEvent()
+    object CreateWaitingRoomSuccess : MainEvent()
     object CreateWaitingRoomFailure : MainEvent()
     class ShowError(val message: String) : MainEvent()
 }

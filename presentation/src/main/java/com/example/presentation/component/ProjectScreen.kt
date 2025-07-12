@@ -20,7 +20,7 @@ import com.example.presentation.theme.ProjectTheme
 
 object ProjectScreen {
     @Composable
-    fun PrimaryScreen(
+    fun Screen(
         containerColor: Color = ProjectTheme.color.background,
         loading: Boolean = false,
         loadingColor: Color = ProjectTheme.color.primary.background,
@@ -60,7 +60,7 @@ object ProjectScreen {
     }
 
     @Composable
-    fun PrimaryScaffold(
+    fun Scaffold(
         topBar: @Composable () -> Unit,
         bottomBar: @Composable () -> Unit,
         snackBarHost: @Composable () -> Unit,
@@ -82,6 +82,36 @@ object ProjectScreen {
                     )
             ) {
                 content()
+            }
+        }
+    }
+
+    @Composable
+    fun LoadingScreen(
+        containerColor: Color = ProjectTheme.color.background,
+        loading: Boolean,
+        loadingColor: Color = ProjectTheme.color.primary.background,
+        content: @Composable () -> Unit
+    ) {
+        Box(
+            modifier = Modifier.fillMaxSize().background(color = containerColor)
+        ) {
+            content()
+
+            if (loading) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(ProjectTheme.color.black.copy(alpha = 0.3f))
+                        .clickable(enabled = false) {},
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(ProjectTheme.space.space12),
+                        color = loadingColor,
+                        strokeWidth = ProjectTheme.space.space1
+                    )
+                }
             }
         }
     }

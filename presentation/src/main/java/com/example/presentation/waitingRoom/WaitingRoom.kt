@@ -20,7 +20,7 @@ fun WaitingRoomRoute() {
 
 @Composable
 fun WaitingRoomScreen() {
-    ProjectScreen.PrimaryScreen {
+    ProjectScreen.Screen {
         Column(
             modifier = Modifier
                 .fillMaxSize()
