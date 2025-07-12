@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.component.PrimaryDialog
 import com.example.core.component.ProjectButton
 import com.example.core.component.ProjectDialog
@@ -28,9 +29,11 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun MainRoute(
-    mainViewModel: MainViewModel,
     navigateToWaitingRoom: () -> Unit
 ) {
+    // view model
+    val mainViewModel: MainViewModel = hiltViewModel()
+
     // local state
     var nickname by remember { mutableStateOf("") }
     var waitingRoomId by remember { mutableStateOf("") }

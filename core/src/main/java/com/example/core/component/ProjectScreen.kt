@@ -22,8 +22,6 @@ object ProjectScreen {
     @Composable
     fun Screen(
         containerColor: Color = ProjectTheme.color.background,
-        loading: Boolean = false,
-        loadingColor: Color = ProjectTheme.color.primary.background,
         content: @Composable () -> Unit
     ) {
         Box(
@@ -39,22 +37,6 @@ object ProjectScreen {
                     .background(color = containerColor)
             ) {
                 content()
-            }
-
-            if (loading) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(ProjectTheme.color.black.copy(alpha = 0.3f))
-                        .clickable(enabled = false) {},
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(ProjectTheme.space.space12),
-                        color = loadingColor,
-                        strokeWidth = ProjectTheme.space.space1
-                    )
-                }
             }
         }
     }

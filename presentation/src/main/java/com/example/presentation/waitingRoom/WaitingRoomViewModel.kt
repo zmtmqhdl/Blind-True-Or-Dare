@@ -46,62 +46,6 @@ class WaitingRoomViewModel @Inject constructor(
 
     private var webSocketClient: WebSocketClient? = null
 
-    fun connectWaitingRoom(
-        waitingRoomId: String,
-        playerId: String
-    ) {
-        setState { copy(loading = true) }
-        logD(
-            """
-            [fun connectWaitingRoom parameter]
-                waitingRoomId = $waitingRoomId,
-                playerId = $playerId
-        """.trimIndent()
-        )
-        webSocketClient = WebSocketClient(
-            waitingRoomId = waitingRoomId,
-            playerId = playerId,
-            onMessage = { message ->
-                _socketMessage.value = message
-            },
-            onOpen = {
-                setState { copy(loading = false) }
-                setEvent(
-                    event = WaitingRoomEvent.ConnectWaitingRoomSuccess
-                )
-                logD("[fun connectWaitingRoom success]")
-            },
-            onFailure = { throwable ->
-                setState { copy(loading = false) }
-                setEvent(
-                    event = WaitingRoomEvent.ConnectWaitingRoomFailure
-                )
-                logD("[fun connectWaitingRoom failure]")
-
-            }
-        ).also {
-            it.connect()
-        }
-    }
-
-    fun createBarCode(waitingRoomId: String): Bitmap {
-        val width = 600
-        val height = 300
-        val bitMatrix = MultiFormatWriter().encode(
-            waitingRoomId,
-            BarcodeFormat.CODE_128,
-            width,
-            height,
-            null
-        )
-        val bmp = createBitmap(width, height, Bitmap.Config.RGB_565)
-        for (x in 0 until width) {
-            for (y in 0 until height) {
-                bmp[x, y] = if (bitMatrix[x, y]) Color.BLACK else Color.WHITE
-            }
-        }
-        return bmp
-    }
 }
 
 data class WaitingRoomState(

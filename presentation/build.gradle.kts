@@ -97,4 +97,7 @@ dependencies {
 
     // zxing
     implementation(libs.core)
+
+    // serialization
+    implementation(libs.kotlinx.serialization.json)
 }

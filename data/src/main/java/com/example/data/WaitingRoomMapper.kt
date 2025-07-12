@@ -58,7 +58,7 @@ fun WaitingRoom.toDto(): WaitingRoomDataDto =
 
 
 
-fun WaitingRoomDto.toWaitingRoom(): WaitingRoom =
+fun WaitingRoomDto.toDomain(): WaitingRoom =
     WaitingRoom(
         waitingRoomId = waitingRoomId,
         hostId = hostId,

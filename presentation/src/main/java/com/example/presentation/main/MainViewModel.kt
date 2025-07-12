@@ -2,16 +2,20 @@ package com.example.presentation.main
 
 import androidx.lifecycle.viewModelScope
 import com.example.core.core.ProjectViewModel
-import com.example.data.client.SocketManager
+import com.example.data.client.WebSocketManager
+import com.example.data.model.MessageType
+import com.example.data.model.WaitingRoomDto
+import com.example.data.toDomain
 import com.example.domain.common.onFailure
 import com.example.domain.common.onSuccess
 import com.example.domain.model.Player
 import com.example.domain.repository.LoadingRepository
 import com.example.domain.repository.WaitingRoomRepository
+import com.example.presentation.util.IdGenerator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.util.UUID
 import javax.inject.Inject
+import kotlinx.serialization.json.Json
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
@@ -21,6 +25,19 @@ class MainViewModel @Inject constructor(
     initialState = MainState(),
     viewModelTag = "MainViewModel"
 ) {
+    init {
+        WebSocketManager.addListener { message ->
+            when (message.type) {
+                MessageType.Update -> {
+                    waitingRoomRepository.saveWaitingRoom(
+                        waitingRoom = Json.decodeFromString<WaitingRoomDto>(message.data!!).toDomain()
+                    )
+                }
+            }
+        }
+    }
+
+
     fun createWaitingRoom(
         nickname: String
     ) {
@@ -33,13 +50,13 @@ class MainViewModel @Inject constructor(
         )
         viewModelScope.launch {
             val player = Player(
-                playerId = UUID.randomUUID().toString(),
+                playerId = IdGenerator(),
                 nickname = nickname
             )
             waitingRoomRepository.createWaitingRoom(
                 player = player
             ).onSuccess {
-                SocketManager.connect(
+                WebSocketManager.connect(
                     waitingRoomId = it.waitingRoomId,
                     player = player,
                     onSuccess = {
@@ -78,10 +95,10 @@ class MainViewModel @Inject constructor(
         """.trimIndent())
         viewModelScope.launch {
             val player = Player(
-                playerId = UUID.randomUUID().toString(),
+                playerId = IdGenerator(),
                 nickname = nickname
             )
-            SocketManager.connect(
+            WebSocketManager.connect(
                 waitingRoomId = waitingRoomId,
                 player = player,
                 onSuccess = {

@@ -13,12 +13,8 @@ import com.example.presentation.waitingRoom.WaitingRoomRoute
 
 fun NavGraphBuilder.main(navController: NavController) {
     composable(route = Route.Main.route) {
-        val parentEntry = remember(it) {
-            navController.getBackStackEntry(Route.Main.route)
-        }
 
         MainRoute(
-            mainViewModel = hiltViewModel(parentEntry),
             navigateToWaitingRoom ={  navController.navigate(route = Route.WaitingRoom.route) }
         )
     }
