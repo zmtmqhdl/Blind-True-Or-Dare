@@ -3,6 +3,7 @@ package com.example.presentation.main
 import androidx.lifecycle.viewModelScope
 import com.example.core.core.ProjectViewModel
 import com.example.data.client.WebSocketManager
+import com.example.data.model.Message
 import com.example.data.model.MessageType
 import com.example.data.model.WaitingRoomDto
 import com.example.data.toDomain
@@ -14,8 +15,8 @@ import com.example.domain.repository.WaitingRoomRepository
 import com.example.presentation.util.IdGenerator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 import kotlinx.serialization.json.Json
+import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
@@ -25,13 +26,17 @@ class MainViewModel @Inject constructor(
     initialState = MainState(),
     viewModelTag = "MainViewModel"
 ) {
+
     init {
-        WebSocketManager.addListener { message ->
-            when (message.type) {
-                MessageType.Update -> {
-                    waitingRoomRepository.saveWaitingRoom(
-                        waitingRoom = Json.decodeFromString<WaitingRoomDto>(message.data!!).toDomain()
-                    )
+        viewModelScope.launch {
+            WebSocketManager.message.collect { message ->
+                logD("$message")
+                when (message.type) {
+                    MessageType.Update -> {
+                        waitingRoomRepository.saveWaitingRoom(
+                            Json.decodeFromString<WaitingRoomDto>(message.data!!).toDomain()
+                        )
+                    }
                 }
             }
         }

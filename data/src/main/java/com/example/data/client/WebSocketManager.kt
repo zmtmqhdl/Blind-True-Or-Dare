@@ -4,6 +4,14 @@ import android.util.Log
 import com.example.data.model.Message
 import com.example.data.toDto
 import com.example.domain.model.Player
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -17,9 +25,17 @@ object WebSocketManager {
 
     private val client: OkHttpClient
         get() = OkHttpClient()
+
     private var webSocket: WebSocket? = null
 
-    private val listeners = mutableListOf<(Message) -> Unit>()
+    private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+
+    private val _message = MutableSharedFlow<Message>(
+        replay = 0,
+        extraBufferCapacity = 64,
+        onBufferOverflow = BufferOverflow.SUSPEND
+    )
+    val message = _message.asSharedFlow()
 
     fun connect(
         waitingRoomId: String,
@@ -37,17 +53,18 @@ object WebSocketManager {
 
         webSocket = client.newWebSocket(request, object : WebSocketListener() {
             override fun onOpen(webSocket: WebSocket, response: Response) {
+
                 onSuccess()
             }
 
             override fun onMessage(webSocket: WebSocket, text: String) {
-                Log.d(tag, "$text")
-                try {
-                    val message = Json.decodeFromString<Message>(text)
-                    Log.d(tag, "$message")
-                    listeners.forEach { it(message) }
-                } catch (e: Exception) {
-                    e.printStackTrace()
+                scope.launch {
+                    try {
+                        val message = Json.decodeFromString<Message>(text)
+                        _message.emit(message)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
             }
 
@@ -70,13 +87,5 @@ object WebSocketManager {
     fun close() {
         webSocket?.close(1000, "Closing normally")
         webSocket = null
-    }
-
-    fun addListener(listener: (Message) -> Unit) {
-        listeners.add(listener)
-    }
-
-    fun removeListener(listener: (Message) -> Unit) {
-        listeners.remove(listener)
     }
 }

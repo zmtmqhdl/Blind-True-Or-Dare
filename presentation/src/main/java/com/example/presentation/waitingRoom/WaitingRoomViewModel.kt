@@ -8,6 +8,11 @@ import androidx.lifecycle.viewModelScope
 import com.example.data.client.WebSocketClient
 import com.example.domain.model.WaitingRoom
 import com.example.core.core.ProjectViewModel
+import com.example.data.client.WebSocketManager
+import com.example.data.model.Message
+import com.example.data.model.MessageType
+import com.example.data.model.WaitingRoomDto
+import com.example.data.toDomain
 import com.example.domain.repository.WaitingRoomRepository
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
@@ -18,6 +23,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
+import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,6 +34,20 @@ class WaitingRoomViewModel @Inject constructor(
     initialState = WaitingRoomState(),
     viewModelTag = "WaitingRoomViewModel"
 ) {
+    init {
+        viewModelScope.launch {
+            WebSocketManager.message.collect { message ->
+                when (message.type) {
+                    MessageType.Update -> {
+                        waitingRoomRepository.saveWaitingRoom(
+                            waitingRoom = Json.decodeFromString<WaitingRoomDto>(message.data!!).toDomain()
+                        )
+                    }
+                }
+            }
+        }
+    }
+
     val waitingRoom: StateFlow<WaitingRoom?> = waitingRoomRepository.waitingRoom
         .stateIn(
             scope = viewModelScope,

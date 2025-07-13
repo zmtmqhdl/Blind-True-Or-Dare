@@ -1,6 +1,7 @@
 package com.example.data.repositoryImpl
 
 import android.graphics.Bitmap
+import android.util.Log
 import com.example.data.api.BlindTrueOrDareApi
 import com.example.data.toDomain
 import com.example.data.toDto
@@ -37,6 +38,7 @@ class WaitingRoomRepositoryImpl(
         }
 
     override fun saveWaitingRoom(waitingRoom: WaitingRoom) {
+        Log.d("yayaya", "$waitingRoom")
         _waitingRoom.value = waitingRoom
     }
 
