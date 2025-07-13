@@ -50,7 +50,7 @@ fun WaitingRoomScreen(
             Spacer(modifier = Modifier.height(ProjectTheme.space.space4))
 
             Text(
-                text = waitingRoom?.participantList.toString(),
+                text = waitingRoom?.participantList!!.map{it.nickname}.toString(),
                 style = ProjectTheme.typography.m.medium
             )
         }
