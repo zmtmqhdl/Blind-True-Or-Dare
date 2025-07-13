@@ -34,6 +34,7 @@ class WaitingRoomViewModel @Inject constructor(
     initialState = WaitingRoomState(),
     viewModelTag = "WaitingRoomViewModel"
 ) {
+
     init {
         viewModelScope.launch {
             WebSocketManager.message.collect { message ->
