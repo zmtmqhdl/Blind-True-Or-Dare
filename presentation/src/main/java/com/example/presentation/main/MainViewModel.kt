@@ -3,7 +3,6 @@ package com.example.presentation.main
 import androidx.lifecycle.viewModelScope
 import com.example.core.core.ProjectViewModel
 import com.example.data.client.WebSocketManager
-import com.example.data.model.Message
 import com.example.data.model.MessageType
 import com.example.data.model.WaitingRoomDto
 import com.example.data.toDomain

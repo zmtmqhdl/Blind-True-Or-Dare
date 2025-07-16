@@ -69,7 +69,6 @@ dependencies {
 
     // module
     implementation(project(":domain"))
-    implementation(project(":data"))
     implementation(project(":core"))
 
     // coroutines
