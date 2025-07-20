@@ -2,11 +2,13 @@ package com.example.data
 
 import com.example.data.model.CreateWaitingRoomDto
 import com.example.data.model.CreateWaitingRoomRequestDto
+import com.example.data.model.MessageDto
 import com.example.data.model.PlayerDto
 import com.example.data.model.WaitingRoomDataDto
 import com.example.data.model.WaitingRoomDto
 import com.example.domain.model.CreateWaitingRoom
 import com.example.domain.model.CreateWaitingRoomRequest
+import com.example.domain.model.Message
 import com.example.domain.model.Player
 import com.example.domain.model.WaitingRoom
 import com.example.domain.model.WaitingRoomStatus
@@ -54,14 +56,17 @@ fun WaitingRoom.toDto(): WaitingRoomDataDto =
         waitingRoomStatus = WaitingRoomStatus.Waiting
     )
 
-
-
-
-
 fun WaitingRoomDto.toDomain(): WaitingRoom =
     WaitingRoom(
         waitingRoomId = waitingRoomId,
         hostId = hostId,
         participantList = participantList.map { it.toDomain() },
         waitingRoomStatus = WaitingRoomStatus.Waiting
+    )
+
+fun MessageDto.toDomain(): Message =
+    Message(
+        type = type,
+        data = data,
+        timestamp = timestamp
     )

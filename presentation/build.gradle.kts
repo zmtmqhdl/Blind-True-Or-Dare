@@ -96,6 +96,7 @@ dependencies {
 
     // zxing
     implementation(libs.core)
+    implementation(libs.zxing.android.embedded)
 
     // serialization
     implementation(libs.kotlinx.serialization.json)

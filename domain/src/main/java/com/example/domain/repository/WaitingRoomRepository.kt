@@ -10,11 +10,10 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface WaitingRoomRepository {
     val waitingRoom: StateFlow<WaitingRoom?>
-    val barCode: StateFlow<Bitmap?>
+    val qrCode: StateFlow<Bitmap?>
 
-    fun saveWaitingRoom(waitingRoom: WaitingRoom)
-    fun saveBarCode(barcode: Bitmap)
-
+    fun setWaitingRoom(data: String?)
+    fun setQrCode(qrCode: Bitmap?)
 
     suspend fun createWaitingRoom(
         player: Player,

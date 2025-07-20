@@ -15,5 +15,8 @@
 
     <!-- waiting room -->
     <string name="waiting_room_title">대기실</string>
-    <string name="waiting_room_barcode">바코드</string>
+    <string name="waiting_room_qr_code">QR 코드</string>
+    <string name="waiting_room_start">시작</string>
+
+
 </resources>

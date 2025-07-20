@@ -17,10 +17,6 @@ sealed class Route(
         route = "main",
     )
 
-    data object Join : Route(
-        route = "join"
-    )
-
     data object WaitingRoom: Route(
         route = "waitingRoom",
     )

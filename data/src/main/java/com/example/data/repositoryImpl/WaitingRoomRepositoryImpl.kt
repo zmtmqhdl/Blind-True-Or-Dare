@@ -1,8 +1,8 @@
 package com.example.data.repositoryImpl
 
 import android.graphics.Bitmap
-import android.util.Log
 import com.example.data.api.BlindTrueOrDareApi
+import com.example.data.model.WaitingRoomDto
 import com.example.data.toDomain
 import com.example.data.toDto
 import com.example.domain.common.ApiResponse
@@ -15,7 +15,10 @@ import com.example.domain.repository.WaitingRoomRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.serialization.json.Json
+import javax.inject.Singleton
 
+@Singleton
 class WaitingRoomRepositoryImpl(
     private val api: BlindTrueOrDareApi
 ) : WaitingRoomRepository {
@@ -23,8 +26,8 @@ class WaitingRoomRepositoryImpl(
     private val _waitingRoom = MutableStateFlow<WaitingRoom?>(null)
     override val waitingRoom: StateFlow<WaitingRoom?> = _waitingRoom.asStateFlow()
 
-    private val _barCode = MutableStateFlow<Bitmap?>(null)
-    override val barCode: StateFlow<Bitmap?> = _barCode.asStateFlow()
+    private val _qrCode = MutableStateFlow<Bitmap?>(null)
+    override val qrCode: StateFlow<Bitmap?> = _qrCode.asStateFlow()
 
     override suspend fun createWaitingRoom(
         player: Player,
@@ -37,12 +40,19 @@ class WaitingRoomRepositoryImpl(
             ).toDomain()
         }
 
-    override fun saveWaitingRoom(waitingRoom: WaitingRoom) {
-        Log.d("yayaya", "$waitingRoom")
-        _waitingRoom.value = waitingRoom
+    override fun setWaitingRoom(data: String?) {
+        data?.let {
+            _waitingRoom.value = Json.decodeFromString<WaitingRoomDto>(data).toDomain()
+        } ?: run {
+            _waitingRoom.value = null
+        }
     }
 
-    override fun saveBarCode(barcode: Bitmap) {
-        _barCode.value = barcode
+    override fun setQrCode(qrCode: Bitmap?) {
+        qrCode?.let {
+            _qrCode.value = qrCode
+        } ?: run {
+            _qrCode.value = null
+        }
     }
 }

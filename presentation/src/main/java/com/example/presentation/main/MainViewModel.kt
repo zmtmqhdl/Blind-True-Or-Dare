@@ -2,88 +2,71 @@ package com.example.presentation.main
 
 import androidx.lifecycle.viewModelScope
 import com.example.core.core.ProjectViewModel
-import com.example.data.client.WebSocketManager
-import com.example.data.model.MessageType
-import com.example.data.model.WaitingRoomDto
-import com.example.data.toDomain
+import com.example.domain.Event
 import com.example.domain.common.onFailure
 import com.example.domain.common.onSuccess
-import com.example.domain.model.Player
-import com.example.domain.repository.LoadingRepository
 import com.example.domain.repository.WaitingRoomRepository
-import com.example.presentation.util.IdGenerator
+import com.example.domain.usecase.CreateWaitingRoomUseCase
+import com.example.domain.usecase.EmitEventUseCase
+import com.example.domain.usecase.HandleEventUseCase
+import com.example.domain.usecase.HideLoadingUseCase
+import com.example.domain.usecase.MessageHandlerUseCase
+import com.example.domain.usecase.SetQrCodeUseCase
+import com.example.domain.usecase.ShowLoadingUseCase
+import com.example.domain.usecase.WebSocketConnectUseCase
+import com.example.domain.usecase.WebSocketHandlerUseCase
+import com.example.domain.usecase.generatePlayerUseCase
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.MultiFormatWriter
+import com.journeyapps.barcodescanner.BarcodeEncoder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val loadingRepository: LoadingRepository,
-    private val waitingRoomRepository: WaitingRoomRepository
-) : ProjectViewModel<MainState, MainEvent>(
-    initialState = MainState(),
+    private val waitingRoomRepository: WaitingRoomRepository,
+
+    private val messageHandlerUseCase: MessageHandlerUseCase,
+    private val hideLoadingUseCase: HideLoadingUseCase,
+    private val showLoadingUseCase: ShowLoadingUseCase,
+    private val createWaitingRoomUseCase: CreateWaitingRoomUseCase,
+    private val emitEventUseCase: EmitEventUseCase,
+    private val handleEventUseCase: HandleEventUseCase,
+    private val webSocketConnectUseCase: WebSocketConnectUseCase,
+    private val webSocketHandlerUseCase: WebSocketHandlerUseCase,
+    private val setQrCodeUseCase: SetQrCodeUseCase
+) : ProjectViewModel(
     viewModelTag = "MainViewModel"
 ) {
-
     init {
         viewModelScope.launch {
-            WebSocketManager.message.collect { message ->
-                logD("$message")
-                when (message.type) {
-                    MessageType.Update -> {
-                        waitingRoomRepository.saveWaitingRoom(
-                            Json.decodeFromString<WaitingRoomDto>(message.data!!).toDomain()
-                        )
-                    }
-                }
-            }
+            messageHandlerUseCase()
         }
     }
-
 
     fun createWaitingRoom(
         nickname: String
     ) {
-        loadingRepository.show()
+        showLoadingUseCase()
         logD(
             """
-            [fun createWaitingRoom parameter]
+            [fun createWaitingRoom start]
                 nickname = $nickname
         """.trimIndent()
         )
         viewModelScope.launch {
-            val player = Player(
-                playerId = IdGenerator(),
-                nickname = nickname
-            )
-            waitingRoomRepository.createWaitingRoom(
+            val player = generatePlayerUseCase(nickname = nickname)
+            createWaitingRoomUseCase(
                 player = player
             ).onSuccess {
-                WebSocketManager.connect(
+                webSocketConnectUseCase(
                     waitingRoomId = it.waitingRoomId,
-                    player = player,
-                    onSuccess = {
-                        viewModelScope.launch {
-                            loadingRepository.hide()
-                            setEvent(event = MainEvent.CreateWaitingRoomSuccess)
-                            logD("[fun createWaitingRoom success]")
-                        }
-                    },
-                    onFailure = {
-                        viewModelScope.launch {
-                            loadingRepository.hide()
-                            setEvent(event = MainEvent.CreateWaitingRoomFailure)
-                            logD("[fun createWaitingRoom failure]")
-                        }
-                    }
+                    player = player
                 )
+                hideLoadingUseCase()
             }.onFailure {
-                viewModelScope.launch {
-                    loadingRepository.hide()
-                    setEvent(event = MainEvent.CreateWaitingRoomFailure)
-                    logD("[fun createWaitingRoom failure]")
-                }
+                emitEventUseCase(event = Event.CreateWaitingRoomFailure(error = it))
             }
         }
     }
@@ -92,43 +75,53 @@ class MainViewModel @Inject constructor(
         nickname: String,
         waitingRoomId: String
     ) {
-        loadingRepository.show()
-        logD("""
+        showLoadingUseCase()
+        logD(
+            """
             [fun joinWaitingRoom start]
                 nickname = $nickname
-        """.trimIndent())
+        """.trimIndent()
+        )
         viewModelScope.launch {
-            val player = Player(
-                playerId = IdGenerator(),
-                nickname = nickname
-            )
-            WebSocketManager.connect(
+            webSocketConnectUseCase(
                 waitingRoomId = waitingRoomId,
-                player = player,
-                onSuccess = {
-                    viewModelScope.launch {
-                        loadingRepository.hide()
-                        setEvent(event = MainEvent.JoinWaitingRoomSuccess)
-                    }
-                },
-                onFailure = {
-                    viewModelScope.launch {
-                        loadingRepository.hide()
-                        setEvent(event = MainEvent.JoinWaitingRoomFailure)
-                    }
-                },
+                player = generatePlayerUseCase(nickname = nickname)
+            )
+            hideLoadingUseCase()
+        }
+    }
+
+    fun handleEvent(
+        createWaitingRoomFailure: () -> Unit,
+    ) {
+        viewModelScope.launch {
+            handleEventUseCase.invoke(
+                createWaitingRoomFailure = createWaitingRoomFailure,
             )
         }
     }
-}
 
-data class MainState(
-    val loading: Boolean = false,
-)
-
-sealed class MainEvent {
-    object CreateWaitingRoomSuccess : MainEvent()
-    object CreateWaitingRoomFailure : MainEvent()
-    object JoinWaitingRoomSuccess: MainEvent()
-    object JoinWaitingRoomFailure: MainEvent()
+    fun handleWebSocketConnect(
+        onConnect: () -> Unit,
+        onConnectFailure: (Throwable) -> Unit,
+    ) {
+        viewModelScope.launch {
+            webSocketHandlerUseCase(
+                onConnect = {
+                    setQrCodeUseCase(
+                        qrCode = BarcodeEncoder().createBitmap(
+                            MultiFormatWriter().encode(
+                                it,
+                                BarcodeFormat.QR_CODE,
+                                512,
+                                512
+                            )
+                        )
+                    )
+                    onConnect()
+                },
+                onConnectFailure = { onConnectFailure(it) },
+            )
+        }
+    }
 }

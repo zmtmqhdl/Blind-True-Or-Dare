@@ -15,5 +15,7 @@
 
     <!-- waiting room -->
     <string name="waiting_room_title">Waiting Room</string>
-    <string name="waiting_room_barcode">Barcode</string>
+    <string name="waiting_room_qr_code">QR Code</string>
+    <string name="waiting_room_start">Start</string>
+
 </resources>

@@ -12,25 +12,9 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-abstract class ProjectViewModel<STATE : Any, EVENT : Any>(
-    initialState: STATE,
+abstract class ProjectViewModel(
     private val viewModelTag: String = "NewBaseViewModel"
 ) : ViewModel() {
-    private val _state = MutableStateFlow(initialState)
-    val state: StateFlow<STATE> = _state.asStateFlow()
-
-    private val _event = Channel<EVENT>(Channel.BUFFERED)
-    val event: Flow<EVENT> = _event.receiveAsFlow()
-
-    protected fun setState(reducer: STATE.() -> STATE) {
-        _state.update { it.reducer() }
-    }
-
-    protected fun setEvent(event: EVENT) {
-        viewModelScope.launch {
-            _event.send(event)
-        }
-    }
 
     protected fun logD(message: String, tag: String = viewModelTag) {
         Log.d(tag, message)

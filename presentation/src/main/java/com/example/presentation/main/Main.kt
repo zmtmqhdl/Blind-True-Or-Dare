@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,7 +24,6 @@ import com.example.core.component.ProjectTextField
 import com.example.core.theme.ProjectSpaces
 import com.example.core.theme.ProjectTheme
 import com.example.presentation.R
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @Composable
@@ -144,35 +142,32 @@ fun MainRoute(
         )
     }
 
-    // side effect
+    // effect
     LaunchedEffect(Unit) {
         launch {
-            mainViewModel.event.collectLatest { event ->
-                when (event) {
-                    is MainEvent.CreateWaitingRoomSuccess -> {
-                        navigateToWaitingRoom()
-                    }
+            mainViewModel.handleEvent(
+                createWaitingRoomFailure = { createWaitingRoomFailureDialog = true }
+            )
+        }
 
-                    is MainEvent.CreateWaitingRoomFailure -> {
-                        createWaitingRoomFailureDialog = true
-                    }
+        launch {
+            mainViewModel.handleWebSocketConnect(
+                onConnect = {
 
-                    is MainEvent.JoinWaitingRoomSuccess -> {
-                        navigateToWaitingRoom()
-                    }
 
-                    is MainEvent.JoinWaitingRoomFailure -> {
-                        joinWaitingRoomFailureDialog = true
-                    }
-                }
-            }
+                    navigateToWaitingRoom()
+                },
+                onConnectFailure = {
+
+                },
+            )
         }
     }
 
     // screen
     MainScreen(
         onCreateClick = { createWaitingRoomDialog = true },
-        onJoinClick = { joinWaitingRoomDialog = true}
+        onJoinClick = { joinWaitingRoomDialog = true }
     )
 }
 

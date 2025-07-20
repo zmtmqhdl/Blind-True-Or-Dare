@@ -13,25 +13,16 @@ import com.example.presentation.waitingRoom.WaitingRoomRoute
 
 fun NavGraphBuilder.main(navController: NavController) {
     composable(route = Route.Main.route) {
-
         MainRoute(
-            navigateToWaitingRoom ={  navController.navigate(route = Route.WaitingRoom.route) }
+            navigateToWaitingRoom = { navController.navigate(route = Route.WaitingRoom.route) }
         )
-    }
-
-    composable(route = Route.Join.route) {
-        val parentEntry = remember(it) {
-            navController.getBackStackEntry(Route.Main.route)
-        }
-
-        val mainViewModel: MainViewModel = hiltViewModel(parentEntry)
-
-
     }
 
 
     composable(route = Route.WaitingRoom.route) {
-        WaitingRoomRoute()
+        WaitingRoomRoute(
+            popBackStack = { navController.popBackStack() }
+        )
     }
 }
 
