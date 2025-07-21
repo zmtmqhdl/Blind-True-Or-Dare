@@ -1,6 +1,5 @@
 package com.example.domain.usecase
 
-import com.example.domain.repository.WaitingRoomRepository
 import com.example.domain.repository.WebSocketRepository
 import javax.inject.Inject
 

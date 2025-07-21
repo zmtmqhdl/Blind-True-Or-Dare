@@ -15,6 +15,8 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import androidx.compose.ui.graphics.asImageBitmap
+import com.example.domain.model.MessageType
+import com.example.domain.usecase.SendMessageUseCase
 import kotlinx.coroutines.flow.map
 
 @HiltViewModel
@@ -23,7 +25,8 @@ class WaitingRoomViewModel @Inject constructor(
 
     private val messageHandlerUseCase: MessageHandlerUseCase,
     private val exitWaitingRoomUseCase: ExitWaitingRoomUseCase,
-    private val handleWebSocketConnectUseCase: WebSocketHandlerUseCase
+    private val handleWebSocketConnectUseCase: WebSocketHandlerUseCase,
+    private val sendMessageUseCase: SendMessageUseCase
 ) : ProjectViewModel(
     viewModelTag = "WaitingRoomViewModel"
 ) {
@@ -34,11 +37,6 @@ class WaitingRoomViewModel @Inject constructor(
     }
 
     val waitingRoom: StateFlow<WaitingRoom?> = waitingRoomRepository.waitingRoom
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Eagerly,
-            initialValue = null
-        )
 
     val qrCode: StateFlow<ImageBitmap?> = waitingRoomRepository.qrCode
         .map { it?.asImageBitmap() }
@@ -65,5 +63,9 @@ class WaitingRoomViewModel @Inject constructor(
         }
     }
 
-
+    fun sendStartMessage() {
+        sendMessageUseCase(
+            messageType = MessageType.SEND_START
+        )
+    }
 }

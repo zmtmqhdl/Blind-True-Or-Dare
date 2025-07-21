@@ -11,7 +11,7 @@ class MessageHandlerUseCase @Inject constructor(
     operator suspend fun invoke() {
         webSocketRepository.message.collect {
             when (it?.type) {
-                MessageType.Update -> {
+                MessageType.UPDATE -> {
                     saveWaitingRoomUseCase(
                         data = it.data!!
                     )

@@ -21,6 +21,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.component.ProjectButton
 import com.example.core.component.ProjectScreen
 import com.example.core.theme.ProjectTheme
+import com.example.domain.model.MessageType
 import com.example.domain.model.WaitingRoom
 import com.example.presentation.R
 
@@ -50,7 +51,7 @@ fun WaitingRoomRoute(
         waitingRoom = waitingRoom,
         qrCode = qrCode,
 
-        onStartClick = {}
+        onStartClick = { waitingRoomViewModel.sendStartMessage() }
     )
 }
 

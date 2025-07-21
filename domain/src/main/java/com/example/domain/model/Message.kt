@@ -3,9 +3,9 @@ package com.example.domain.model
 data class Message (
     val type: MessageType,
     val data: String? = null,
-    val timestamp: Long = System.currentTimeMillis()
+    val timestamp: Long
 )
 
 enum class MessageType {
-    Update,
+    UPDATE, SEND_START
 }

@@ -87,8 +87,8 @@ class WebSocketRepositoryImpl @Inject constructor(
         })
     }
 
-    override fun send(message: String) {
-        webSocket?.send(message)
+    override fun send(message: Message) {
+        webSocket?.send(text = Json.encodeToString(message.toDto()))
     }
 
     override fun close() {

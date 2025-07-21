@@ -17,7 +17,7 @@ interface WebSocketRepository {
         waitingRoomId: String,
         player: Player
     )
-    fun send(message: String)
+    fun send(message: Message)
     fun close()
 
 

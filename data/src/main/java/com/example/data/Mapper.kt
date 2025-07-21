@@ -70,3 +70,10 @@ fun MessageDto.toDomain(): Message =
         data = data,
         timestamp = timestamp
     )
+
+fun Message.toDto(): MessageDto =
+    MessageDto(
+        type = type,
+        data = data,
+        timestamp = timestamp
+    )

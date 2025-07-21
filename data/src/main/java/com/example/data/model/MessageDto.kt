@@ -7,5 +7,5 @@ import kotlinx.serialization.Serializable
 data class MessageDto(
     val type: MessageType,
     val data: String? = null,
-    val timestamp: Long = System.currentTimeMillis()
+    val timestamp: Long
 )
