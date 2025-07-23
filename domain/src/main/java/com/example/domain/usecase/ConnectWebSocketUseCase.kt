@@ -4,7 +4,7 @@ import com.example.domain.model.Player
 import com.example.domain.repository.WebSocketRepository
 import javax.inject.Inject
 
-class WebSocketConnectUseCase @Inject constructor(
+class ConnectWebSocketUseCase @Inject constructor(
     private val webSocketRepository: WebSocketRepository
 ) {
     operator fun invoke(

@@ -1,32 +1,31 @@
 package com.example.presentation.waitingRoom
 
-import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.lifecycle.viewModelScope
 import com.example.core.core.ProjectViewModel
-import com.example.domain.model.WaitingRoom
+import com.example.domain.model.MessageType
 import com.example.domain.repository.WaitingRoomRepository
-import com.example.domain.usecase.ExitWaitingRoomUseCase
+import com.example.domain.usecase.DisconnectWebSocketUseCase
 import com.example.domain.usecase.MessageHandlerUseCase
+import com.example.domain.usecase.SendMessageUseCase
 import com.example.domain.usecase.WebSocketHandlerUseCase
+import com.example.domain.usecase.function.ExitGameUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import androidx.compose.ui.graphics.asImageBitmap
-import com.example.domain.model.MessageType
-import com.example.domain.usecase.SendMessageUseCase
-import kotlinx.coroutines.flow.map
 
 @HiltViewModel
 class WaitingRoomViewModel @Inject constructor(
     private val waitingRoomRepository: WaitingRoomRepository,
 
     private val messageHandlerUseCase: MessageHandlerUseCase,
-    private val exitWaitingRoomUseCase: ExitWaitingRoomUseCase,
-    private val handleWebSocketConnectUseCase: WebSocketHandlerUseCase,
-    private val sendMessageUseCase: SendMessageUseCase
+    private val disconnectWebSocketUseCase: DisconnectWebSocketUseCase,
+    private val webSocketHandlerUseCase: WebSocketHandlerUseCase,
+    private val sendMessageUseCase: SendMessageUseCase,
+    private val exitGameUseCase: ExitGameUseCase
 ) : ProjectViewModel(
     viewModelTag = "WaitingRoomViewModel"
 ) {
@@ -36,9 +35,9 @@ class WaitingRoomViewModel @Inject constructor(
         }
     }
 
-    val waitingRoom: StateFlow<WaitingRoom?> = waitingRoomRepository.waitingRoom
+    val waitingRoom = waitingRoomRepository.waitingRoom
 
-    val qrCode: StateFlow<ImageBitmap?> = waitingRoomRepository.qrCode
+    val qrCode = waitingRoomRepository.qrCode
         .map { it?.asImageBitmap() }
         .stateIn(
             scope = viewModelScope,
@@ -47,16 +46,16 @@ class WaitingRoomViewModel @Inject constructor(
         )
 
     fun exitWaitingRoom() {
-        exitWaitingRoomUseCase()
+        disconnectWebSocketUseCase()
     }
 
     fun handleWebSocketConnect(
         onDisconnect: () -> Unit
     ) {
         viewModelScope.launch {
-            handleWebSocketConnectUseCase(
+            webSocketHandlerUseCase(
                 onDisconnect = {
-                    waitingRoomRepository.setQrCode(qrCode = null)
+                    exitGameUseCase()
                     onDisconnect()
                 }
             )

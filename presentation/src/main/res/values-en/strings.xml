@@ -8,6 +8,9 @@
     <string name="component_enter">Enter</string>
     <string name="component_nickname">Nickname</string>
     <string name="component_waiting_room_id">Waiting Room Id</string>
+    <string name="component_next">Next</string>
+    <string name="component_okay">OK</string>
+    <string name="component_cancel">Cancel</string>
 
     <!-- main -->
     <string name="main_create_room">Create Room</string>
@@ -17,5 +20,8 @@
     <string name="waiting_room_title">Waiting Room</string>
     <string name="waiting_room_qr_code">QR Code</string>
     <string name="waiting_room_start">Start</string>
+
+    <!-- question room -->
+    <string name="question_room_question">Question No.$1%d</string>
 
 </resources>

@@ -2,14 +2,18 @@ package com.example.data
 
 import com.example.data.model.CreateWaitingRoomDto
 import com.example.data.model.CreateWaitingRoomRequestDto
+import com.example.data.model.GameStartDto
 import com.example.data.model.MessageDto
 import com.example.data.model.PlayerDto
+import com.example.data.model.QuestionRoomSettingDto
 import com.example.data.model.WaitingRoomDataDto
 import com.example.data.model.WaitingRoomDto
 import com.example.domain.model.CreateWaitingRoom
 import com.example.domain.model.CreateWaitingRoomRequest
+import com.example.domain.model.GameStart
 import com.example.domain.model.Message
 import com.example.domain.model.Player
+import com.example.domain.model.QuestionRoomSetting
 import com.example.domain.model.WaitingRoom
 import com.example.domain.model.WaitingRoomStatus
 
@@ -29,9 +33,6 @@ fun PlayerDto.toDomain(): Player =
         playerId = this@toDomain.playerId,
         nickname = nickname
     )
-
-
-
 
 fun CreateWaitingRoomDto.toDomain() : CreateWaitingRoom =
     CreateWaitingRoom(
@@ -61,7 +62,7 @@ fun WaitingRoomDto.toDomain(): WaitingRoom =
         waitingRoomId = waitingRoomId,
         hostId = hostId,
         participantList = participantList.map { it.toDomain() },
-        waitingRoomStatus = WaitingRoomStatus.Waiting
+        waitingRoomStatus = waitingRoomStatus
     )
 
 fun MessageDto.toDomain(): Message =
@@ -74,6 +75,19 @@ fun MessageDto.toDomain(): Message =
 fun Message.toDto(): MessageDto =
     MessageDto(
         type = type,
+        senderId = senderId,
         data = data,
         timestamp = timestamp
+    )
+
+fun QuestionRoomSettingDto.toDomain(): QuestionRoomSetting =
+    QuestionRoomSetting(
+        time = time,
+        number = number
+    )
+
+fun GameStartDto.toDomain(): GameStart =
+    GameStart(
+        waitingRoom = waitingRoom.toDomain(),
+        questionRoomSetting = questionRoomSetting.toDomain()
     )

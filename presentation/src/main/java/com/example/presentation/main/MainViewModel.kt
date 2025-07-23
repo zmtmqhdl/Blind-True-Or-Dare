@@ -11,9 +11,10 @@ import com.example.domain.usecase.EmitEventUseCase
 import com.example.domain.usecase.HandleEventUseCase
 import com.example.domain.usecase.HideLoadingUseCase
 import com.example.domain.usecase.MessageHandlerUseCase
+import com.example.domain.usecase.SetPlayerUseCase
 import com.example.domain.usecase.SetQrCodeUseCase
 import com.example.domain.usecase.ShowLoadingUseCase
-import com.example.domain.usecase.WebSocketConnectUseCase
+import com.example.domain.usecase.ConnectWebSocketUseCase
 import com.example.domain.usecase.WebSocketHandlerUseCase
 import com.example.domain.usecase.generatePlayerUseCase
 import com.google.zxing.BarcodeFormat
@@ -33,9 +34,10 @@ class MainViewModel @Inject constructor(
     private val createWaitingRoomUseCase: CreateWaitingRoomUseCase,
     private val emitEventUseCase: EmitEventUseCase,
     private val handleEventUseCase: HandleEventUseCase,
-    private val webSocketConnectUseCase: WebSocketConnectUseCase,
+    private val connectWebSocketUseCase: ConnectWebSocketUseCase,
     private val webSocketHandlerUseCase: WebSocketHandlerUseCase,
-    private val setQrCodeUseCase: SetQrCodeUseCase
+    private val setQrCodeUseCase: SetQrCodeUseCase,
+    private val setPlayerUseCase: SetPlayerUseCase
 ) : ProjectViewModel(
     viewModelTag = "MainViewModel"
 ) {
@@ -60,7 +62,8 @@ class MainViewModel @Inject constructor(
             createWaitingRoomUseCase(
                 player = player
             ).onSuccess {
-                webSocketConnectUseCase(
+                setPlayerUseCase(player = player)
+                connectWebSocketUseCase(
                     waitingRoomId = it.waitingRoomId,
                     player = player
                 )
@@ -83,9 +86,11 @@ class MainViewModel @Inject constructor(
         """.trimIndent()
         )
         viewModelScope.launch {
-            webSocketConnectUseCase(
+            val player = generatePlayerUseCase(nickname = nickname)
+            setPlayerUseCase(player = player)
+            connectWebSocketUseCase(
                 waitingRoomId = waitingRoomId,
-                player = generatePlayerUseCase(nickname = nickname)
+                player = player
             )
             hideLoadingUseCase()
         }

@@ -2,6 +2,8 @@ package com.example.data.repositoryImpl
 
 import android.graphics.Bitmap
 import com.example.data.api.BlindTrueOrDareApi
+import com.example.data.model.GameStartDto
+import com.example.data.model.QuestionRoomSettingDto
 import com.example.data.model.WaitingRoomDto
 import com.example.data.toDomain
 import com.example.data.toDto
@@ -10,6 +12,7 @@ import com.example.domain.common.request
 import com.example.domain.model.CreateWaitingRoom
 import com.example.domain.model.CreateWaitingRoomRequest
 import com.example.domain.model.Player
+import com.example.domain.model.QuestionRoomSetting
 import com.example.domain.model.WaitingRoom
 import com.example.domain.repository.WaitingRoomRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,8 +29,14 @@ class WaitingRoomRepositoryImpl(
     private val _waitingRoom = MutableStateFlow<WaitingRoom?>(null)
     override val waitingRoom: StateFlow<WaitingRoom?> = _waitingRoom.asStateFlow()
 
+    private val _questionRoomSetting = MutableStateFlow<QuestionRoomSetting?>(null)
+    override val questionRoomSetting: StateFlow<QuestionRoomSetting?> = _questionRoomSetting.asStateFlow()
+
     private val _qrCode = MutableStateFlow<Bitmap?>(null)
     override val qrCode: StateFlow<Bitmap?> = _qrCode.asStateFlow()
+
+    private val _player = MutableStateFlow<Player?>(null)
+    override val player: StateFlow<Player?> = _player.asStateFlow()
 
     override suspend fun createWaitingRoom(
         player: Player,
@@ -49,10 +58,20 @@ class WaitingRoomRepositoryImpl(
     }
 
     override fun setQrCode(qrCode: Bitmap?) {
-        qrCode?.let {
-            _qrCode.value = qrCode
-        } ?: run {
-            _qrCode.value = null
-        }
+        _qrCode.value = qrCode
+    }
+
+    override fun setPlayer(player: Player?) {
+        _player.value = player
+    }
+
+    override fun setQuestionRoomSetting(data: String) {
+        _questionRoomSetting.value = Json.decodeFromString<QuestionRoomSettingDto>(data).toDomain()
+    }
+
+    override fun setWaitingRoomAndQuestionRoomSettingUseCase(data: String) {
+        val message = Json.decodeFromString<GameStartDto>(data).toDomain()
+        _waitingRoom.value = message.waitingRoom
+        _questionRoomSetting.value = message.questionRoomSetting
     }
 }

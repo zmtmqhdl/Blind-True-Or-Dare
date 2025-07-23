@@ -1,5 +1,6 @@
 package com.example.presentation.waitingRoom
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -23,10 +24,12 @@ import com.example.core.component.ProjectScreen
 import com.example.core.theme.ProjectTheme
 import com.example.domain.model.MessageType
 import com.example.domain.model.WaitingRoom
+import com.example.domain.model.WaitingRoomStatus
 import com.example.presentation.R
 
 @Composable
 fun WaitingRoomRoute(
+    navigateToQuestionRoom: () -> Unit,
     popBackStack: () -> Unit
 ) {
     // view model
@@ -41,6 +44,13 @@ fun WaitingRoomRoute(
         waitingRoomViewModel.handleWebSocketConnect(
             onDisconnect = popBackStack
         )
+    }
+
+    // 이벤트로 바꿔라...
+    LaunchedEffect(waitingRoom?.waitingRoomStatus) {
+        if (waitingRoom?.waitingRoomStatus == WaitingRoomStatus.Playing) {
+            navigateToQuestionRoom()
+        }
     }
 
     BackHandler {

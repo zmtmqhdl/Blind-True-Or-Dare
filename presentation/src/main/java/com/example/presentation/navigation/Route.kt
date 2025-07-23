@@ -18,20 +18,10 @@ sealed class Route(
     )
 
     data object WaitingRoom: Route(
-        route = "waitingRoom",
+        route = "waiting_room",
     )
 
-    data object First : Route(
-        route = "first",
-        label = "first",
-        selectedIcon = Close,
-        unselectedIcon = Close
-    )
-
-    data object Second : Route(
-        route = "second",
-        label = "second",
-        selectedIcon = Close,
-        unselectedIcon = Close
+    data object QuestionRoom: Route(
+        route  = "question_room"
     )
 }

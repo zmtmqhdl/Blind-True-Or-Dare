@@ -6,13 +6,19 @@ import javax.inject.Inject
 
 class MessageHandlerUseCase @Inject constructor(
     private val webSocketRepository: WebSocketRepository,
-    private val saveWaitingRoomUseCase: SaveWaitingRoomUseCase
+    private val setWaitingRoomUseCase: SetWaitingRoomUseCase,
+    private val setWaitingRoomAndQuestionRoomSettingUseCase: SetWaitingRoomAndQuestionRoomSettingUseCase
 ){
-    operator suspend fun invoke() {
+    suspend operator fun invoke() {
         webSocketRepository.message.collect {
             when (it?.type) {
                 MessageType.UPDATE -> {
-                    saveWaitingRoomUseCase(
+                    setWaitingRoomUseCase(
+                        data = it.data!!
+                    )
+                }
+                MessageType.START -> {
+                    setWaitingRoomAndQuestionRoomSettingUseCase(
                         data = it.data!!
                     )
                 }

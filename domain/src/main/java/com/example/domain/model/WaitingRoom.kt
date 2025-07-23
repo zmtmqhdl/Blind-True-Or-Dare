@@ -7,8 +7,8 @@ data class CreateWaitingRoom(
 data class WaitingRoom(
     val waitingRoomId: String,
     val hostId: String,
-    val participantList: List<Player> = emptyList<Player>(),
-    val waitingRoomStatus: WaitingRoomStatus
+    val participantList: List<Player> = emptyList(),
+    var waitingRoomStatus: WaitingRoomStatus
 )
 
 data class CreateWaitingRoomRequest(

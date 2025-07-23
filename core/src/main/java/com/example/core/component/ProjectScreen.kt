@@ -24,20 +24,17 @@ object ProjectScreen {
         containerColor: Color = ProjectTheme.color.background,
         content: @Composable () -> Unit
     ) {
-        Box(
-            modifier = Modifier.fillMaxSize()
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(
+                    start = ProjectTheme.space.space4,
+                    end = ProjectTheme.space.space4
+                )
+                .padding(WindowInsets.systemBars.asPaddingValues())
+                .background(color = containerColor)
         ) {
-            Column(
-                modifier = Modifier
-                    .padding(
-                        start = ProjectTheme.space.space4,
-                        end = ProjectTheme.space.space4
-                    )
-                    .padding(WindowInsets.systemBars.asPaddingValues())
-                    .background(color = containerColor)
-            ) {
-                content()
-            }
+            content()
         }
     }
 
@@ -56,7 +53,8 @@ object ProjectScreen {
             containerColor = containerColor
         ) { innerPadding ->
             Column(
-                modifier = Modifier.padding(innerPadding)
+                modifier = Modifier
+                    .padding(innerPadding)
                     .padding(
                         start = ProjectTheme.space.space4,
                         end = ProjectTheme.space.space4
@@ -75,7 +73,9 @@ object ProjectScreen {
         content: @Composable () -> Unit
     ) {
         Box(
-            modifier = Modifier.fillMaxSize().background(color = containerColor)
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color = containerColor)
         ) {
             content()
 

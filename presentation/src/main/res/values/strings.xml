@@ -7,7 +7,11 @@
     <string name="component_create">생성</string>
     <string name="component_enter">입장</string>
     <string name="component_nickname">닉네임</string>
-    <string name="component_waiting_room_id">대기실 Id</string>
+    <string name="component_waiting_room_id">대기실 ID</string>
+    <string name="component_next">다음</string>
+    <string name="component_okay">확인</string>
+    <string name="component_cancel">취소</string>
+
 
     <!-- main -->
     <string name="main_create_room">대기실 생성</string>
@@ -17,6 +21,9 @@
     <string name="waiting_room_title">대기실</string>
     <string name="waiting_room_qr_code">QR 코드</string>
     <string name="waiting_room_start">시작</string>
+
+    <!-- question room -->
+    <string name="question_room_question">$1%d번 질문</string>
 
 
 </resources>
