@@ -2,16 +2,16 @@ package com.example.domain.usecase.function
 
 import com.example.domain.usecase.SetPlayerUseCase
 import com.example.domain.usecase.SetQrCodeUseCase
-import com.example.domain.usecase.SetWaitingRoomUseCase
+import com.example.domain.usecase.SetRoomUseCase
 import javax.inject.Inject
 
 class ExitGameUseCase @Inject constructor(
     private val setPlayerUseCase: SetPlayerUseCase,
     private val setQrCodeUseCase: SetQrCodeUseCase,
-    private val setWaitingRoomUseCase: SetWaitingRoomUseCase
+    private val setRoomUseCase: SetRoomUseCase
 ) {
     operator fun invoke() {
-        setWaitingRoomUseCase(data = null)
+        setRoomUseCase(data = null)
         setQrCodeUseCase(qrCode = null)
         setPlayerUseCase(player = null)
     }

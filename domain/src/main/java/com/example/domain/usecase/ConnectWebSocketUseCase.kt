@@ -8,11 +8,11 @@ class ConnectWebSocketUseCase @Inject constructor(
     private val webSocketRepository: WebSocketRepository
 ) {
     operator fun invoke(
-        waitingRoomId: String,
+        roomId: String,
         player: Player
     ) {
         webSocketRepository.connect(
-            waitingRoomId = waitingRoomId,
+            roomId = roomId,
             player = player
         )
     }

@@ -59,7 +59,7 @@ fun MainRoute(
                 ProjectButton.Primary.Small(
                     text = stringResource(R.string.component_create),
                     onClick = {
-                        mainViewModel.createWaitingRoom(
+                        mainViewModel.createRoom(
                             nickname = nickname
                         )
                         createWaitingRoomDialog = false
@@ -103,7 +103,7 @@ fun MainRoute(
                 ProjectButton.Primary.Small(
                     text = stringResource(R.string.component_enter),
                     onClick = {
-                        mainViewModel.joinWaitingRoom(
+                        mainViewModel.joinRoom(
                             nickname = nickname,
                             waitingRoomId = waitingRoomId
                         )

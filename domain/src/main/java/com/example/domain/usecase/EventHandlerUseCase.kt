@@ -8,12 +8,12 @@ class HandleEventUseCase @Inject constructor(
     private val loadingRepository: LoadingRepository
 ) {
     suspend operator fun invoke(
-        createWaitingRoomFailure: () -> Unit = {},
+        createRoomFailure: () -> Unit = {},
     ) {
         loadingRepository.event.collect {
             when (it) {
-                is Event.CreateWaitingRoomFailure -> {
-                    createWaitingRoomFailure()
+                is Event.CreateRoomFailure -> {
+                    createRoomFailure()
                 }
             }
         }

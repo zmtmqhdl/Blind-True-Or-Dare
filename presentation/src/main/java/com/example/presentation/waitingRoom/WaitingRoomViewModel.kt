@@ -4,7 +4,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.lifecycle.viewModelScope
 import com.example.core.core.ProjectViewModel
 import com.example.domain.model.MessageType
-import com.example.domain.repository.WaitingRoomRepository
+import com.example.domain.repository.RoomRepository
 import com.example.domain.usecase.DisconnectWebSocketUseCase
 import com.example.domain.usecase.MessageHandlerUseCase
 import com.example.domain.usecase.SendMessageUseCase
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WaitingRoomViewModel @Inject constructor(
-    private val waitingRoomRepository: WaitingRoomRepository,
+    private val roomRepository: RoomRepository,
 
     private val messageHandlerUseCase: MessageHandlerUseCase,
     private val disconnectWebSocketUseCase: DisconnectWebSocketUseCase,
@@ -35,9 +35,9 @@ class WaitingRoomViewModel @Inject constructor(
         }
     }
 
-    val waitingRoom = waitingRoomRepository.waitingRoom
+    val room = roomRepository.room
 
-    val qrCode = waitingRoomRepository.qrCode
+    val qrCode = roomRepository.qrCode
         .map { it?.asImageBitmap() }
         .stateIn(
             scope = viewModelScope,
@@ -45,7 +45,7 @@ class WaitingRoomViewModel @Inject constructor(
             initialValue = null
         )
 
-    fun exitWaitingRoom() {
+    fun exitRoom() {
         disconnectWebSocketUseCase()
     }
 

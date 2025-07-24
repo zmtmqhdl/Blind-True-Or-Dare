@@ -47,22 +47,22 @@ class WebSocketRepositoryImpl @Inject constructor(
     override val message: SharedFlow<Message?> = _message.asSharedFlow()
 
     override fun connect(
-        waitingRoomId: String,
+        roomId: String,
         player: Player
     ) {
         if (webSocket != null) return
 
         val playerJson = Json.encodeToString(player.toDto())
         val encodedPlayerJson = URLEncoder.encode(playerJson, "UTF-8")
-        val waitingRoomUrl = "ws://10.0.2.2:8080/waitingRoom?waitingRoomId=$waitingRoomId"
+        val roomUrl = "ws://10.0.2.2:8080/room?roomId=$roomId"
         val request = Request.Builder()
-            .url("$waitingRoomUrl&player=$encodedPlayerJson")
+            .url("$roomUrl&player=$encodedPlayerJson")
             .build()
 
         webSocket = client.newWebSocket(request, object : WebSocketListener() {
             override fun onOpen(webSocket: WebSocket, response: Response) {
                 scope.launch {
-                    _webSocketConnect.emit(value = WebSocketStatus.WebSocketConnectSuccess(waitingRoomUrl = waitingRoomUrl))
+                    _webSocketConnect.emit(value = WebSocketStatus.WebSocketConnectSuccess(roomUrl = roomUrl))
                 }
             }
 

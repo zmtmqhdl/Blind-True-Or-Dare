@@ -5,8 +5,8 @@ import com.example.core.core.ProjectViewModel
 import com.example.domain.Event
 import com.example.domain.common.onFailure
 import com.example.domain.common.onSuccess
-import com.example.domain.repository.WaitingRoomRepository
-import com.example.domain.usecase.CreateWaitingRoomUseCase
+import com.example.domain.repository.RoomRepository
+import com.example.domain.usecase.CreateRoomUseCase
 import com.example.domain.usecase.EmitEventUseCase
 import com.example.domain.usecase.HandleEventUseCase
 import com.example.domain.usecase.HideLoadingUseCase
@@ -26,12 +26,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val waitingRoomRepository: WaitingRoomRepository,
+    private val roomRepository: RoomRepository,
 
     private val messageHandlerUseCase: MessageHandlerUseCase,
     private val hideLoadingUseCase: HideLoadingUseCase,
     private val showLoadingUseCase: ShowLoadingUseCase,
-    private val createWaitingRoomUseCase: CreateWaitingRoomUseCase,
+    private val createRoomUseCase: CreateRoomUseCase,
     private val emitEventUseCase: EmitEventUseCase,
     private val handleEventUseCase: HandleEventUseCase,
     private val connectWebSocketUseCase: ConnectWebSocketUseCase,
@@ -47,41 +47,41 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun createWaitingRoom(
+    fun createRoom(
         nickname: String
     ) {
         showLoadingUseCase()
         logD(
             """
-            [fun createWaitingRoom start]
+            [fun createRoom start]
                 nickname = $nickname
         """.trimIndent()
         )
         viewModelScope.launch {
             val player = generatePlayerUseCase(nickname = nickname)
-            createWaitingRoomUseCase(
+            createRoomUseCase(
                 player = player
             ).onSuccess {
                 setPlayerUseCase(player = player)
                 connectWebSocketUseCase(
-                    waitingRoomId = it.waitingRoomId,
+                    roomId = it.roomId,
                     player = player
                 )
                 hideLoadingUseCase()
             }.onFailure {
-                emitEventUseCase(event = Event.CreateWaitingRoomFailure(error = it))
+                emitEventUseCase(event = Event.CreateRoomFailure(error = it))
             }
         }
     }
 
-    fun joinWaitingRoom(
+    fun joinRoom(
         nickname: String,
         waitingRoomId: String
     ) {
         showLoadingUseCase()
         logD(
             """
-            [fun joinWaitingRoom start]
+            [fun joinRoom start]
                 nickname = $nickname
         """.trimIndent()
         )
@@ -89,7 +89,7 @@ class MainViewModel @Inject constructor(
             val player = generatePlayerUseCase(nickname = nickname)
             setPlayerUseCase(player = player)
             connectWebSocketUseCase(
-                waitingRoomId = waitingRoomId,
+                roomId = waitingRoomId,
                 player = player
             )
             hideLoadingUseCase()
@@ -101,7 +101,7 @@ class MainViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             handleEventUseCase.invoke(
-                createWaitingRoomFailure = createWaitingRoomFailure,
+                createRoomFailure = createWaitingRoomFailure,
             )
         }
     }

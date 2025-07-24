@@ -3,7 +3,7 @@ package com.example.presentation.gameRoom
 import androidx.lifecycle.viewModelScope
 import com.example.core.core.ProjectViewModel
 import com.example.domain.model.Question
-import com.example.domain.repository.WaitingRoomRepository
+import com.example.domain.repository.RoomRepository
 import com.example.domain.usecase.WebSocketHandlerUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,14 +14,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GameRoomViewModel @Inject constructor(
-    waitingRoomRepository: WaitingRoomRepository,
+    roomRepository: RoomRepository,
     private val webSocketHandlerUseCase: WebSocketHandlerUseCase,
 ): ProjectViewModel(
     viewModelTag = "GameRoomViewModel"
 ){
-    val player = waitingRoomRepository.player
+    val room = roomRepository.room
+    val player = roomRepository.player
 
-    val questionSetting = waitingRoomRepository.questionSetting
     private val _myQuestionList: MutableStateFlow<MutableList<Question>> = MutableStateFlow(mutableListOf())
     val myQuestionList: StateFlow<MutableList<Question>> = _myQuestionList.asStateFlow()
 

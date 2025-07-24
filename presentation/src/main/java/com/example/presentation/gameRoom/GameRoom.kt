@@ -19,7 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.component.ProjectScreen
-import com.example.domain.model.QuestionSetting
+import com.example.domain.model.Room
 
 @Composable
 fun GameRoomRoute(
@@ -29,10 +29,10 @@ fun GameRoomRoute(
     val gameRoomViewModel: GameRoomViewModel = hiltViewModel()
 
     // question view model state value
-    val questionRoomSetting by gameRoomViewModel.questionSetting.collectAsState()
+    val room by gameRoomViewModel.room.collectAsState()
 
     // local state
-    val totalTime = questionRoomSetting?.time ?: 0L
+    val totalTime = room?.writeTime ?: 0L
     var remainingTime by remember { mutableLongStateOf(totalTime) }
     val progress = remember { Animatable(1f) }
 
@@ -56,7 +56,7 @@ fun GameRoomRoute(
     }
 
     GameRoomScreen(
-        questionSetting = questionRoomSetting,
+        room = room,
         progress = progress.value,
         remainingTime = remainingTime,
     )
@@ -64,8 +64,7 @@ fun GameRoomRoute(
 
 @Composable
 fun GameRoomScreen(
-
-    questionSetting: QuestionSetting?,
+    room: Room?,
     progress: Float,
     remainingTime: Long,
 ) {
@@ -83,15 +82,15 @@ fun GameRoomScreen(
             modifier = Modifier,
             contentAlignment = Alignment.Center
         ) {
-
+            // 이제 여기다가 분기 태워야함
         }
 
         Text(
-            text = "남은 시간: ${remainingTime}s / 총 시간: ${questionSetting?.time ?: 0L}s"
+            text = "남은 시간: ${remainingTime}s / 총 시간: ${room?.writeTime ?: 0L}s"
         )
 
         Text(
-            text = "문제 수: ${questionSetting?.number ?: 0}"
+            text = "문제 수: ${room?.questionNumber ?: 0}"
         )
     }
 }

@@ -21,8 +21,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.component.ProjectButton
 import com.example.core.component.ProjectScreen
 import com.example.core.theme.ProjectTheme
-import com.example.domain.model.WaitingRoom
-import com.example.domain.model.WaitingRoomStatus
+import com.example.domain.model.Room
+import com.example.domain.model.RoomStatus
 import com.example.presentation.R
 
 @Composable
@@ -34,7 +34,7 @@ fun WaitingRoomRoute(
     val waitingRoomViewModel: WaitingRoomViewModel = hiltViewModel()
 
     // waiting room view model state value
-    val waitingRoom by waitingRoomViewModel.waitingRoom.collectAsState()
+    val waitingRoom by waitingRoomViewModel.room.collectAsState()
     val qrCode by waitingRoomViewModel.qrCode.collectAsState()
 
     // effect
@@ -45,18 +45,18 @@ fun WaitingRoomRoute(
     }
 
     // 이벤트로 바꿔라...
-    LaunchedEffect(waitingRoom?.waitingRoomStatus) {
-        if (waitingRoom?.waitingRoomStatus == WaitingRoomStatus.WRITE) {
+    LaunchedEffect(waitingRoom?.roomStatus) {
+        if (waitingRoom?.roomStatus == RoomStatus.WRITE) {
             navigateToQuestionRoom()
         }
     }
 
     BackHandler {
-        waitingRoomViewModel.exitWaitingRoom()
+        waitingRoomViewModel.exitRoom()
     }
 
     WaitingRoomScreen(
-        waitingRoom = waitingRoom,
+        room = waitingRoom,
         qrCode = qrCode,
 
         onStartClick = { waitingRoomViewModel.sendStartMessage() }
@@ -65,7 +65,7 @@ fun WaitingRoomRoute(
 
 @Composable
 fun WaitingRoomScreen(
-    waitingRoom: WaitingRoom?,
+    room: Room?,
     qrCode: ImageBitmap?,
 
     onStartClick: () -> Unit
@@ -83,7 +83,7 @@ fun WaitingRoomScreen(
             Spacer(modifier = Modifier.height(ProjectTheme.space.space4))
 
             Text(
-                text = waitingRoom?.participantList?.map{it.nickname}.toString(),
+                text = room?.participantList?.map{it.nickname}.toString(),
                 style = ProjectTheme.typography.m.medium
             )
 

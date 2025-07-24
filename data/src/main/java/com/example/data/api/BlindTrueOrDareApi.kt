@@ -1,13 +1,13 @@
 package com.example.data.api
 
-import com.example.data.model.CreateWaitingRoomRequestDto
-import com.example.data.model.CreateWaitingRoomDto
+import com.example.data.model.CreateRoomRequestDto
+import com.example.data.model.CreateRoomDto
 import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface BlindTrueOrDareApi {
-    @POST("/waitingRoom/create")
-    suspend fun createWaitingRoom(
-        @Body createWaitingRoomRequestDto: CreateWaitingRoomRequestDto
-    ): CreateWaitingRoomDto
+    @POST("/room/create")
+    suspend fun createRoom(
+        @Body createRoomRequestDto: CreateRoomRequestDto
+    ): CreateRoomDto
 }

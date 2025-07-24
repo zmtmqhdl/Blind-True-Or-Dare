@@ -6,7 +6,7 @@ import javax.inject.Inject
 class HideLoadingUseCase @Inject constructor(
     private val loadingRepository: LoadingRepository
 ) {
-    operator suspend fun invoke() {
+    suspend operator  fun invoke() {
         loadingRepository.hide()
     }
 }

@@ -1,23 +1,17 @@
 package com.example.data
 
-import com.example.data.model.CreateWaitingRoomDto
-import com.example.data.model.CreateWaitingRoomRequestDto
-import com.example.data.model.GameStartDto
+import com.example.data.model.CreateRoomDto
+import com.example.data.model.CreateRoomRequestDto
 import com.example.data.model.MessageDto
 import com.example.data.model.PlayerDto
 import com.example.data.model.QuestionDto
-import com.example.data.model.QuestionSettingDto
-import com.example.data.model.WaitingRoomDataDto
-import com.example.data.model.WaitingRoomDto
-import com.example.domain.model.CreateWaitingRoom
-import com.example.domain.model.CreateWaitingRoomRequest
-import com.example.domain.model.GameStart
+import com.example.data.model.RoomDto
+import com.example.domain.model.CreateRoom
+import com.example.domain.model.CreateRoomRequest
 import com.example.domain.model.Message
 import com.example.domain.model.Player
 import com.example.domain.model.Question
-import com.example.domain.model.QuestionSetting
-import com.example.domain.model.WaitingRoom
-import com.example.domain.model.WaitingRoomStatus
+import com.example.domain.model.Room
 
 fun Player.toDto(): PlayerDto =
     PlayerDto(
@@ -25,46 +19,30 @@ fun Player.toDto(): PlayerDto =
         nickname = nickname
     )
 
-fun CreateWaitingRoomRequest.toDto() : CreateWaitingRoomRequestDto =
-    CreateWaitingRoomRequestDto(
+fun CreateRoomRequest.toDto() : CreateRoomRequestDto =
+    CreateRoomRequestDto(
         player = player.toDto()
     )
 
 fun PlayerDto.toDomain(): Player =
     Player(
-        playerId = this@toDomain.playerId,
+        playerId = playerId,
         nickname = nickname
     )
 
-fun CreateWaitingRoomDto.toDomain() : CreateWaitingRoom =
-    CreateWaitingRoom(
-        waitingRoomId = waitingRoomId
+fun CreateRoomDto.toDomain() : CreateRoom =
+    CreateRoom(
+        roomId = roomId
     )
 
-
-
-fun WaitingRoomDataDto.toDomain(): WaitingRoom =
-    WaitingRoom(
-        waitingRoomId = waitingRoomId,
+fun RoomDto.toDomain(): Room =
+    Room(
+        roomId = roomId,
         hostId = hostId,
         participantList = participantList.map { it.toDomain() },
-        waitingRoomStatus = WaitingRoomStatus.WAIT
-    )
-
-fun WaitingRoom.toDto(): WaitingRoomDataDto =
-    WaitingRoomDataDto(
-        waitingRoomId = waitingRoomId,
-        hostId = hostId,
-        participantList = participantList.map { it.toDto()},
-        waitingRoomStatus = WaitingRoomStatus.WAIT
-    )
-
-fun WaitingRoomDto.toDomain(): WaitingRoom =
-    WaitingRoom(
-        waitingRoomId = waitingRoomId,
-        hostId = hostId,
-        participantList = participantList.map { it.toDomain() },
-        waitingRoomStatus = waitingRoomStatus
+        roomStatus = roomStatus,
+        writeTime = writeTime,
+        questionNumber = questionNumber
     )
 
 fun MessageDto.toDomain(): Message =
@@ -80,18 +58,6 @@ fun Message.toDto(): MessageDto =
         senderId = senderId,
         data = data,
         timestamp = timestamp
-    )
-
-fun QuestionSettingDto.toDomain(): QuestionSetting =
-    QuestionSetting(
-        time = time,
-        number = number
-    )
-
-fun GameStartDto.toDomain(): GameStart =
-    GameStart(
-        waitingRoom = waitingRoom.toDomain(),
-        questionSetting = questionRoomSetting.toDomain()
     )
 
 fun QuestionDto.toDomain(): Question =

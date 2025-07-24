@@ -1,17 +1,16 @@
 package com.example.domain.usecase
 
-import android.graphics.Bitmap
 import com.example.domain.repository.RoomRepository
 import javax.inject.Inject
 
-class SetQrCodeUseCase @Inject constructor(
+class SetRoomUseCase @Inject constructor(
     private val roomRepository: RoomRepository
 ) {
     operator fun invoke(
-        qrCode: Bitmap?
+        data: String?
     ) {
-        roomRepository.setQrCode(
-            qrCode = qrCode
+        roomRepository.setRoom(
+            data = data
         )
     }
 }

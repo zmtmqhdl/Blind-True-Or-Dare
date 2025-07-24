@@ -1,17 +1,17 @@
 package com.example.domain.usecase
 
 import com.example.domain.model.Player
-import com.example.domain.repository.WaitingRoomRepository
+import com.example.domain.repository.RoomRepository
 import javax.inject.Inject
 
 class SetPlayerUseCase @Inject
 constructor(
-    private val waitingRoomRepository: WaitingRoomRepository
+    private val roomRepository: RoomRepository
 ) {
     operator fun invoke(
         player: Player?
     ) {
-        waitingRoomRepository.setPlayer(
+        roomRepository.setPlayer(
             player = player
         )
     }

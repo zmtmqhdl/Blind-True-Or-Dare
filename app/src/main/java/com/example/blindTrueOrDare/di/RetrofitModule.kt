@@ -2,8 +2,8 @@ package com.example.blindTrueOrDare.di
 
 import com.example.data.api.BlindTrueOrDareApi
 import com.example.data.client.RetrofitClient
-import com.example.data.repositoryImpl.WaitingRoomRepositoryImpl
-import com.example.domain.repository.WaitingRoomRepository
+import com.example.data.repositoryImpl.RoomRepositoryImpl
+import com.example.domain.repository.RoomRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,7 +22,7 @@ object RetrofitModule {
 
     @Provides
     @Singleton
-    fun provideRetrofitRepository(blindTrueOrDareApi: BlindTrueOrDareApi): WaitingRoomRepository {
-        return WaitingRoomRepositoryImpl(blindTrueOrDareApi)
+    fun provideRetrofitRepository(blindTrueOrDareApi: BlindTrueOrDareApi): RoomRepository {
+        return RoomRepositoryImpl(blindTrueOrDareApi)
     }
 }

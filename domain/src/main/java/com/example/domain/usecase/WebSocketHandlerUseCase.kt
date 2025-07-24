@@ -15,7 +15,7 @@ class WebSocketHandlerUseCase @Inject constructor(
         webSocketRepository.webSocketConnect.collect {
             when (it) {
                 is WebSocketStatus.WebSocketConnectSuccess -> {
-                    onConnect(it.waitingRoomUrl)
+                    onConnect(it.roomUrl)
                 }
                 is WebSocketStatus.WebSocketConnectFailure -> {
                     onConnectFailure(it.error)
