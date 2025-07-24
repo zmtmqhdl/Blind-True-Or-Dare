@@ -5,7 +5,8 @@ import com.example.data.model.CreateWaitingRoomRequestDto
 import com.example.data.model.GameStartDto
 import com.example.data.model.MessageDto
 import com.example.data.model.PlayerDto
-import com.example.data.model.QuestionRoomSettingDto
+import com.example.data.model.QuestionDto
+import com.example.data.model.QuestionSettingDto
 import com.example.data.model.WaitingRoomDataDto
 import com.example.data.model.WaitingRoomDto
 import com.example.domain.model.CreateWaitingRoom
@@ -13,7 +14,8 @@ import com.example.domain.model.CreateWaitingRoomRequest
 import com.example.domain.model.GameStart
 import com.example.domain.model.Message
 import com.example.domain.model.Player
-import com.example.domain.model.QuestionRoomSetting
+import com.example.domain.model.Question
+import com.example.domain.model.QuestionSetting
 import com.example.domain.model.WaitingRoom
 import com.example.domain.model.WaitingRoomStatus
 
@@ -46,7 +48,7 @@ fun WaitingRoomDataDto.toDomain(): WaitingRoom =
         waitingRoomId = waitingRoomId,
         hostId = hostId,
         participantList = participantList.map { it.toDomain() },
-        waitingRoomStatus = WaitingRoomStatus.Waiting
+        waitingRoomStatus = WaitingRoomStatus.WAIT
     )
 
 fun WaitingRoom.toDto(): WaitingRoomDataDto =
@@ -54,7 +56,7 @@ fun WaitingRoom.toDto(): WaitingRoomDataDto =
         waitingRoomId = waitingRoomId,
         hostId = hostId,
         participantList = participantList.map { it.toDto()},
-        waitingRoomStatus = WaitingRoomStatus.Waiting
+        waitingRoomStatus = WaitingRoomStatus.WAIT
     )
 
 fun WaitingRoomDto.toDomain(): WaitingRoom =
@@ -80,8 +82,8 @@ fun Message.toDto(): MessageDto =
         timestamp = timestamp
     )
 
-fun QuestionRoomSettingDto.toDomain(): QuestionRoomSetting =
-    QuestionRoomSetting(
+fun QuestionSettingDto.toDomain(): QuestionSetting =
+    QuestionSetting(
         time = time,
         number = number
     )
@@ -89,5 +91,21 @@ fun QuestionRoomSettingDto.toDomain(): QuestionRoomSetting =
 fun GameStartDto.toDomain(): GameStart =
     GameStart(
         waitingRoom = waitingRoom.toDomain(),
-        questionRoomSetting = questionRoomSetting.toDomain()
+        questionSetting = questionRoomSetting.toDomain()
+    )
+
+fun QuestionDto.toDomain(): Question =
+    Question(
+        playerId = playerId,
+        question = question,
+        oCount = oCount,
+        xCount = xCount
+    )
+
+fun Question.toDto(): QuestionDto =
+    QuestionDto(
+        playerId = playerId,
+        question = question,
+        oCount = oCount,
+        xCount = xCount
     )

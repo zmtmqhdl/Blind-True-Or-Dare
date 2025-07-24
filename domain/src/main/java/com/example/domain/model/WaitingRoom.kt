@@ -21,6 +21,7 @@ data class Player(
 )
 
 enum class WaitingRoomStatus {
-    Waiting,
-    Playing
+    WAIT,
+    WRITE,
+    ANSWER
 }

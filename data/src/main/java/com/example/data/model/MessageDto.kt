@@ -10,3 +10,9 @@ data class MessageDto(
     val data: String? = null,
     val timestamp: Long
 )
+
+@Serializable
+data class GameStartDto (
+    val waitingRoom: WaitingRoomDto,
+    val questionRoomSetting: QuestionSettingDto
+)

@@ -4,14 +4,14 @@ import android.graphics.Bitmap
 import com.example.domain.common.ApiResponse
 import com.example.domain.model.CreateWaitingRoom
 import com.example.domain.model.Player
-import com.example.domain.model.QuestionRoomSetting
+import com.example.domain.model.QuestionSetting
 import com.example.domain.model.WaitingRoom
 import kotlinx.coroutines.flow.StateFlow
 
 
 interface WaitingRoomRepository {
     val waitingRoom: StateFlow<WaitingRoom?>
-    val questionRoomSetting: StateFlow<QuestionRoomSetting?>
+    val questionSetting: StateFlow<QuestionSetting?>
     val qrCode: StateFlow<Bitmap?>
     val player: StateFlow<Player?>
 

@@ -7,6 +7,12 @@ data class Message (
     val timestamp: Long
 )
 
+data class GameStart (
+    val waitingRoom: WaitingRoom,
+    val questionSetting: QuestionSetting
+)
+
+
 enum class MessageType {
     UPDATE, SEND_START, START
 }
