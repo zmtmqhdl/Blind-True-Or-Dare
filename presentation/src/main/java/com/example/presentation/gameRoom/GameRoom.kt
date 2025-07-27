@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.component.ProjectScreen
 import com.example.domain.model.Room
+import com.example.domain.model.RoomStatus
 
 @Composable
 fun GameRoomRoute(
@@ -78,19 +79,26 @@ fun GameRoomScreen(
             strokeCap = ProgressIndicatorDefaults.LinearStrokeCap,
         )
 
-        Box(
-            modifier = Modifier,
-            contentAlignment = Alignment.Center
-        ) {
-            // 이제 여기다가 분기 태워야함
-        }
-
         Text(
             text = "남은 시간: ${remainingTime}s / 총 시간: ${room?.writeTime ?: 0L}s"
         )
 
-        Text(
-            text = "문제 수: ${room?.questionNumber ?: 0}"
-        )
+        Box(
+            modifier = Modifier,
+            contentAlignment = Alignment.Center
+        ) {
+            if (room?.roomStatus == RoomStatus.WRITE) {
+
+            } else if (room?.roomStatus == RoomStatus.ANSWER) {
+
+            }
+
+
+
+
+            Text(
+                text = "문제 수: ${room?.questionNumber ?: 0}"
+            )
+        }
     }
 }

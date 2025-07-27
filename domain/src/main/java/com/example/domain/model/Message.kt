@@ -9,5 +9,5 @@ data class Message (
 
 
 enum class MessageType {
-    UPDATE, SEND_START,
+    UPDATE, SEND_START, SEND_WRITE_END, SEND_ANSWER_END
 }
