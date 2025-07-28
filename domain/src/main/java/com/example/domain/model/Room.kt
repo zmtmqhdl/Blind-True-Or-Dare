@@ -7,7 +7,7 @@ data class CreateRoom(
 data class Room(
     val roomId: String,
     val hostId: String,
-    val participantList: List<Player>,
+    val participantList: Set<Player>,
     var roomStatus: RoomStatus,
     val writeTime: Long,
     val questionNumber: Int
@@ -32,5 +32,6 @@ data class Question(
 enum class RoomStatus {
     WAIT,
     WRITE,
-    ANSWER
+    ANSWER,
+    END
 }

@@ -19,7 +19,7 @@ data class CreateRoomDto(
 data class RoomDto (
     val roomId: String,
     val hostId: String,
-    val participantList: List<PlayerDto>,
+    val participantList: Set<PlayerDto>,
     val roomStatus: RoomStatus,
     val writeTime: Long,
     val questionNumber: Int
