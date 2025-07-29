@@ -5,6 +5,7 @@ import com.example.data.toDomain
 import com.example.data.toDto
 import com.example.domain.WebSocketStatus
 import com.example.domain.model.Message
+import com.example.domain.model.MessageType
 import com.example.domain.model.Player
 import com.example.domain.repository.WebSocketRepository
 import kotlinx.coroutines.CoroutineScope
@@ -87,8 +88,35 @@ class WebSocketRepositoryImpl @Inject constructor(
         })
     }
 
-    override fun send(message: Message) {
-        webSocket?.send(text = Json.encodeToString(value = message.toDto()))
+    override fun send(
+        messageType: MessageType,
+        playerId: String,
+        data: Any?,
+        timestamp: Long
+    ) {
+        val message = when(messageType) {
+            MessageType.SEND_START -> {
+                Message(
+                    type = MessageType.SEND_START,
+                    playerId = playerId,
+                    timestamp = System.currentTimeMillis()
+                )
+            }
+
+            MessageType.SEND_WRITE_END -> {
+                Message(
+                    type = MessageType.SEND_WRITE_END,
+                    playerId = playerId,
+                    data = Json.encodeToString(value = data),
+                    timestamp = System.currentTimeMillis()
+                )
+            }
+            else -> null
+        }
+        message?.let{
+            webSocket?.send(text = Json.encodeToString(value = message.toDto()))
+
+        }
     }
 
     override fun close() {

@@ -8,7 +8,7 @@ import com.example.domain.common.onSuccess
 import com.example.domain.repository.RoomRepository
 import com.example.domain.usecase.CreateRoomUseCase
 import com.example.domain.usecase.EmitEventUseCase
-import com.example.domain.usecase.HandleEventUseCase
+import com.example.domain.usecase.EventHandlerUseCase
 import com.example.domain.usecase.HideLoadingUseCase
 import com.example.domain.usecase.MessageHandlerUseCase
 import com.example.domain.usecase.SetPlayerUseCase
@@ -33,7 +33,7 @@ class MainViewModel @Inject constructor(
     private val showLoadingUseCase: ShowLoadingUseCase,
     private val createRoomUseCase: CreateRoomUseCase,
     private val emitEventUseCase: EmitEventUseCase,
-    private val handleEventUseCase: HandleEventUseCase,
+    private val eventHandlerUseCase: EventHandlerUseCase,
     private val connectWebSocketUseCase: ConnectWebSocketUseCase,
     private val webSocketHandlerUseCase: WebSocketHandlerUseCase,
     private val setQrCodeUseCase: SetQrCodeUseCase,
@@ -96,11 +96,11 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun handleEvent(
+    fun eventHandler(
         createWaitingRoomFailure: () -> Unit,
     ) {
         viewModelScope.launch {
-            handleEventUseCase.invoke(
+            eventHandlerUseCase.invoke(
                 createRoomFailure = createWaitingRoomFailure,
             )
         }

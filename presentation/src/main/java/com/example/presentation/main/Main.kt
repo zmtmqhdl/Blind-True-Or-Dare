@@ -145,7 +145,7 @@ fun MainRoute(
     // effect
     LaunchedEffect(Unit) {
         launch {
-            mainViewModel.handleEvent(
+            mainViewModel.eventHandler(
                 createWaitingRoomFailure = { createWaitingRoomFailureDialog = true }
             )
         }

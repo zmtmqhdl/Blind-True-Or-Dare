@@ -9,22 +9,16 @@ import javax.inject.Inject
 class SendMessageUseCase @Inject constructor(
     private val webSocketRepository: WebSocketRepository,
     private val roomRepository: RoomRepository
-
 ) {
-    operator fun invoke(messageType: MessageType) {
-        val senderId = roomRepository.player.value!!.playerId
-        val message = when(messageType) {
-            MessageType.SEND_START -> {
-                Message(
-                    type = MessageType.SEND_START,
-                    senderId = senderId,
-                    timestamp = System.currentTimeMillis()
-                )
-            }
-            else -> null
-        }
-        message?.let {
-            webSocketRepository.send(message = it)
-        }
+    operator fun invoke(
+        messageType: MessageType,
+        data: Any? = null
+    ) {
+        webSocketRepository.send(
+            messageType = messageType,
+            playerId = roomRepository.player.value!!.playerId,
+            data = data,
+            timestamp = System.currentTimeMillis()
+        )
     }
 }

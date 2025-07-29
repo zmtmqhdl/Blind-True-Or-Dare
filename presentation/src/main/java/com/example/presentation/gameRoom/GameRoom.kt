@@ -12,6 +12,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.withFrameNanos
@@ -33,24 +34,10 @@ fun GameRoomRoute(
     val room by gameRoomViewModel.room.collectAsState()
 
     // local state
-    val totalTime = room?.writeTime ?: 0L
-    var remainingTime by remember { mutableLongStateOf(totalTime) }
-    val progress = remember { Animatable(1f) }
+    var questionValue by remember { mutableStateOf("") }
+    // 질문 이벤트 받아서 넣는거 해보자
 
     // effect
-    LaunchedEffect(totalTime) {
-        if (totalTime > 0L) {
-            val startTime = withFrameNanos { it }
-            var elapsed: Long
-            do {
-                elapsed = (withFrameNanos { it } - startTime) / 1_000_000
-                val clamped = elapsed.coerceAtMost(totalTime * 1000L)
-                remainingTime = ((totalTime * 1000L - clamped) / 1000L).coerceAtLeast(0L)
-                progress.snapTo(1f - clamped.toFloat() / (totalTime * 1000L))
-
-            } while (clamped < totalTime * 1000L)
-        }
-    }
 
     BackHandler {
         // 종료 팝업 띄워줘야함
@@ -58,29 +45,21 @@ fun GameRoomRoute(
 
     GameRoomScreen(
         room = room,
-        progress = progress.value,
-        remainingTime = remainingTime,
+
     )
 }
 
 @Composable
 fun GameRoomScreen(
     room: Room?,
-    progress: Float,
-    remainingTime: Long,
+
 ) {
     ProjectScreen.Screen {
 
-        LinearProgressIndicator(
-            progress = { progress.coerceIn(0f, 1f) },
-            modifier = Modifier.fillMaxWidth(),
-            color = ProgressIndicatorDefaults.linearColor,
-            trackColor = ProgressIndicatorDefaults.linearTrackColor,
-            strokeCap = ProgressIndicatorDefaults.LinearStrokeCap,
-        )
+
 
         Text(
-            text = "남은 시간: ${remainingTime}s / 총 시간: ${room?.writeTime ?: 0L}s"
+            text = "남은 시간: / 총 시간: ${room?.writeTime ?: 0L}s"
         )
 
         Box(

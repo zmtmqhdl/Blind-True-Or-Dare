@@ -55,7 +55,7 @@ fun MessageDto.toDomain(): Message =
 fun Message.toDto(): MessageDto =
     MessageDto(
         type = type,
-        senderId = senderId,
+        playerId = playerId,
         data = data,
         timestamp = timestamp
     )
