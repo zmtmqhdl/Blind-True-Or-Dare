@@ -19,9 +19,12 @@ import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.core.component.ProjectButton
 import com.example.core.component.ProjectScreen
+import com.example.core.component.ProjectTextField
 import com.example.domain.model.Room
 import com.example.domain.model.RoomStatus
+import kotlinx.coroutines.launch
 
 @Composable
 fun GameRoomRoute(
@@ -32,12 +35,28 @@ fun GameRoomRoute(
 
     // question view model state value
     val room by gameRoomViewModel.room.collectAsState()
+    val time by gameRoomViewModel.time.collectAsState()
+    val currentQuestionNumber by gameRoomViewModel.currentQuestionNumber.collectAsState()
 
     // local state
     var questionValue by remember { mutableStateOf("") }
+    var voteValue by remember { mutableStateOf(true) }
     // 질문 이벤트 받아서 넣는거 해보자
 
     // effect
+    LaunchedEffect(Unit) {
+        launch {
+            gameRoomViewModel.eventHandler(
+                writeNextQuestion = {
+                    gameRoomViewModel.submit(
+                        questionValue = questionValue,
+                        voteValue = voteValue
+                    )
+                    questionValue = ""
+                }
+            )
+        }
+    }
 
     BackHandler {
         // 종료 팝업 띄워줘야함
@@ -45,21 +64,36 @@ fun GameRoomRoute(
 
     GameRoomScreen(
         room = room,
-
+        questionValue = questionValue,
+        onSubmitClick = {
+            gameRoomViewModel.submit(
+                questionValue = questionValue,
+                voteValue = voteValue
+            )
+            questionValue = ""
+        },
+        currentQuestionNumber = currentQuestionNumber,
+        updateQuestionValue = { questionValue = it },
+        time = time
     )
 }
 
 @Composable
 fun GameRoomScreen(
     room: Room?,
+    questionValue: String,
+    currentQuestionNumber: Int,
+    onSubmitClick: () -> Unit,
+    updateQuestionValue: (String) -> Unit,
+    time: Long
 
 ) {
     ProjectScreen.Screen {
-
-
-
         Text(
-            text = "남은 시간: / 총 시간: ${room?.writeTime ?: 0L}s"
+            text = "남은 시간: $time / 총 시간: ${room?.writeTime ?: 0L}s"
+        )
+        Text(
+            text = "현재 문제: $currentQuestionNumber / 문제 수: ${room?.questionNumber ?: 0}"
         )
 
         Box(
@@ -67,17 +101,31 @@ fun GameRoomScreen(
             contentAlignment = Alignment.Center
         ) {
             if (room?.roomStatus == RoomStatus.WRITE) {
+                ProjectTextField.OutlinedTextField(
+                    value = questionValue,
+                    onValueChange = {
+                        updateQuestionValue(it)
+                    }
+                )
 
             } else if (room?.roomStatus == RoomStatus.ANSWER) {
 
             }
 
-
-
-
-            Text(
-                text = "문제 수: ${room?.questionNumber ?: 0}"
-            )
         }
+        ProjectButton.Primary.Medium(
+            text = "버튼",
+            onClick = onSubmitClick
+        )
+
+        ProjectButton.Primary.Medium(
+            text = "O",
+            onClick = {}
+        )
+
+        ProjectButton.Primary.Medium(
+            text = "X",
+            onClick = {}
+        )
     }
 }

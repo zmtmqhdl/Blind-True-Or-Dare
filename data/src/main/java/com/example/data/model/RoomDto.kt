@@ -34,6 +34,6 @@ data class CreateRoomRequestDto(
 data class QuestionDto(
     val playerId: String,
     val question: String,
-    val oCount: Int,
-    val xCount: Int
+    val oVoters: Set<String>,
+    val xVoters: Set<String>
 )

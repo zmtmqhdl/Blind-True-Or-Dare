@@ -17,12 +17,12 @@ fun NavGraphBuilder.main(navController: NavController) {
 
     composable(route = Route.WaitingRoom.route) {
         WaitingRoomRoute(
-            navigateToQuestionRoom = { navController.navigate(route = Route.QuestionRoom.route) },
+            navigateToGameRoom = { navController.navigate(route = Route.GameRoom.route) },
             popBackStack = { navController.popBackStack() }
         )
     }
 
-    composable(route = Route.QuestionRoom.route) {
+    composable(route = Route.GameRoom.route) {
         GameRoomRoute(
             popBackStack = { navController.popBackStack() }
         )

@@ -1,6 +1,5 @@
 package com.example.domain.usecase
 
-import com.example.domain.model.Message
 import com.example.domain.model.MessageType
 import com.example.domain.repository.RoomRepository
 import com.example.domain.repository.WebSocketRepository

@@ -21,7 +21,7 @@ sealed class Route(
         route = "waiting_room",
     )
 
-    data object QuestionRoom: Route(
-        route  = "question_room"
+    data object GameRoom: Route(
+        route  = "game_room"
     )
 }

@@ -19,6 +19,7 @@ class EventHandlerUseCase @Inject constructor(
                 is Event.WriteNextQuestion -> {
                     writeNextQuestion()
                 }
+
             }
         }
     }

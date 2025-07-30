@@ -1,24 +1,22 @@
 package com.example.presentation.gameRoom
 
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.lifecycle.viewModelScope
 import com.example.core.core.ProjectViewModel
 import com.example.domain.Event
 import com.example.domain.model.MessageType
 import com.example.domain.model.Question
+import com.example.domain.model.RoomStatus
 import com.example.domain.repository.RoomRepository
 import com.example.domain.usecase.EmitEventUseCase
+import com.example.domain.usecase.EventHandlerUseCase
 import com.example.domain.usecase.SendMessageUseCase
 import com.example.domain.usecase.WebSocketHandlerUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,7 +25,8 @@ class GameRoomViewModel @Inject constructor(
     roomRepository: RoomRepository,
     private val webSocketHandlerUseCase: WebSocketHandlerUseCase,
     private val sendMessageUseCase: SendMessageUseCase,
-    private val emitEventUseCase: EmitEventUseCase
+    private val emitEventUseCase: EmitEventUseCase,
+    private val eventHandlerUseCase: EventHandlerUseCase
 ): ProjectViewModel(
     viewModelTag = "GameRoomViewModel"
 ){
@@ -52,39 +51,54 @@ class GameRoomViewModel @Inject constructor(
         }
     }
 
-    fun startWriteTimer() {
-        timeJob?.cancel()
-        timeJob = viewModelScope.launch {
-            for (time in 30 downTo 0) {
-                _time.value = time * 1000L
-                if (time != 0) {
-                    delay(timeMillis = 1000L)
-                }
-                emitEventUseCase(event = Event.WriteNextQuestion)
-            }
+    fun eventHandler(
+        writeNextQuestion: () -> Unit
+    ) {
+        viewModelScope.launch {
+            eventHandlerUseCase(
+                writeNextQuestion = writeNextQuestion
+            )
         }
     }
 
-    fun addQuestion(
-        question: String,
+    fun stopTimer() {
+        timeJob?.cancel()
+    }
+
+    fun submit(
+        questionValue: String,
+        voteValue: Boolean
     ) {
-        _myQuestionList.value.add(
-            Question(
-                playerId = player.value!!.playerId,
-                question = question,
-                oCount = 0,
-                xCount = 0
+        if (room.value?.roomStatus == RoomStatus.WRITE) {
+            _myQuestionList.value.add(
+                Question(
+                    playerId = player.value!!.playerId,
+                    question = questionValue,
+                    oVoters = setOf(),
+                    xVoters = setOf()
+                )
             )
-        )
+            _currentQuestionNumber.value += 1
+            if (_currentQuestionNumber.value > room.value?.questionNumber!!) {
+                sendMessageUseCase(
+                    messageType = MessageType.SEND_WRITE_END,
+                    data = _myQuestionList.value
+                )
+                timeJob?.cancel()
+            } else {
+                timeJob?.cancel()
+                timeJob = viewModelScope.launch {
+                    for (time in 30 downTo 0) {
+                        _time.value = time * 1000L
+                        if (time != 0) {
+                            delay(timeMillis = 1000L)
+                        }
+                    }
+                    emitEventUseCase(event = Event.WriteNextQuestion)
+                }
+            }
+        } else if (room.value?.roomStatus == RoomStatus.ANSWER) {
+
+        }
     }
-
-    fun sendQuestion() {
-        sendMessageUseCase(
-            messageType = MessageType.SEND_WRITE_END,
-            data = _myQuestionList.value
-        )
-    }
-
-
-
 }

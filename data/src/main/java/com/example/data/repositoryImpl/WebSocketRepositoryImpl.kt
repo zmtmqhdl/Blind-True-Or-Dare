@@ -1,12 +1,15 @@
 package com.example.data.repositoryImpl
 
+import android.util.Log
 import com.example.data.model.MessageDto
+import com.example.data.model.QuestionDto
 import com.example.data.toDomain
 import com.example.data.toDto
 import com.example.domain.WebSocketStatus
 import com.example.domain.model.Message
 import com.example.domain.model.MessageType
 import com.example.domain.model.Player
+import com.example.domain.model.Question
 import com.example.domain.repository.WebSocketRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -104,10 +107,11 @@ class WebSocketRepositoryImpl @Inject constructor(
             }
 
             MessageType.SEND_WRITE_END -> {
+                val questionList = data as? List<Question>
                 Message(
                     type = MessageType.SEND_WRITE_END,
                     playerId = playerId,
-                    data = Json.encodeToString(value = data),
+                    data = Json.encodeToString<List<QuestionDto>>(value = questionList!!.map { it.toDto()}),
                     timestamp = System.currentTimeMillis()
                 )
             }

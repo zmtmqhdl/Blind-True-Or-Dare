@@ -39,7 +39,7 @@ fun RoomDto.toDomain(): Room =
     Room(
         roomId = roomId,
         hostId = hostId,
-        participantList = participantList.map { it.toDomain() },
+        participantList = participantList.map { it.toDomain() }.toSet(),
         roomStatus = roomStatus,
         writeTime = writeTime,
         questionNumber = questionNumber
@@ -64,14 +64,14 @@ fun QuestionDto.toDomain(): Question =
     Question(
         playerId = playerId,
         question = question,
-        oCount = oCount,
-        xCount = xCount
+        oVoters = oVoters,
+        xVoters = xVoters
     )
 
 fun Question.toDto(): QuestionDto =
     QuestionDto(
         playerId = playerId,
         question = question,
-        oCount = oCount,
-        xCount = xCount
+        oVoters = oVoters,
+        xVoters = xVoters
     )

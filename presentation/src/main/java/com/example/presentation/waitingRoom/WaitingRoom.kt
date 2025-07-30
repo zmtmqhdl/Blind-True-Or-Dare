@@ -1,5 +1,6 @@
 package com.example.presentation.waitingRoom
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -27,7 +28,7 @@ import com.example.presentation.R
 
 @Composable
 fun WaitingRoomRoute(
-    navigateToQuestionRoom: () -> Unit,
+    navigateToGameRoom: () -> Unit,
     popBackStack: () -> Unit
 ) {
     // view model
@@ -44,10 +45,10 @@ fun WaitingRoomRoute(
         )
     }
 
-    // 이벤트로 바꿔라...
+    // 이벤트로 바꿔라...?
     LaunchedEffect(waitingRoom?.roomStatus) {
         if (waitingRoom?.roomStatus == RoomStatus.WRITE) {
-            navigateToQuestionRoom()
+            navigateToGameRoom()
         }
     }
 
