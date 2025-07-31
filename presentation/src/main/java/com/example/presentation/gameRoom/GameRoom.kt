@@ -1,21 +1,15 @@
 package com.example.presentation.gameRoom
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -28,6 +22,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun GameRoomRoute(
+    navigateToResultRoom: () -> Unit,
     popBackStack: () -> Unit
 ) {
     // view model
@@ -40,21 +35,35 @@ fun GameRoomRoute(
 
     // local state
     var questionValue by remember { mutableStateOf("") }
-    var voteValue by remember { mutableStateOf(true) }
-    // 질문 이벤트 받아서 넣는거 해보자
+    var voteValue by remember { mutableStateOf<Boolean?>(null) }
 
     // effect
     LaunchedEffect(Unit) {
         launch {
             gameRoomViewModel.eventHandler(
                 writeNextQuestion = {
-                    gameRoomViewModel.submit(
+                    gameRoomViewModel.submitQuestion(
                         questionValue = questionValue,
-                        voteValue = voteValue
+                        voteValue = voteValue!!
                     )
                     questionValue = ""
+                },
+                answerNextQuestion = {
+                    if (voteValue == null) {
+                        voteValue = true
+                    }
+                    gameRoomViewModel.submitQuestion(
+                        questionValue = questionValue,
+                        voteValue = voteValue!!
+                    )
                 }
             )
+        }
+    }
+
+    LaunchedEffect(room?.roomStatus) {
+        if (room?.roomStatus == RoomStatus.END) {
+            navigateToResultRoom()
         }
     }
 
@@ -66,15 +75,18 @@ fun GameRoomRoute(
         room = room,
         questionValue = questionValue,
         onSubmitClick = {
-            gameRoomViewModel.submit(
+            gameRoomViewModel.submitQuestion(
                 questionValue = questionValue,
-                voteValue = voteValue
+                voteValue = voteValue ?: true
             )
             questionValue = ""
         },
         currentQuestionNumber = currentQuestionNumber,
         updateQuestionValue = { questionValue = it },
-        time = time
+        onOVote = { voteValue = true},
+        onXVote = { voteValue = false },
+        time = time,
+        voteValue = voteValue
     )
 }
 
@@ -85,8 +97,10 @@ fun GameRoomScreen(
     currentQuestionNumber: Int,
     onSubmitClick: () -> Unit,
     updateQuestionValue: (String) -> Unit,
-    time: Long
-
+    onOVote: () -> Unit,
+    onXVote: () -> Unit,
+    time: Long,
+    voteValue: Boolean?
 ) {
     ProjectScreen.Screen {
         Text(
@@ -109,7 +123,9 @@ fun GameRoomScreen(
                 )
 
             } else if (room?.roomStatus == RoomStatus.ANSWER) {
-
+                Text(
+                    text = room.questionList[currentQuestionNumber - 1].question
+                )
             }
 
         }
@@ -119,13 +135,13 @@ fun GameRoomScreen(
         )
 
         ProjectButton.Primary.Medium(
-            text = "O",
-            onClick = {}
+            text = if (voteValue == true) "O 선택 중" else "O",
+            onClick = onOVote
         )
 
         ProjectButton.Primary.Medium(
-            text = "X",
-            onClick = {}
+            text = if (voteValue == false) "X 선택 중" else "X",
+            onClick = onXVote
         )
     }
 }

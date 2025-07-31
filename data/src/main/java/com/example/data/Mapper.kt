@@ -1,11 +1,13 @@
 package com.example.data
 
+import com.example.data.model.AnswerDto
 import com.example.data.model.CreateRoomDto
 import com.example.data.model.CreateRoomRequestDto
 import com.example.data.model.MessageDto
 import com.example.data.model.PlayerDto
 import com.example.data.model.QuestionDto
 import com.example.data.model.RoomDto
+import com.example.domain.model.Answer
 import com.example.domain.model.CreateRoom
 import com.example.domain.model.CreateRoomRequest
 import com.example.domain.model.Message
@@ -42,7 +44,8 @@ fun RoomDto.toDomain(): Room =
         participantList = participantList.map { it.toDomain() }.toSet(),
         roomStatus = roomStatus,
         writeTime = writeTime,
-        questionNumber = questionNumber
+        questionNumber = questionNumber,
+        questionList = questionList.map { it.toDomain()}
     )
 
 fun MessageDto.toDomain(): Message =
@@ -62,6 +65,7 @@ fun Message.toDto(): MessageDto =
 
 fun QuestionDto.toDomain(): Question =
     Question(
+        questionId = questionId,
         playerId = playerId,
         question = question,
         oVoters = oVoters,
@@ -70,8 +74,23 @@ fun QuestionDto.toDomain(): Question =
 
 fun Question.toDto(): QuestionDto =
     QuestionDto(
+        questionId = questionId,
         playerId = playerId,
         question = question,
         oVoters = oVoters,
         xVoters = xVoters
+    )
+
+fun Answer.toDto(): AnswerDto =
+    AnswerDto(
+        questionId = questionId,
+        playerId = playerId,
+        answer = answer
+    )
+
+fun AnswerDto.toDomain(): Answer =
+    Answer(
+        questionId = questionId,
+        playerId = playerId,
+        answer = answer
     )

@@ -1,11 +1,13 @@
 package com.example.data.repositoryImpl
 
 import android.util.Log
+import com.example.data.model.AnswerDto
 import com.example.data.model.MessageDto
 import com.example.data.model.QuestionDto
 import com.example.data.toDomain
 import com.example.data.toDto
 import com.example.domain.WebSocketStatus
+import com.example.domain.model.Answer
 import com.example.domain.model.Message
 import com.example.domain.model.MessageType
 import com.example.domain.model.Player
@@ -29,9 +31,10 @@ import java.net.URLEncoder
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@Suppress("UNCHECKED_CAST")
 @Singleton
 class WebSocketRepositoryImpl @Inject constructor(
-): WebSocketRepository {
+) : WebSocketRepository {
     private val _webSocketConnect = MutableSharedFlow<WebSocketStatus>(
         replay = 0,
         extraBufferCapacity = 64,
@@ -82,6 +85,7 @@ class WebSocketRepositoryImpl @Inject constructor(
                 }
 
             }
+
             override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
                 this@WebSocketRepositoryImpl.webSocket = null
                 scope.launch {
@@ -97,7 +101,7 @@ class WebSocketRepositoryImpl @Inject constructor(
         data: Any?,
         timestamp: Long
     ) {
-        val message = when(messageType) {
+        val message = when (messageType) {
             MessageType.SEND_START -> {
                 Message(
                     type = MessageType.SEND_START,
@@ -107,17 +111,28 @@ class WebSocketRepositoryImpl @Inject constructor(
             }
 
             MessageType.SEND_WRITE_END -> {
-                val questionList = data as? List<Question>
+                val questionList = data as List<Question>
                 Message(
                     type = MessageType.SEND_WRITE_END,
                     playerId = playerId,
-                    data = Json.encodeToString<List<QuestionDto>>(value = questionList!!.map { it.toDto()}),
+                    data = Json.encodeToString<List<QuestionDto>>(value = questionList.map { it.toDto() }),
                     timestamp = System.currentTimeMillis()
                 )
             }
+
+            MessageType.SEND_ANSWER_END -> {
+                val answerList = data as List<Answer>
+                Message(
+                    type = MessageType.SEND_ANSWER_END,
+                    playerId = playerId,
+                    data = Json.encodeToString<List<AnswerDto>>(value = answerList.map { it.toDto() }),
+                    timestamp = System.currentTimeMillis()
+                )
+            }
+
             else -> null
         }
-        message?.let{
+        message?.let {
             webSocket?.send(text = Json.encodeToString(value = message.toDto()))
 
         }

@@ -3,6 +3,7 @@ package com.example.presentation.gameRoom
 import androidx.lifecycle.viewModelScope
 import com.example.core.core.ProjectViewModel
 import com.example.domain.Event
+import com.example.domain.model.Answer
 import com.example.domain.model.MessageType
 import com.example.domain.model.Question
 import com.example.domain.model.RoomStatus
@@ -27,9 +28,9 @@ class GameRoomViewModel @Inject constructor(
     private val sendMessageUseCase: SendMessageUseCase,
     private val emitEventUseCase: EmitEventUseCase,
     private val eventHandlerUseCase: EventHandlerUseCase
-): ProjectViewModel(
+) : ProjectViewModel(
     viewModelTag = "GameRoomViewModel"
-){
+) {
     val room = roomRepository.room
     val player = roomRepository.player
     var timeJob: Job? = null
@@ -40,8 +41,13 @@ class GameRoomViewModel @Inject constructor(
     private val _currentQuestionNumber = MutableStateFlow(1)
     val currentQuestionNumber: StateFlow<Int> = _currentQuestionNumber.asStateFlow()
 
-    private val _myQuestionList: MutableStateFlow<MutableList<Question>> = MutableStateFlow(mutableListOf())
+    private val _myQuestionList: MutableStateFlow<MutableList<Question>> =
+        MutableStateFlow(mutableListOf())
     val myQuestionList: StateFlow<MutableList<Question>> = _myQuestionList.asStateFlow()
+
+    private val _myAnswerList: MutableStateFlow<MutableList<Answer>> =
+        MutableStateFlow(mutableListOf())
+    val myAnswerList: StateFlow<MutableList<Answer>> = _myAnswerList.asStateFlow()
 
     init {
         viewModelScope.launch {
@@ -52,26 +58,25 @@ class GameRoomViewModel @Inject constructor(
     }
 
     fun eventHandler(
-        writeNextQuestion: () -> Unit
+        writeNextQuestion: () -> Unit,
+        answerNextQuestion: () -> Unit
     ) {
         viewModelScope.launch {
             eventHandlerUseCase(
-                writeNextQuestion = writeNextQuestion
+                writeNextQuestion = writeNextQuestion,
+                answerNextQuestion = answerNextQuestion
             )
         }
     }
 
-    fun stopTimer() {
-        timeJob?.cancel()
-    }
-
-    fun submit(
+    fun submitQuestion(
         questionValue: String,
         voteValue: Boolean
     ) {
         if (room.value?.roomStatus == RoomStatus.WRITE) {
             _myQuestionList.value.add(
                 Question(
+                    questionId = -1,
                     playerId = player.value!!.playerId,
                     question = questionValue,
                     oVoters = setOf(),
@@ -85,6 +90,7 @@ class GameRoomViewModel @Inject constructor(
                     data = _myQuestionList.value
                 )
                 timeJob?.cancel()
+                _currentQuestionNumber.value = 1
             } else {
                 timeJob?.cancel()
                 timeJob = viewModelScope.launch {
@@ -98,7 +104,34 @@ class GameRoomViewModel @Inject constructor(
                 }
             }
         } else if (room.value?.roomStatus == RoomStatus.ANSWER) {
+            _myAnswerList.value.add(
+                Answer(
+                    questionId = room.value!!.questionList[_currentQuestionNumber.value - 1].questionId,
+                    playerId = player.value!!.playerId,
+                    answer = voteValue
+                )
+            )
+            _currentQuestionNumber.value += 1
+            if (_currentQuestionNumber.value > room.value?.questionList!!.size) {
+                sendMessageUseCase(
+                    messageType = MessageType.SEND_ANSWER_END,
+                    data = _myAnswerList.value
+                )
+                timeJob?.cancel()
+            } else {
+                timeJob?.cancel()
+                timeJob = viewModelScope.launch {
+                    for (time in 30 downTo 0) {
+                        _time.value = time * 1000L
+                        if (time != 0) {
+                            delay(timeMillis = 1000L)
+                        }
+                    }
+                    emitEventUseCase(event = Event.AnswerNextQuestion)
+                }
+            }
 
         }
+
     }
 }

@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.example.presentation.main.MainRoute
 import com.example.presentation.gameRoom.GameRoomRoute
+import com.example.presentation.resultRoom.ResultRoomRoute
 import com.example.presentation.waitingRoom.WaitingRoomRoute
 
 fun NavGraphBuilder.main(navController: NavController) {
@@ -24,6 +25,13 @@ fun NavGraphBuilder.main(navController: NavController) {
 
     composable(route = Route.GameRoom.route) {
         GameRoomRoute(
+            navigateToResultRoom = { navController.navigate(route = Route.ResultRoom.route)},
+            popBackStack = { navController.popBackStack() }
+        )
+    }
+
+    composable(route = Route.ResultRoom.route) {
+        ResultRoomRoute(
             popBackStack = { navController.popBackStack() }
         )
     }

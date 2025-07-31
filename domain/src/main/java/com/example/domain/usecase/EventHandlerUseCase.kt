@@ -9,7 +9,8 @@ class EventHandlerUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(
         createRoomFailure: () -> Unit = {},
-        writeNextQuestion: () -> Unit = {}
+        writeNextQuestion: () -> Unit = {},
+        answerNextQuestion: () -> Unit = {}
     ) {
         loadingRepository.event.collect {
             when (it) {
@@ -19,7 +20,9 @@ class EventHandlerUseCase @Inject constructor(
                 is Event.WriteNextQuestion -> {
                     writeNextQuestion()
                 }
-
+                is Event.AnswerNextQuestion -> {
+                    answerNextQuestion()
+                }
             }
         }
     }

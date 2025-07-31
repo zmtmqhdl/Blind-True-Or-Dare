@@ -22,6 +22,10 @@ sealed class Route(
     )
 
     data object GameRoom: Route(
-        route  = "game_room"
+        route = "game_room"
+    )
+
+    data object ResultRoom: Route(
+        route = "result_room"
     )
 }

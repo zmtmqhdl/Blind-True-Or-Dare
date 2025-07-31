@@ -10,7 +10,8 @@ data class Room(
     val participantList: Set<Player>,
     var roomStatus: RoomStatus,
     val writeTime: Long,
-    val questionNumber: Int
+    val questionNumber: Long,
+    val questionList: List<Question>
 )
 
 data class CreateRoomRequest(
@@ -23,10 +24,17 @@ data class Player(
 )
 
 data class Question(
+    val questionId: Long,
     val playerId: String,
     val question: String,
     val oVoters: Set<String>,
     val xVoters: Set<String>
+)
+
+data class Answer(
+    val questionId: Long,
+    val playerId: String,
+    val answer: Boolean
 )
 
 enum class RoomStatus {
