@@ -11,6 +11,8 @@ import com.example.domain.repository.RoomRepository
 import com.example.domain.usecase.EmitEventUseCase
 import com.example.domain.usecase.EventHandlerUseCase
 import com.example.domain.usecase.SendMessageUseCase
+import com.example.domain.usecase.SetMyAnswerListUseCase
+import com.example.domain.usecase.SetMyQuestionListUseCase
 import com.example.domain.usecase.WebSocketHandlerUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -27,7 +29,9 @@ class GameRoomViewModel @Inject constructor(
     private val webSocketHandlerUseCase: WebSocketHandlerUseCase,
     private val sendMessageUseCase: SendMessageUseCase,
     private val emitEventUseCase: EmitEventUseCase,
-    private val eventHandlerUseCase: EventHandlerUseCase
+    private val eventHandlerUseCase: EventHandlerUseCase,
+    private val setMyQuestionListUseCase: SetMyQuestionListUseCase,
+    private val setMyAnswerListUseCase: SetMyAnswerListUseCase
 ) : ProjectViewModel(
     viewModelTag = "GameRoomViewModel"
 ) {
@@ -85,6 +89,7 @@ class GameRoomViewModel @Inject constructor(
             )
             _currentQuestionNumber.value += 1
             if (_currentQuestionNumber.value > room.value?.questionNumber!!) {
+                setMyQuestionListUseCase(myQuestionList = _myQuestionList.value)
                 sendMessageUseCase(
                     messageType = MessageType.SEND_WRITE_END,
                     data = _myQuestionList.value
@@ -113,6 +118,7 @@ class GameRoomViewModel @Inject constructor(
             )
             _currentQuestionNumber.value += 1
             if (_currentQuestionNumber.value > room.value?.questionList!!.size) {
+                setMyAnswerListUseCase(myAnswerList = _myAnswerList.value)
                 sendMessageUseCase(
                     messageType = MessageType.SEND_ANSWER_END,
                     data = _myAnswerList.value

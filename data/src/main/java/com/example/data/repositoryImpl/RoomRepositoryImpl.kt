@@ -7,6 +7,7 @@ import com.example.data.toDomain
 import com.example.data.toDto
 import com.example.domain.common.ApiResponse
 import com.example.domain.common.request
+import com.example.domain.model.Answer
 import com.example.domain.model.CreateRoom
 import com.example.domain.model.CreateRoomRequest
 import com.example.domain.model.Player
@@ -33,6 +34,11 @@ class RoomRepositoryImpl(
     private val _player = MutableStateFlow<Player?>(null)
     override val player: StateFlow<Player?> = _player.asStateFlow()
 
+    private val _myQuestionList = MutableStateFlow<List<Question>>(emptyList())
+    override val myQuestionList: StateFlow<List<Question>> = _myQuestionList.asStateFlow()
+
+    private val _myAnswerList = MutableStateFlow<List<Answer>>(emptyList())
+    override val myAnswerList: StateFlow<List<Answer>> = _myAnswerList.asStateFlow()
 
     override suspend fun createRoom(
         player: Player,
@@ -59,5 +65,13 @@ class RoomRepositoryImpl(
 
     override fun setPlayer(player: Player?) {
         _player.value = player
+    }
+
+    override fun setMyQuestionList(myQuestionList: List<Question>) {
+        _myQuestionList.value = myQuestionList
+    }
+
+    override fun setMyAnswerList(myAnswerList: List<Answer>) {
+        _myAnswerList.value = myAnswerList
     }
 }
