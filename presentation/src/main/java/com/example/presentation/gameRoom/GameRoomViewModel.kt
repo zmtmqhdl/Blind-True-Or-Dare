@@ -47,11 +47,9 @@ class GameRoomViewModel @Inject constructor(
 
     private val _myQuestionList: MutableStateFlow<MutableList<Question>> =
         MutableStateFlow(mutableListOf())
-    val myQuestionList: StateFlow<MutableList<Question>> = _myQuestionList.asStateFlow()
 
     private val _myAnswerList: MutableStateFlow<MutableList<Answer>> =
         MutableStateFlow(mutableListOf())
-    val myAnswerList: StateFlow<MutableList<Answer>> = _myAnswerList.asStateFlow()
 
     init {
         viewModelScope.launch {
