@@ -36,6 +36,12 @@ fun GameRoomRoute(
     // local state
     var questionValue by remember { mutableStateOf("") }
     var voteValue by remember { mutableStateOf<Boolean?>(null) }
+    var exitDialog by remember { mutableStateOf(false) }
+
+    // dialog
+    if (exitDialog) {
+
+    }
 
     // effect
     LaunchedEffect(Unit) {

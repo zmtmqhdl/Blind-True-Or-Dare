@@ -16,5 +16,7 @@ constructor(
     val myQuestionList = roomRepository.myQuestionList
     val myAnswerListUseCase = roomRepository.myAnswerList
 
-
+    init {
+        // 질문의 정렬? ox보여주고 내질문 및 답변에 대한건 따로 표기 (별표..?)
+    }
 }
