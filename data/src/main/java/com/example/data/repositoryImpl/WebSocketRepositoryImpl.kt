@@ -17,6 +17,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -30,6 +31,7 @@ import okhttp3.WebSocketListener
 import java.net.URLEncoder
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.math.max
 
 @Suppress("UNCHECKED_CAST")
 @Singleton
@@ -45,6 +47,9 @@ class WebSocketRepositoryImpl @Inject constructor(
     private val client = OkHttpClient()
     private var webSocket: WebSocket? = null
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+    private var reconnectAttempt = 0
+    private val maxReconnectAttempt = 5
+    private val reconnectDelay = 2000L
 
     private val _message = MutableSharedFlow<Message?>(
         replay = 0,
@@ -68,6 +73,7 @@ class WebSocketRepositoryImpl @Inject constructor(
 
         webSocket = client.newWebSocket(request, object : WebSocketListener() {
             override fun onOpen(webSocket: WebSocket, response: Response) {
+                reconnectAttempt = 0
                 scope.launch {
                     _webSocketConnect.emit(value = WebSocketStatus.WebSocketConnectSuccess(roomUrl = roomUrl))
                 }
@@ -83,6 +89,11 @@ class WebSocketRepositoryImpl @Inject constructor(
                 scope.launch {
                     _webSocketConnect.emit(value = WebSocketStatus.WebSocketConnectFailure(error = t))
                 }
+
+                reconnect(
+                    roomId = roomId,
+                    player = player
+                )
 
             }
 
@@ -138,7 +149,26 @@ class WebSocketRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun close() {
+    override fun close(
+
+    ) {
         webSocket?.close(1000, "Closing normally")
+        webSocket = null
+    }
+
+    private fun reconnect(
+        roomId: String,
+        player: Player
+    ) {
+        if (reconnectAttempt >= maxReconnectAttempt) return
+        reconnectAttempt++
+
+        scope.launch {
+            delay(reconnectDelay)
+            connect(
+                roomId = roomId,
+                player = player
+            )
+        }
     }
 }
