@@ -9,11 +9,13 @@ import androidx.compose.runtime.getValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
-import com.example.domain.repository.LoadingRepository
 import com.example.core.component.ProjectScreen
+import com.example.core.theme.ProjectTheme
+import com.example.domain.repository.LoadingRepository
+import com.example.domain.repository.RoomRepository
+import com.example.domain.repository.WebSocketRepository
 import com.example.presentation.navigation.MainGraph
 import com.example.presentation.splash.SplashViewModel
-import com.example.core.theme.ProjectTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -23,8 +25,13 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var loadingRepository: LoadingRepository
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    @Inject
+    lateinit var roomDataRepository: RoomRepository
 
+    @Inject
+    lateinit var webSocketRepository: WebSocketRepository
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         installSplashScreen()
@@ -45,4 +52,16 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+
+    override fun onResume() {
+        super.onResume()
+        if (webSocketRepository.isConnected.value) {
+            webSocketRepository.reconnect(
+                roomId = roomDataRepository.room.value!!.roomId,
+                player = roomDataRepository.player.value!!
+            )
+        }
+    }
 }
+// todo - resume이랑 네트워크 연결 감지 -> 근데 roomId랑 player를 어디서 담아두지

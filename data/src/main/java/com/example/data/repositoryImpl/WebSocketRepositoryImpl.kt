@@ -19,8 +19,11 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
@@ -51,6 +54,10 @@ class WebSocketRepositoryImpl @Inject constructor(
     private val maxReconnectAttempt = 5
     private val reconnectDelay = 2000L
 
+    private val _isConnected = MutableStateFlow(false)
+    override val isConnected: StateFlow<Boolean> = _isConnected.asStateFlow()
+
+
     private val _message = MutableSharedFlow<Message?>(
         replay = 0,
         extraBufferCapacity = 64,
@@ -74,6 +81,7 @@ class WebSocketRepositoryImpl @Inject constructor(
         webSocket = client.newWebSocket(request, object : WebSocketListener() {
             override fun onOpen(webSocket: WebSocket, response: Response) {
                 reconnectAttempt = 0
+                _isConnected.value = true
                 scope.launch {
                     _webSocketConnect.emit(value = WebSocketStatus.WebSocketConnectSuccess(roomUrl = roomUrl))
                 }
@@ -89,16 +97,11 @@ class WebSocketRepositoryImpl @Inject constructor(
                 scope.launch {
                     _webSocketConnect.emit(value = WebSocketStatus.WebSocketConnectFailure(error = t))
                 }
-
-                reconnect(
-                    roomId = roomId,
-                    player = player
-                )
-
             }
 
             override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
                 this@WebSocketRepositoryImpl.webSocket = null
+                _isConnected.value = false
                 scope.launch {
                     _webSocketConnect.emit(value = WebSocketStatus.WebSocketDisconnect)
                 }
@@ -149,14 +152,13 @@ class WebSocketRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun close(
-
-    ) {
+    override fun close() {
         webSocket?.close(1000, "Closing normally")
         webSocket = null
+        _isConnected.value = false
     }
 
-    private fun reconnect(
+    override fun reconnect(
         roomId: String,
         player: Player
     ) {
