@@ -5,7 +5,7 @@ import com.example.domain.usecase.SetQrCodeUseCase
 import com.example.domain.usecase.SetRoomUseCase
 import javax.inject.Inject
 
-class ExitGameUseCase @Inject constructor(
+class ExitGameFunction @Inject constructor(
     private val setPlayerUseCase: SetPlayerUseCase,
     private val setQrCodeUseCase: SetQrCodeUseCase,
     private val setRoomUseCase: SetRoomUseCase

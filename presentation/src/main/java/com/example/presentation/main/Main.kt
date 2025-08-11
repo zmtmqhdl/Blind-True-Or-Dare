@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,6 +33,9 @@ fun MainRoute(
 ) {
     // view model
     val mainViewModel: MainViewModel = hiltViewModel()
+
+    // main view model state value
+    val createRoomFailureDialog by mainViewModel.createRoomFailureDialog.collectAsState()
 
     // local state
     var nickname by remember { mutableStateOf("") }
@@ -105,7 +109,7 @@ fun MainRoute(
                     onClick = {
                         mainViewModel.joinRoom(
                             nickname = nickname,
-                            waitingRoomId = waitingRoomId
+                            roomId = waitingRoomId
                         )
                         joinWaitingRoomDialog = false
                     },
@@ -120,14 +124,15 @@ fun MainRoute(
         )
     }
 
-    var createWaitingRoomFailureDialog by remember { mutableStateOf(false) }
-    if (createWaitingRoomFailureDialog) {
+    if (createRoomFailureDialog) {
         ProjectDialog.Single.SingleArrangement(
             title = "",
             text = "",
             buttonText = "",
-            onClick = { createWaitingRoomFailureDialog = false },
-            onDismissRequest = { createWaitingRoomFailureDialog = false }
+            onClick = { mainViewModel.dismissCreateRoomFailureDialog() },
+            onDismissRequest = {
+                mainViewModel.dismissCreateRoomFailureDialog()
+            }
         )
     }
 
@@ -144,11 +149,6 @@ fun MainRoute(
 
     // effect
     LaunchedEffect(Unit) {
-        launch {
-            mainViewModel.eventHandler(
-                createWaitingRoomFailure = { createWaitingRoomFailureDialog = true }
-            )
-        }
 
         launch {
             mainViewModel.handleWebSocketConnect(

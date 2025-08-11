@@ -14,15 +14,9 @@ class EventHandlerUseCase @Inject constructor(
     ) {
         loadingRepository.event.collect {
             when (it) {
-                is Event.CreateRoomFailure -> {
-                    createRoomFailure()
-                }
-                is Event.WriteNextQuestion -> {
-                    writeNextQuestion()
-                }
-                is Event.AnswerNextQuestion -> {
-                    answerNextQuestion()
-                }
+                is Event.CreateRoomFailure -> createRoomFailure()
+                is Event.WriteNextQuestion -> writeNextQuestion()
+                is Event.AnswerNextQuestion -> answerNextQuestion()
             }
         }
     }

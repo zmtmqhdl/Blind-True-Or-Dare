@@ -1,11 +1,10 @@
 package com.example.presentation.main
 
+import androidx.compose.runtime.remember
 import androidx.lifecycle.viewModelScope
 import com.example.core.core.ProjectViewModel
-import com.example.domain.Event
-import com.example.domain.common.onFailure
-import com.example.domain.common.onSuccess
 import com.example.domain.repository.RoomRepository
+import com.example.domain.usecase.ConnectWebSocketUseCase
 import com.example.domain.usecase.CreateRoomUseCase
 import com.example.domain.usecase.EmitEventUseCase
 import com.example.domain.usecase.EventHandlerUseCase
@@ -14,13 +13,16 @@ import com.example.domain.usecase.MessageHandlerUseCase
 import com.example.domain.usecase.SetPlayerUseCase
 import com.example.domain.usecase.SetQrCodeUseCase
 import com.example.domain.usecase.ShowLoadingUseCase
-import com.example.domain.usecase.ConnectWebSocketUseCase
 import com.example.domain.usecase.WebSocketHandlerUseCase
-import com.example.domain.usecase.generatePlayerUseCase
+import com.example.domain.usecase.function.CreateRoomFunction
+import com.example.domain.usecase.function.JoinRoomFunction
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -29,79 +31,57 @@ class MainViewModel @Inject constructor(
     private val roomRepository: RoomRepository,
 
     private val messageHandlerUseCase: MessageHandlerUseCase,
-    private val hideLoadingUseCase: HideLoadingUseCase,
-    private val showLoadingUseCase: ShowLoadingUseCase,
-    private val createRoomUseCase: CreateRoomUseCase,
-    private val emitEventUseCase: EmitEventUseCase,
     private val eventHandlerUseCase: EventHandlerUseCase,
-    private val connectWebSocketUseCase: ConnectWebSocketUseCase,
     private val webSocketHandlerUseCase: WebSocketHandlerUseCase,
     private val setQrCodeUseCase: SetQrCodeUseCase,
-    private val setPlayerUseCase: SetPlayerUseCase
+    private val createRoomFunction: CreateRoomFunction,
+    private val joinRoomFunction: JoinRoomFunction
 ) : ProjectViewModel(
     viewModelTag = "MainViewModel"
 ) {
+    private val _createRoomFailureDialog = MutableStateFlow(false)
+    val createRoomFailureDialog: StateFlow<Boolean> = _createRoomFailureDialog.asStateFlow()
+
+    private val _joinRoomFailureDialog = MutableStateFlow(false)
+    val joinRoomFailureDialog: StateFlow<Boolean> = _joinRoomFailureDialog.asStateFlow()
+
     init {
         viewModelScope.launch {
             messageHandlerUseCase()
+        }
+
+        viewModelScope.launch {
+            eventHandlerUseCase(
+                createRoomFailure = { _createRoomFailureDialog.value = true },
+            )
+        }
+
+        viewModelScope.launch {
+            webSocketHandlerUseCase(
+                onConnect = { },
+                onConnectFailure = { _joinRoomFailureDialog.value = true }
+            )
         }
     }
 
     fun createRoom(
         nickname: String
     ) {
-        showLoadingUseCase()
-        logD(
-            """
-            [fun createRoom start]
-                nickname = $nickname
-        """.trimIndent()
-        )
         viewModelScope.launch {
-            val player = generatePlayerUseCase(nickname = nickname)
-            createRoomUseCase(
-                player = player
-            ).onSuccess {
-                setPlayerUseCase(player = player)
-                connectWebSocketUseCase(
-                    roomId = it.roomId,
-                    player = player
-                )
-                hideLoadingUseCase()
-            }.onFailure {
-                emitEventUseCase(event = Event.CreateRoomFailure(error = it))
-            }
+            createRoomFunction(
+                nickname = nickname
+            )
         }
     }
 
     fun joinRoom(
         nickname: String,
-        waitingRoomId: String
-    ) {
-        showLoadingUseCase()
-        logD(
-            """
-            [fun joinRoom start]
-                nickname = $nickname
-        """.trimIndent()
-        )
-        viewModelScope.launch {
-            val player = generatePlayerUseCase(nickname = nickname)
-            setPlayerUseCase(player = player)
-            connectWebSocketUseCase(
-                roomId = waitingRoomId,
-                player = player
-            )
-            hideLoadingUseCase()
-        }
-    }
-
-    fun eventHandler(
-        createWaitingRoomFailure: () -> Unit,
+        roomId: String
     ) {
         viewModelScope.launch {
-            eventHandlerUseCase.invoke(
-                createRoomFailure = createWaitingRoomFailure,
+            joinRoomFunction(
+                nickname = nickname,
+                roomId = roomId
             )
         }
     }
@@ -128,5 +108,9 @@ class MainViewModel @Inject constructor(
                 onConnectFailure = { onConnectFailure(it) },
             )
         }
+    }
+
+    fun dismissCreateRoomFailureDialog() {
+        _createRoomFailureDialog.value = false
     }
 }

@@ -9,7 +9,7 @@ import com.example.domain.usecase.DisconnectWebSocketUseCase
 import com.example.domain.usecase.MessageHandlerUseCase
 import com.example.domain.usecase.SendMessageUseCase
 import com.example.domain.usecase.WebSocketHandlerUseCase
-import com.example.domain.usecase.function.ExitGameUseCase
+import com.example.domain.usecase.function.ExitGameFunction
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
@@ -25,7 +25,7 @@ class WaitingRoomViewModel @Inject constructor(
     private val disconnectWebSocketUseCase: DisconnectWebSocketUseCase,
     private val webSocketHandlerUseCase: WebSocketHandlerUseCase,
     private val sendMessageUseCase: SendMessageUseCase,
-    private val exitGameUseCase: ExitGameUseCase
+    private val exitGameFunction: ExitGameFunction
 ) : ProjectViewModel(
     viewModelTag = "WaitingRoomViewModel"
 ) {
@@ -55,7 +55,7 @@ class WaitingRoomViewModel @Inject constructor(
         viewModelScope.launch {
             webSocketHandlerUseCase(
                 onDisconnect = {
-                    exitGameUseCase()
+                    exitGameFunction()
                     onDisconnect()
                 }
             )
