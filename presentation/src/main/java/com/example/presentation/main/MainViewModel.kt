@@ -87,8 +87,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun handleWebSocketConnect(
-        onConnect: () -> Unit,
-        onConnectFailure: (Throwable) -> Unit,
+        onConnect: () -> Unit
     ) {
         viewModelScope.launch {
             webSocketHandlerUseCase(
@@ -105,12 +104,16 @@ class MainViewModel @Inject constructor(
                     )
                     onConnect()
                 },
-                onConnectFailure = { onConnectFailure(it) },
+                onConnectFailure = { _joinRoomFailureDialog.value = true },
             )
         }
     }
 
     fun dismissCreateRoomFailureDialog() {
         _createRoomFailureDialog.value = false
+    }
+
+    fun dismissJoinRoomFailureDialog() {
+        _joinRoomFailureDialog.value = false
     }
 }

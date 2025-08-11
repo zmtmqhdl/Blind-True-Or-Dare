@@ -36,6 +36,7 @@ fun MainRoute(
 
     // main view model state value
     val createRoomFailureDialog by mainViewModel.createRoomFailureDialog.collectAsState()
+    val joinRoomFailureDialog by mainViewModel.joinRoomFailureDialog.collectAsState()
 
     // local state
     var nickname by remember { mutableStateOf("") }
@@ -126,40 +127,29 @@ fun MainRoute(
 
     if (createRoomFailureDialog) {
         ProjectDialog.Single.SingleArrangement(
-            title = "",
-            text = "",
-            buttonText = "",
+            title = stringResource(R.string.main_create_room_failure_dialog_title),
+            text = stringResource(R.string.main_create_room_failure_dialog_text),
+            buttonText = stringResource(R.string.component_okay),
             onClick = { mainViewModel.dismissCreateRoomFailureDialog() },
-            onDismissRequest = {
-                mainViewModel.dismissCreateRoomFailureDialog()
-            }
+            onDismissRequest = { mainViewModel.dismissCreateRoomFailureDialog() }
         )
     }
 
-    var joinWaitingRoomFailureDialog by remember { mutableStateOf(false) }
-    if (joinWaitingRoomFailureDialog) {
+    if (joinRoomFailureDialog) {
         ProjectDialog.Single.SingleArrangement(
-            title = "",
-            text = "",
-            buttonText = "",
-            onClick = { joinWaitingRoomFailureDialog = false },
-            onDismissRequest = { joinWaitingRoomFailureDialog = false }
+            title = stringResource(R.string.main_join_room_failure_dialog_title),
+            text = stringResource(R.string.main_join_room_failure_dialog_text),
+            buttonText = stringResource(R.string.component_okay),
+            onClick = { mainViewModel.dismissJoinRoomFailureDialog() },
+            onDismissRequest = { mainViewModel.dismissJoinRoomFailureDialog() }
         )
     }
 
     // effect
     LaunchedEffect(Unit) {
-
         launch {
             mainViewModel.handleWebSocketConnect(
-                onConnect = {
-
-
-                    navigateToWaitingRoom()
-                },
-                onConnectFailure = {
-
-                },
+                onConnect = { navigateToWaitingRoom() }
             )
         }
     }
