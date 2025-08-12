@@ -46,7 +46,7 @@ fun PrimaryButton(
                 shape = ProjectTheme.shape.button
             )
             .border(
-                width = ProjectTheme.space.space0,
+                width = ProjectTheme.space.space1,
                 color = color.outline,
                 shape = ProjectTheme.shape.button
             )

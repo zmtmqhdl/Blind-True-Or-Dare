@@ -2,9 +2,12 @@ package com.example.presentation.main
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -17,11 +20,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.component.PrimaryDialog
 import com.example.core.component.ProjectButton
 import com.example.core.component.ProjectDialog
+import com.example.core.component.ProjectScreen
 import com.example.core.component.ProjectTextField
+import com.example.core.core.ProjectPreview
+import com.example.core.theme.ProjectFontSize
 import com.example.core.theme.ProjectSpaces
 import com.example.core.theme.ProjectTheme
 import com.example.presentation.R
@@ -166,21 +174,71 @@ fun MainScreen(
     onCreateClick: () -> Unit,
     onJoinClick: () -> Unit
 ) {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        ProjectButton.Primary.Xlarge(
-            text = stringResource(R.string.main_create_room),
-            onClick = onCreateClick
-        )
+    ProjectScreen.Screen {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "BLIND",
+                modifier = Modifier.height(90.dp),
+                style = ProjectTheme.typography.xl.bold,
+                fontSize = 80.sp,
+                color = ProjectTheme.color.primary.fontColor
+            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "TRUE",
+                    style = ProjectTheme.typography.xl.bold,
+                    fontSize = 45.sp,
+                    color = ProjectTheme.color.primary.fontColor
+                )
 
-        Spacer(modifier = Modifier.height(ProjectSpaces.Space3))
+                Spacer(modifier = Modifier.width(ProjectTheme.space.space2))
 
-        ProjectButton.Primary.Xlarge(
-            text = stringResource(R.string.main_join_room),
-            onClick = onJoinClick
-        )
+                Text(
+                    text = "OR",
+                    style = ProjectTheme.typography.m.bold,
+                    fontSize = 25.sp,
+                    color = ProjectTheme.color.primary.fontColor
+                )
+
+                Spacer(modifier = Modifier.width(ProjectTheme.space.space2))
+
+                Text(
+                    text = "DARE",
+                    style = ProjectTheme.typography.xl.bold,
+                    fontSize = 45.sp,
+                    color = ProjectTheme.color.primary.fontColor
+                )
+            }
+
+            Spacer(modifier = Modifier.height(ProjectTheme.space.space12))
+
+            ProjectButton.Primary.Xlarge(
+                text = stringResource(R.string.main_create_room),
+                onClick = onCreateClick
+            )
+
+            Spacer(modifier = Modifier.height(ProjectSpaces.Space3))
+
+            ProjectButton.Primary.Xlarge(
+                text = stringResource(R.string.main_join_room),
+                onClick = onJoinClick
+            )
+        }
+
     }
+}
+
+@ProjectPreview
+@Composable
+fun MainScreenPreview() {
+    MainScreen(
+        onCreateClick = {},
+        onJoinClick = {}
+    )
 }

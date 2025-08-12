@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
@@ -22,15 +23,17 @@ object ProjectScreen {
     @Composable
     fun Screen(
         containerColor: Color = ProjectTheme.color.background,
+        imePadding: Boolean = false,
         content: @Composable () -> Unit
     ) {
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(
                     start = ProjectTheme.space.space4,
                     end = ProjectTheme.space.space4
                 )
+                .then(if (imePadding) Modifier.imePadding() else Modifier)
                 .padding(WindowInsets.systemBars.asPaddingValues())
                 .background(color = containerColor)
         ) {
@@ -54,6 +57,7 @@ object ProjectScreen {
         ) { innerPadding ->
             Column(
                 modifier = Modifier
+                    .imePadding()
                     .padding(innerPadding)
                     .padding(
                         start = ProjectTheme.space.space4,
