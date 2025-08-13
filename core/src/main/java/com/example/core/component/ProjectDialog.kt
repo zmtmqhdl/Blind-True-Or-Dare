@@ -26,7 +26,7 @@ fun PrimaryDialog(
     title: String? = null,
     certification: String? = null,
     subText: String? = null,
-    text: String,
+    text: String? = null,
     content: @Composable () -> Unit,
 ) {
     Dialog(
@@ -40,7 +40,7 @@ fun PrimaryDialog(
                 .wrapContentHeight()
                 .padding(horizontal = ProjectTheme.space.space8)
                 .background(
-                    color = ProjectTheme.color.white,
+                    color = ProjectTheme.color.background,
                     shape = ProjectTheme.shape.dialog
                 ),
             contentAlignment = Alignment.Center
@@ -57,7 +57,7 @@ fun PrimaryDialog(
                 title?.let {
                     Text(
                         text = it,
-                        color = ProjectTheme.color.black,
+                        color = ProjectTheme.color.primary.fontColor,
                         style = ProjectTheme.typography.xl.bold
                     )
                     Spacer(modifier = Modifier.height(ProjectTheme.space.space2))
@@ -78,11 +78,13 @@ fun PrimaryDialog(
                     )
                     Spacer(modifier = Modifier.height(ProjectTheme.space.space2))
                 }
-                Text(
-                    text = text,
-                    color = ProjectTheme.color.black,
-                    style = ProjectTheme.typography.m.regular
-                )
+                text?.let {
+                    Text(
+                        text = text,
+                        color = ProjectTheme.color.black,
+                        style = ProjectTheme.typography.m.regular
+                    )
+                }
                 Spacer(modifier = Modifier.height(ProjectTheme.space.space4))
                 content()
                 Spacer(modifier = Modifier.height(ProjectTheme.space.space4))

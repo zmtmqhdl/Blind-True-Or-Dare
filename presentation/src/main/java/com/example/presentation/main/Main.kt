@@ -1,6 +1,11 @@
 package com.example.presentation.main
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -58,7 +63,7 @@ fun MainRoute(
             focusRequester.requestFocus()
         }
         PrimaryDialog(
-            text = stringResource(R.string.main_create_room),
+            title = stringResource(R.string.main_create_room),
             content = {
                 ProjectTextField.OutlinedTextField(
                     value = nickname,
@@ -182,9 +187,9 @@ fun MainScreen(
         ) {
             Text(
                 text = "BLIND",
-                modifier = Modifier.height(90.dp),
+                modifier = Modifier.height(100.dp),
                 style = ProjectTheme.typography.xl.bold,
-                fontSize = 80.sp,
+                fontSize = 90.sp,
                 color = ProjectTheme.color.primary.fontColor
             )
             Row(
@@ -216,19 +221,68 @@ fun MainScreen(
                 )
             }
 
-            Spacer(modifier = Modifier.height(ProjectTheme.space.space12))
+            Spacer(modifier = Modifier.height(ProjectTheme.space.space12 * 2))
 
-            ProjectButton.Primary.Xlarge(
-                text = stringResource(R.string.main_create_room),
-                onClick = onCreateClick
-            )
+            Box(
+                modifier = Modifier
+                    .width(330.dp)
+                    .height(100.dp)
+                    .background(
+                        color = ProjectTheme.color.background,
+                        shape = ProjectTheme.shape.button
+                    )
+                    .border(
+                        width = ProjectTheme.space.space1,
+                        color = ProjectTheme.color.primary.outline,
+                        shape = ProjectTheme.shape.button
+                    )
+                    .clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null,
+                        onClick = onCreateClick
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = stringResource(R.string.main_create_room),
+                    color = ProjectTheme.color.primary.fontColor,
+                    fontSize = 40.sp,
+                    style = ProjectTheme.typography.xl.medium
+                )
+            }
 
-            Spacer(modifier = Modifier.height(ProjectSpaces.Space3))
 
-            ProjectButton.Primary.Xlarge(
-                text = stringResource(R.string.main_join_room),
-                onClick = onJoinClick
-            )
+
+            Spacer(modifier = Modifier.height(ProjectSpaces.Space8))
+
+            Box(
+                modifier = Modifier
+                    .width(330.dp)
+                    .height(100.dp)
+                    .background(
+                        color = ProjectTheme.color.background,
+                        shape = ProjectTheme.shape.button
+                    )
+                    .border(
+                        width = ProjectTheme.space.space1,
+                        color = ProjectTheme.color.primary.outline,
+                        shape = ProjectTheme.shape.button
+                    )
+                    .clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null,
+                        onClick = onJoinClick
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = stringResource(R.string.main_join_room),
+                    color = ProjectTheme.color.primary.fontColor,
+                    fontSize = 40.sp,
+                    style = ProjectTheme.typography.xl.medium
+
+                )
+            }
         }
 
     }
@@ -237,8 +291,10 @@ fun MainScreen(
 @ProjectPreview
 @Composable
 fun MainScreenPreview() {
-    MainScreen(
-        onCreateClick = {},
-        onJoinClick = {}
-    )
+    ProjectTheme {
+        MainScreen(
+            onCreateClick = {},
+            onJoinClick = {}
+        )
+    }
 }
