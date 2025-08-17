@@ -13,6 +13,7 @@
     <string name="component_cancel">Cancel</string>
 
     <!-- main -->
+    <string name="main_create_room_dialog_input_nickname">Input your nickname.</string>
     <string name="main_create_room">Create Room</string>
     <string name="main_join_room">Join Room</string>
     <string name="main_create_room_failure_dialog_title">Failed to Create Room</string>

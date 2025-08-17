@@ -65,6 +65,15 @@ fun MainRoute(
         PrimaryDialog(
             title = stringResource(R.string.main_create_room),
             content = {
+
+                Text(
+                    text = stringResource(R.string.main_create_room_dialog_input_nickname),
+                    style = ProjectTheme.typography.s.medium,
+                    color = ProjectTheme.color.primary.fontColor
+                )
+
+                Spacer(modifier = Modifier.height(ProjectTheme.space.space2))
+
                 ProjectTextField.OutlinedTextField(
                     value = nickname,
                     onValueChange = { nickname = it },
@@ -73,6 +82,8 @@ fun MainRoute(
                 )
 
                 Spacer(modifier = Modifier.height(ProjectTheme.space.space4))
+
+
 
                 ProjectButton.Primary.Small(
                     text = stringResource(R.string.component_create),
