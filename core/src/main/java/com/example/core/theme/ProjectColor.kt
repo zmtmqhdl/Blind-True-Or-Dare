@@ -49,7 +49,7 @@ val LightCautionBackground = Color(0xFFFBF6C9)
 val LightCautionOutline = Color(0xFFFDFAE3)
 
 val LightDisableFontColor = Color(0xFFFDD000)
-val LightDisableBackground = Color(0xFFFBF6C9)
+val LightDisableBackground = Color(0xFF203427)
 val LightDisableOutline = Color(0xFFFDFAE3)
 
 val LightWhite = Color(0xFFFFFFFF)
@@ -62,7 +62,7 @@ val LightInactiveIcon = Color(0xFF181F29)
 val LightText = Color(0xFF161D27)
 
 val DarkPrimaryFontColor = Color(0xFFE2D9C5)
-val DarkPrimaryBackground = Color(0xFF2B3E9B)
+val DarkPrimaryBackground = Color(0xFF121F18)
 val DarkPrimaryOutline = Color(0xFFE2D9C5)
 
 val DarkSecondaryFontColor = Color(0xFF00C200)
@@ -90,7 +90,7 @@ val DarkCautionBackground = Color(0xFFAB8A2A)
 val DarkCautionOutline = Color(0xFFB69F59)
 
 val DarkDisableFontColor = Color(0xFFFDD000)
-val DarkDisableBackground = Color(0xFFAB8A2A)
+val DarkDisableBackground = Color(0xFF121F18)
 val DarkDisableOutline = Color(0xFFB69F59)
 
 val DarkWhite = Color(0xFFFFFFFF)

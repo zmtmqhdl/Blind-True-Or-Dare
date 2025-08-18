@@ -34,9 +34,9 @@ import com.example.core.component.ProjectDialog
 import com.example.core.component.ProjectScreen
 import com.example.core.component.ProjectTextField
 import com.example.core.core.ProjectPreview
-import com.example.core.theme.ProjectFontSize
 import com.example.core.theme.ProjectSpaces
 import com.example.core.theme.ProjectTheme
+import com.example.domain.usecase.RoomIdTransformationUseCase
 import com.example.presentation.R
 import kotlinx.coroutines.launch
 
@@ -65,9 +65,8 @@ fun MainRoute(
         PrimaryDialog(
             title = stringResource(R.string.main_create_room),
             content = {
-
                 Text(
-                    text = stringResource(R.string.main_create_room_dialog_input_nickname),
+                    text = stringResource(R.string.main_dialog_input_nickname),
                     style = ProjectTheme.typography.s.medium,
                     color = ProjectTheme.color.primary.fontColor
                 )
@@ -82,8 +81,6 @@ fun MainRoute(
                 )
 
                 Spacer(modifier = Modifier.height(ProjectTheme.space.space4))
-
-
 
                 ProjectButton.Primary.Small(
                     text = stringResource(R.string.component_create),
@@ -109,8 +106,16 @@ fun MainRoute(
             focusRequester.requestFocus()
         }
         PrimaryDialog(
-            text = stringResource(R.string.main_join_room),
+            title = stringResource(R.string.main_join_room),
             content = {
+                Text(
+                    text = stringResource(R.string.main_dialog_input_nickname),
+                    style = ProjectTheme.typography.s.medium,
+                    color = ProjectTheme.color.primary.fontColor
+                )
+
+                Spacer(modifier = Modifier.height(ProjectTheme.space.space2))
+
                 ProjectTextField.OutlinedTextField(
                     value = nickname,
                     onValueChange = { nickname = it },
@@ -120,11 +125,20 @@ fun MainRoute(
 
                 Spacer(modifier = Modifier.height(ProjectTheme.space.space4))
 
+                Text(
+                    text = stringResource(R.string.main_dialog_input_room_id),
+                    style = ProjectTheme.typography.s.medium,
+                    color = ProjectTheme.color.primary.fontColor
+                )
+
+                Spacer(modifier = Modifier.height(ProjectTheme.space.space2))
+
                 ProjectTextField.OutlinedTextField(
                     value = waitingRoomId,
                     onValueChange = { waitingRoomId = it },
                     modifier = Modifier.focusRequester(focusRequester = focusRequester),
-                    textCenter = true
+                    textCenter = true,
+                    visualTransformation = RoomIdTransformationUseCase()
                 )
 
                 Spacer(modifier = Modifier.height(ProjectTheme.space.space4))

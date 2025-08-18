@@ -42,7 +42,7 @@ fun PrimaryButton(
             .then(if (width != null) Modifier.width(width) else Modifier.fillMaxWidth())
             .height(height)
             .background(
-                color = if (enabled) color.background else ProjectTheme.color.disable.background,
+                color = if (enabled) color.background else color.background,
                 shape = ProjectTheme.shape.button
             )
             .border(
@@ -65,7 +65,7 @@ fun PrimaryButton(
         }
         Text(
             text = text,
-            color = if (enabled) color.fontColor else ProjectTheme.color.disable.fontColor,
+            color = if (enabled) color.fontColor else color.fontColor,
             style = style
         )
     }

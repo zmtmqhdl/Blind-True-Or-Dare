@@ -48,8 +48,7 @@ fun PrimaryDialog(
             Column(
                 modifier = Modifier
                     .padding(
-                        start = ProjectTheme.space.space4,
-                        end = ProjectTheme.space.space4
+                        horizontal = ProjectTheme.space.space4,
                     ),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {

@@ -3,6 +3,7 @@ package com.example.core.component
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -12,11 +13,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import com.example.core.Icon.Close
 import com.example.core.core.ProjectPreview
+import com.example.core.theme.ProjectFontSize
 import com.example.core.theme.ProjectTheme
 
 object ProjectTextField {
@@ -40,7 +43,10 @@ object ProjectTextField {
             onValueChange = onValueChange,
             modifier = modifier,
             textStyle = textStyle.copy(
-                textAlign = if (textCenter) TextAlign.Center else TextAlign.Start
+                textAlign = if (textCenter) TextAlign.Center else TextAlign.Start,
+                color = ProjectTheme.color.primary.fontColor,
+                fontWeight = FontWeight.Medium,
+                fontSize = ProjectFontSize.FontSize6
             ),
             label = { label?.let { Text(it) } },
             placeholder = { placeholder?.let { Text(it) } },
@@ -60,7 +66,6 @@ object ProjectTextField {
                             )
                         }
                     }
-
                 }
             },
             visualTransformation = visualTransformation,
@@ -69,7 +74,12 @@ object ProjectTextField {
             ),
             keyboardActions = KeyboardActions.Default,
             singleLine = true,
-            shape = ProjectTheme.shape.textField
+            shape = ProjectTheme.shape.textField,
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = ProjectTheme.color.primary.outline,
+                unfocusedBorderColor = ProjectTheme.color.primary.outline,
+                cursorColor = ProjectTheme.color.primary.fontColor,
+            )
         )
     }
 
