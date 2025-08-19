@@ -15,6 +15,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogWindowProvider
 import com.example.core.core.ProjectPreview
@@ -36,7 +38,7 @@ fun PrimaryDialog(
 
         Box(
             modifier = Modifier
-                .fillMaxWidth()
+                .width(600.dp)
                 .wrapContentHeight()
                 .padding(horizontal = ProjectTheme.space.space8)
                 .background(
@@ -47,6 +49,7 @@ fun PrimaryDialog(
         ) {
             Column(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .padding(
                         horizontal = ProjectTheme.space.space4,
                     ),
@@ -57,6 +60,7 @@ fun PrimaryDialog(
                     Text(
                         text = it,
                         color = ProjectTheme.color.primary.fontColor,
+                        textAlign = TextAlign.Center,
                         style = ProjectTheme.typography.xl.bold
                     )
                     Spacer(modifier = Modifier.height(ProjectTheme.space.space2))
@@ -65,6 +69,7 @@ fun PrimaryDialog(
                     Text(
                         text = it,
                         color = ProjectTheme.color.primary.fontColor,
+                        textAlign = TextAlign.Center,
                         style = ProjectTheme.typography.xxl.regular
                     )
                     Spacer(modifier = Modifier.height(ProjectTheme.space.space2))
@@ -73,14 +78,16 @@ fun PrimaryDialog(
                     Text(
                         text = it,
                         color = ProjectTheme.color.gray600,
+                        textAlign = TextAlign.Center,
                         style = ProjectTheme.typography.s.regular
                     )
                     Spacer(modifier = Modifier.height(ProjectTheme.space.space2))
                 }
                 text?.let {
                     Text(
-                        text = text,
-                        color = ProjectTheme.color.black,
+                        text = it,
+                        color = ProjectTheme.color.primary.fontColor,
+                        textAlign = TextAlign.Center,
                         style = ProjectTheme.typography.m.regular
                     )
                 }

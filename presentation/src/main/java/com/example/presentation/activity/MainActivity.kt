@@ -45,6 +45,7 @@ class MainActivity : AppCompatActivity() {
             ProjectTheme {
                 ProjectScreen.LoadingScreen(
                     loading = loading,
+                    loadingColor = ProjectTheme.color.white,
                     content = {
                         MainGraph(navController = navController)
                     }

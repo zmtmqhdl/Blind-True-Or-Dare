@@ -97,8 +97,8 @@ class MainViewModel @Inject constructor(
                             MultiFormatWriter().encode(
                                 it,
                                 BarcodeFormat.QR_CODE,
-                                512,
-                                512
+                                1024,
+                                1024
                             )
                         )
                     )

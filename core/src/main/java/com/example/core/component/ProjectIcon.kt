@@ -22,13 +22,14 @@ import com.example.core.type.IconPosition
 @Composable
 fun ProjectIcon(
     icon: ImageVector,
+    modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null,
     size: Dp = ProjectTheme.space.space4,
-    color: Color = ProjectTheme.color.black,
+    color: Color = ProjectTheme.color.primary.fontColor,
     iconPosition: IconPosition = IconPosition.DEFAULT,
 ) {
     val modifier = if (onClick != null) {
-        Modifier
+        modifier
             .size(size)
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
@@ -36,7 +37,7 @@ fun ProjectIcon(
                 onClick = onClick
             )
     } else {
-        Modifier.size(size)
+        modifier.size(size)
     }
 
     when (iconPosition) {

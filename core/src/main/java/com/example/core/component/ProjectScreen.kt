@@ -30,8 +30,7 @@ object ProjectScreen {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(
-                    start = ProjectTheme.space.space4,
-                    end = ProjectTheme.space.space4
+                    horizontal = ProjectTheme.space.space4
                 )
                 .then(if (imePadding) Modifier.imePadding() else Modifier)
                 .padding(WindowInsets.systemBars.asPaddingValues())
@@ -43,13 +42,18 @@ object ProjectScreen {
 
     @Composable
     fun Scaffold(
-        topBar: @Composable () -> Unit,
-        bottomBar: @Composable () -> Unit,
-        snackBarHost: @Composable () -> Unit,
+        topBar: @Composable () -> Unit = {},
+        bottomBar: @Composable () -> Unit = {},
+        snackBarHost: @Composable () -> Unit = {},
         containerColor: Color = ProjectTheme.color.background,
         content: @Composable () -> Unit
     ) {
         Scaffold(
+            modifier = Modifier
+                .imePadding()
+                .padding(
+                    horizontal = ProjectTheme.space.space4
+                ),
             topBar = topBar,
             bottomBar = bottomBar,
             snackbarHost = snackBarHost,
@@ -59,10 +63,7 @@ object ProjectScreen {
                 modifier = Modifier
                     .imePadding()
                     .padding(innerPadding)
-                    .padding(
-                        start = ProjectTheme.space.space4,
-                        end = ProjectTheme.space.space4
-                    )
+
             ) {
                 content()
             }
