@@ -40,7 +40,7 @@ fun CreateRoomDto.toDomain() : CreateRoom =
 fun RoomDto.toDomain(): Room =
     Room(
         roomId = roomId,
-        hostId = hostId,
+        host = host.toDomain(),
         participantList = participantList.map { it.toDomain() }.toSet(),
         roomStatus = roomStatus,
         writeTime = writeTime,

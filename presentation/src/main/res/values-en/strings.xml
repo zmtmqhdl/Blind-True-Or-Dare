@@ -7,10 +7,11 @@
     <string name="component_create">Create</string>
     <string name="component_enter">Enter</string>
     <string name="component_nickname">Nickname</string>
-    <string name="component_waiting_room_id">Waiting Room Id</string>
+    <string name="component_waiting_room_id">Waiting Room ID</string>
     <string name="component_next">Next</string>
     <string name="component_okay">OK</string>
     <string name="component_cancel">Cancel</string>
+    <string name="component_host_nickname">Host Nickname</string>
 
     <!-- main -->
     <string name="main_dialog_input_nickname">Input your nickname.</string>

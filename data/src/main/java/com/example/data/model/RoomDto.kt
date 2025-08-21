@@ -18,7 +18,7 @@ data class CreateRoomDto(
 @Serializable
 data class RoomDto (
     val roomId: String,
-    val hostId: String,
+    val host: PlayerDto,
     val participantList: Set<PlayerDto>,
     val roomStatus: RoomStatus,
     val writeTime: Long,

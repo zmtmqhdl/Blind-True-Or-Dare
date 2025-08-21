@@ -11,6 +11,7 @@
     <string name="component_next">다음</string>
     <string name="component_okay">확인</string>
     <string name="component_cancel">취소</string>
+    <string name="component_host_nickname">방장 닉네임</string>
 
     <!-- main -->
     <string name="main_dialog_input_nickname">닉네임을 입력해주세요.</string>

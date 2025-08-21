@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -33,7 +34,7 @@ object ProjectScreen {
                     horizontal = ProjectTheme.space.space4
                 )
                 .then(if (imePadding) Modifier.imePadding() else Modifier)
-                .padding(WindowInsets.systemBars.asPaddingValues())
+                .windowInsetsPadding(WindowInsets.systemBars)
                 .background(color = containerColor)
         ) {
             content()
@@ -51,6 +52,7 @@ object ProjectScreen {
         Scaffold(
             modifier = Modifier
                 .imePadding()
+                .windowInsetsPadding(WindowInsets.systemBars)
                 .padding(
                     horizontal = ProjectTheme.space.space4
                 ),
@@ -80,8 +82,7 @@ object ProjectScreen {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = containerColor)
-        ) {
+                .background(color = containerColor)) {
             content()
 
             if (loading) {

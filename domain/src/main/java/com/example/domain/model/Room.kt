@@ -6,7 +6,7 @@ data class CreateRoom(
 
 data class Room(
     val roomId: String,
-    val hostId: String,
+    val host: Player,
     val participantList: Set<Player>,
     var roomStatus: RoomStatus,
     val writeTime: Long,
