@@ -19,8 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WaitingRoomViewModel @Inject constructor(
-    private val roomRepository: RoomRepository,
-
+    roomRepository: RoomRepository,
     private val messageHandlerUseCase: MessageHandlerUseCase,
     private val disconnectWebSocketUseCase: DisconnectWebSocketUseCase,
     private val webSocketHandlerUseCase: WebSocketHandlerUseCase,

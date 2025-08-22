@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
@@ -30,11 +29,11 @@ object ProjectScreen {
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .windowInsetsPadding(WindowInsets.systemBars)
                 .padding(
                     horizontal = ProjectTheme.space.space4
                 )
                 .then(if (imePadding) Modifier.imePadding() else Modifier)
-                .windowInsetsPadding(WindowInsets.systemBars)
                 .background(color = containerColor)
         ) {
             content()
@@ -89,6 +88,7 @@ object ProjectScreen {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
+                        .windowInsetsPadding(WindowInsets.systemBars)
                         .background(ProjectTheme.color.black.copy(alpha = 0.3f))
                         .clickable(enabled = false) {},
                     contentAlignment = Alignment.Center
