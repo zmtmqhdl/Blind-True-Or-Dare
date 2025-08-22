@@ -14,6 +14,7 @@
     <string name="component_host_nickname">Host Nickname</string>
 
     <!-- main -->
+    <string name="component_player">$1%d Players</string>
     <string name="main_dialog_input_nickname">Input your nickname.</string>
     <string name="main_dialog_input_room_id">Input room ID.</string>
     <string name="main_create_room">Create Room</string>
@@ -25,9 +26,9 @@
 
 
     <!-- waiting room -->
-    <string name="waiting_room_title">Waiting Room</string>
-    <string name="waiting_room_qr_code">QR Code</string>
-    <string name="waiting_room_start">Start</string>
+    <string name="component_waiting_room">Waiting Room</string>
+    <string name="component_qr_code">QR Code</string>
+    <string name="component_start">Start</string>
 
     <!-- question room -->
     <string name="question_room_question">Question No.$1%d</string>

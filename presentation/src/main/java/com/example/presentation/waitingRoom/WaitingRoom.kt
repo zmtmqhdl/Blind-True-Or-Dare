@@ -1,22 +1,20 @@
 package com.example.presentation.waitingRoom
 
 import android.content.ClipData
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -32,7 +30,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.Clipboard
 import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.toClipEntry
 import androidx.compose.ui.res.stringResource
@@ -43,9 +40,9 @@ import com.example.core.component.ProjectButton
 import com.example.core.component.ProjectIcon
 import com.example.core.component.ProjectScreen
 import com.example.core.theme.ProjectShapes
-import com.example.core.theme.ProjectSpace
 import com.example.core.theme.ProjectSpaces
 import com.example.core.theme.ProjectTheme
+import com.example.domain.model.Player
 import com.example.domain.model.Room
 import com.example.domain.model.RoomStatus
 import com.example.presentation.R
@@ -64,7 +61,11 @@ fun WaitingRoomRoute(
     val qrCode by waitingRoomViewModel.qrCode.collectAsState()
 
     // local state
-    val displayRoomId by remember { mutableStateOf(waitingRoom!!.roomId.chunked(4).joinToString("-")) }
+    val displayRoomId by remember {
+        mutableStateOf(
+            waitingRoom!!.roomId.chunked(4).joinToString("-")
+        )
+    }
     val clipboard = LocalClipboard.current
     val scope = rememberCoroutineScope()
     val clipData = ClipData.newPlainText("label", waitingRoom!!.roomId)
@@ -124,7 +125,7 @@ fun WaitingRoomScreen(
                 )
 
                 Text(
-                    text = stringResource(R.string.waiting_room_title),
+                    text = stringResource(R.string.component_waiting_room),
                     modifier = Modifier.align(alignment = Alignment.Center),
                     style = ProjectTheme.typography.l.medium,
                     color = ProjectTheme.color.primary.fontColor
@@ -136,7 +137,7 @@ fun WaitingRoomScreen(
                 Spacer(modifier = Modifier.height(ProjectSpaces.Space4))
 
                 ProjectButton.Primary.Xlarge(
-                    text = stringResource(R.string.waiting_room_start),
+                    text = stringResource(R.string.component_start),
                     onClick = onStartClick
                 )
 
@@ -145,83 +146,106 @@ fun WaitingRoomScreen(
 
         },
         content = {
-            Spacer(modifier = Modifier.height(ProjectSpaces.Space8))
+            room?.let {
+                Spacer(modifier = Modifier.height(ProjectSpaces.Space8))
 
-            Row(
-                modifier = Modifier.fillMaxWidth().height(160.dp).border(
-                    width = 1.dp,
-                    color = ProjectTheme.color.primary.outline,
-                    shape = ProjectShapes.Box
-                ),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Spacer(modifier = Modifier.width(10.dp))
-
-                qrCode?.let {
-                    Image(
-                        bitmap = it,
-                        contentDescription = "QR Code",
-                        modifier = Modifier.size(140.dp),
-                        contentScale = ContentScale.Fit
-                    )
-                }
-
-                Spacer(modifier = Modifier.width(ProjectSpaces.Space2))
-
-                Column(
-
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(160.dp)
+                        .border(
+                            width = 1.dp,
+                            color = ProjectTheme.color.primary.outline,
+                            shape = ProjectShapes.Box
+                        ),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
-                        text = stringResource(R.string.component_waiting_room_id)
-                    )
-                    Text(
-                        text = displayRoomId,
-                        modifier = Modifier.clickable(
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = null,
-                            onClick = onRoomIdClick
+                    Spacer(modifier = Modifier.width(10.dp))
+
+                    qrCode?.let {
+                        Image(
+                            bitmap = it,
+                            contentDescription = "QR Code",
+                            modifier = Modifier.size(140.dp),
+                            contentScale = ContentScale.Fit
                         )
-                    )
+                    }
 
                     Spacer(modifier = Modifier.width(ProjectSpaces.Space2))
 
-                    Text(
-                        text = stringResource(R.string.component_host_nickname)
-                    )
+                    Column(
 
-                    Text(
-                        text = room!!.host.nickname
-                    )
+                    ) {
+                        Text(
+                            text = stringResource(R.string.component_waiting_room_id)
+                        )
+                        Text(
+                            text = displayRoomId,
+                            modifier = Modifier.clickable(
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null,
+                                onClick = onRoomIdClick
+                            )
+                        )
+
+                        Spacer(modifier = Modifier.width(ProjectSpaces.Space2))
+
+                        Text(
+                            text = stringResource(R.string.component_host_nickname)
+                        )
+
+                        Text(
+                            text = room.host.nickname
+                        )
+                    }
+
                 }
 
+                Spacer(modifier = Modifier.height(ProjectTheme.space.space4))
+
+                Text(
+                    text = stringResource(R.string.component_player, room.participantList.size),
+                    style = ProjectTheme.typography.l.bold,
+                    color = ProjectTheme.color.primary.fontColor
+                )
+
+                Spacer(modifier = Modifier.height(ProjectTheme.space.space2))
+
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = ProjectTheme.space.space4)
+                        .background(
+                            color = ProjectTheme.color.backgroundElevated
+                        )
+
+                ) {
+                    items(room.participantList.toList()) {
+
+                    }
+                }
             }
-
-            Spacer(modifier = Modifier.height(ProjectTheme.space.space4))
-
-            LazyColumn() {
-                // 떠들 예정인 사람
-                item {
-                    Text(
-                        text = ""
-                    )
-                }
-
-                items(room!!.participantList.toList()) {
-                    
-                }
-            }
-
-            Text(
-                text = room?.participantList?.map { it.nickname }.toString(),
-                style = ProjectTheme.typography.m.medium
-            )
-
-            Spacer(modifier = Modifier.height(ProjectTheme.space.space4))
-
-
-
-
 
         }
     )
+}
+
+@Composable
+fun ParticipantBox(
+    player: Player
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(
+                ProjectTheme.space.space12
+            ),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = player.nickname,
+            style = ProjectTheme.typography.m.medium,
+            color = ProjectTheme.color.primary.fontColor
+        )
+    }
 }

@@ -12,6 +12,11 @@
     <string name="component_okay">확인</string>
     <string name="component_cancel">취소</string>
     <string name="component_host_nickname">방장 닉네임</string>
+    <string name="component_start">시작</string>
+    <string name="component_waiting_room">대기실</string>
+    <string name="component_qr_code">QR 코드</string>
+    <string name="component_player">현재 플레이어 $1%d명</string>
+
 
     <!-- main -->
     <string name="main_dialog_input_nickname">닉네임을 입력해주세요.</string>
@@ -22,11 +27,6 @@
     <string name="main_create_room_failure_dialog_text">대기실 생성에 실패했습니다. 잠시 후 다시 시도해주세요.</string>
     <string name="main_join_room_failure_dialog_title">대기실 입장 실패</string>
     <string name="main_join_room_failure_dialog_text">대기실 입장에 실패했습니다. 잠시 후 다시 시도해주세요.</string>
-
-    <!-- waiting room -->
-    <string name="waiting_room_title">대기실</string>
-    <string name="waiting_room_qr_code">QR 코드</string>
-    <string name="waiting_room_start">시작</string>
 
     <!-- question room -->
     <string name="question_room_question">$1%d번 질문</string>
