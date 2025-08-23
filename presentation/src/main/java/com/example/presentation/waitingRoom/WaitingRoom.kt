@@ -37,12 +37,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.Icon.Back
 import com.example.core.component.ProjectButton
+import com.example.core.component.ProjectDialog.Single.SingleArrangement
 import com.example.core.component.ProjectIcon
 import com.example.core.component.ProjectScreen
 import com.example.core.theme.ProjectShapes
 import com.example.core.theme.ProjectSpaces
 import com.example.core.theme.ProjectTheme
-import com.example.domain.model.Player
 import com.example.domain.model.Room
 import com.example.domain.model.RoomStatus
 import com.example.presentation.R
@@ -59,6 +59,8 @@ fun WaitingRoomRoute(
     // waiting room view model state value
     val waitingRoom by waitingRoomViewModel.room.collectAsState()
     val qrCode by waitingRoomViewModel.qrCode.collectAsState()
+    val player by waitingRoomViewModel.player.collectAsState()
+    val startFailureDialog by waitingRoomViewModel.startFailureDialog.collectAsState()
 
     // local state
     val displayRoomId by remember {
@@ -69,6 +71,17 @@ fun WaitingRoomRoute(
     val clipboard = LocalClipboard.current
     val scope = rememberCoroutineScope()
     val clipData = ClipData.newPlainText("label", waitingRoom!!.roomId)
+
+    // dialog
+    if (startFailureDialog) {
+        SingleArrangement(
+            title = stringResource(R.string.waiting_room_start_failure_dialog_title),
+            text = stringResource(R.string.waiting_room_start_failure_dialog_message),
+            buttonText = stringResource(R.string.component_okay),
+            onClick = { waitingRoomViewModel.dismissStartFailureDialog() }
+
+        )
+    }
 
     // effect
     LaunchedEffect(Unit) {
@@ -98,7 +111,8 @@ fun WaitingRoomRoute(
         },
         qrCode = qrCode,
         popBackStack = { waitingRoomViewModel.exitRoom() },
-        onStartClick = { waitingRoomViewModel.sendStartMessage() }
+        onStartClick = { waitingRoomViewModel.sendStartMessage() },
+        isHost = player!!.playerId == waitingRoom!!.host.playerId
     )
 }
 
@@ -109,7 +123,8 @@ fun WaitingRoomScreen(
     onRoomIdClick: () -> Unit,
     qrCode: ImageBitmap?,
     popBackStack: () -> Unit,
-    onStartClick: () -> Unit
+    onStartClick: () -> Unit,
+    isHost: Boolean
 ) {
     ProjectScreen.Scaffold(
         topBar = {
@@ -133,119 +148,112 @@ fun WaitingRoomScreen(
             }
         },
         bottomBar = {
-            Column {
-                Spacer(modifier = Modifier.height(ProjectSpaces.Space4))
+            if (isHost) {
+                Column {
+                    Spacer(modifier = Modifier.height(ProjectSpaces.Space4))
 
-                ProjectButton.Primary.Xlarge(
-                    text = stringResource(R.string.component_start),
-                    onClick = onStartClick
-                )
+                    ProjectButton.Primary.Xlarge(
+                        text = stringResource(R.string.component_start),
+                        onClick = onStartClick
+                    )
 
-                Spacer(modifier = Modifier.height(ProjectSpaces.Space7))
+                    Spacer(modifier = Modifier.height(ProjectSpaces.Space7))
+                }
             }
-
         },
         content = {
             room?.let {
-                Spacer(modifier = Modifier.height(ProjectSpaces.Space8))
+                Column() {
+                    Spacer(modifier = Modifier.height(ProjectSpaces.Space8))
 
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(160.dp)
-                        .border(
-                            width = 1.dp,
-                            color = ProjectTheme.color.primary.outline,
-                            shape = ProjectShapes.Box
-                        ),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Spacer(modifier = Modifier.width(10.dp))
-
-                    qrCode?.let {
-                        Image(
-                            bitmap = it,
-                            contentDescription = "QR Code",
-                            modifier = Modifier.size(140.dp),
-                            contentScale = ContentScale.Fit
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.width(ProjectSpaces.Space2))
-
-                    Column(
-
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(160.dp)
+                            .border(
+                                width = 1.dp,
+                                color = ProjectTheme.color.primary.outline,
+                                shape = ProjectShapes.Box
+                            ),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(
-                            text = stringResource(R.string.component_waiting_room_id)
-                        )
-                        Text(
-                            text = displayRoomId,
-                            modifier = Modifier.clickable(
-                                interactionSource = remember { MutableInteractionSource() },
-                                indication = null,
-                                onClick = onRoomIdClick
+                        Spacer(modifier = Modifier.width(10.dp))
+
+                        qrCode?.let {
+                            Image(
+                                bitmap = it,
+                                contentDescription = "QR Code",
+                                modifier = Modifier.size(140.dp),
+                                contentScale = ContentScale.Fit
                             )
-                        )
+                        }
 
                         Spacer(modifier = Modifier.width(ProjectSpaces.Space2))
 
-                        Text(
-                            text = stringResource(R.string.component_host_nickname)
-                        )
+                        Column(
 
-                        Text(
-                            text = room.host.nickname
-                        )
+                        ) {
+                            Text(
+                                text = stringResource(R.string.component_waiting_room_id)
+                            )
+                            Text(
+                                text = displayRoomId,
+                                modifier = Modifier.clickable(
+                                    interactionSource = remember { MutableInteractionSource() },
+                                    indication = null,
+                                    onClick = onRoomIdClick
+                                )
+                            )
+
+                            Spacer(modifier = Modifier.width(ProjectSpaces.Space2))
+
+                            Text(
+                                text = stringResource(R.string.component_host_nickname)
+                            )
+
+                            Text(
+                                text = room.host.nickname
+                            )
+                        }
+
                     }
 
-                }
+                    Spacer(modifier = Modifier.height(ProjectTheme.space.space4))
 
-                Spacer(modifier = Modifier.height(ProjectTheme.space.space4))
+                    Text(
+                        text = stringResource(R.string.component_player, room.participantList.size),
+                        style = ProjectTheme.typography.l.bold,
+                        color = ProjectTheme.color.primary.fontColor
+                    )
 
-                Text(
-                    text = stringResource(R.string.component_player, room.participantList.size),
-                    style = ProjectTheme.typography.l.bold,
-                    color = ProjectTheme.color.primary.fontColor
-                )
+                    Spacer(modifier = Modifier.height(ProjectTheme.space.space2))
 
-                Spacer(modifier = Modifier.height(ProjectTheme.space.space2))
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(
+                                color = ProjectTheme.color.backgroundElevated,
+                                shape = ProjectShapes.Box
+                            )
 
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = ProjectTheme.space.space4)
-                        .background(
-                            color = ProjectTheme.color.backgroundElevated
-                        )
-
-                ) {
-                    items(room.participantList.toList()) {
-
+                    ) {
+                        items(room.participantList.toList()) {
+                            Box(
+                                modifier = Modifier.height(ProjectSpaces.Space12),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    text = it.nickname,
+                                    modifier = Modifier.padding(start = ProjectSpaces.Space3),
+                                    style = ProjectTheme.typography.m.medium,
+                                    color = ProjectTheme.color.primary.fontColor,
+                                )
+                            }
+                        }
                     }
                 }
             }
 
         }
     )
-}
-
-@Composable
-fun ParticipantBox(
-    player: Player
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(
-                ProjectTheme.space.space12
-            ),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = player.nickname,
-            style = ProjectTheme.typography.m.medium,
-            color = ProjectTheme.color.primary.fontColor
-        )
-    }
 }

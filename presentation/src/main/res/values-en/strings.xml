@@ -14,7 +14,7 @@
     <string name="component_host_nickname">Host Nickname</string>
 
     <!-- main -->
-    <string name="component_player">$1%d Players</string>
+    <string name="component_player">%d Players</string>
     <string name="main_dialog_input_nickname">Input your nickname.</string>
     <string name="main_dialog_input_room_id">Input room ID.</string>
     <string name="main_create_room">Create Room</string>
@@ -31,6 +31,8 @@
     <string name="component_start">Start</string>
 
     <!-- question room -->
+    <string name="waiting_room_start_failure_dialog_message">At least 2 players are required to start.</string>
     <string name="question_room_question">Question No.$1%d</string>
+    <string name="waiting_room_start_failure_dialog_title">Start failed</string>
 
 </resources>

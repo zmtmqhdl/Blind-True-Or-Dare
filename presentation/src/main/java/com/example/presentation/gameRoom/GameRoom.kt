@@ -2,6 +2,8 @@ package com.example.presentation.gameRoom
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -12,12 +14,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.core.Icon.Back
 import com.example.core.component.ProjectButton
+import com.example.core.component.ProjectDialog.Double.RowArrangement
+import com.example.core.component.ProjectIcon
 import com.example.core.component.ProjectScreen
 import com.example.core.component.ProjectTextField
+import com.example.core.theme.ProjectSpaces
+import com.example.core.theme.ProjectTheme
 import com.example.domain.model.Room
 import com.example.domain.model.RoomStatus
+import com.example.presentation.R
 import kotlinx.coroutines.launch
 
 @Composable
@@ -40,6 +49,17 @@ fun GameRoomRoute(
 
     // dialog
     if (exitDialog) {
+        RowArrangement(
+            title = "",
+            text = "",
+            buttonText1 = "",
+            buttonText2 = "",
+            onClick1 = { exitDialog = false },
+            onClick2 = {
+                exitDialog = false
+
+            }
+        )
 
     }
 
@@ -74,7 +94,7 @@ fun GameRoomRoute(
     }
 
     BackHandler {
-        // 종료 팝업 띄워줘야함
+        exitDialog = true
     }
 
     GameRoomScreen(
@@ -89,10 +109,11 @@ fun GameRoomRoute(
         },
         currentQuestionNumber = currentQuestionNumber,
         updateQuestionValue = { questionValue = it },
-        onOVote = { voteValue = true},
-        onXVote = { voteValue = false },
+        onOVoteClick = { voteValue = true},
+        onXVoteClick = { voteValue = false },
         time = time,
-        voteValue = voteValue
+        voteValue = voteValue,
+        popBackStack = popBackStack
     )
 }
 
@@ -103,51 +124,68 @@ fun GameRoomScreen(
     currentQuestionNumber: Int,
     onSubmitClick: () -> Unit,
     updateQuestionValue: (String) -> Unit,
-    onOVote: () -> Unit,
-    onXVote: () -> Unit,
+    onOVoteClick: () -> Unit,
+    onXVoteClick: () -> Unit,
     time: Long,
-    voteValue: Boolean?
+    voteValue: Boolean?,
+    popBackStack: () -> Unit
 ) {
-    ProjectScreen.Screen {
-        Text(
-            text = "남은 시간: $time / 총 시간: ${room?.writeTime ?: 0L}s"
-        )
-        Text(
-            text = "현재 문제: $currentQuestionNumber / 문제 수: ${room?.questionNumber ?: 0}"
-        )
-
-        Box(
-            modifier = Modifier,
-            contentAlignment = Alignment.Center
-        ) {
-            if (room?.roomStatus == RoomStatus.WRITE) {
-                ProjectTextField.OutlinedTextField(
-                    value = questionValue,
-                    onValueChange = {
-                        updateQuestionValue(it)
-                    }
-                )
-
-            } else if (room?.roomStatus == RoomStatus.ANSWER) {
-                Text(
-                    text = room.questionList[currentQuestionNumber - 1].question
+    ProjectScreen.Scaffold(
+        topBar = {
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
+                ProjectIcon(
+                    icon = Back,
+                    modifier = Modifier.align(alignment = Alignment.CenterStart),
+                    size = ProjectSpaces.Space8,
+                    onClick = popBackStack
                 )
             }
-
         }
-        ProjectButton.Primary.Medium(
-            text = "버튼",
-            onClick = onSubmitClick
-        )
+    ) {
+        Column {
+            Text(
+                text = "남은 시간: $time / 총 시간: ${room?.writeTime ?: 0L}s"
+            )
+            Text(
+                text = "현재 문제: $currentQuestionNumber / 문제 수: ${room?.questionNumber ?: 0}"
+            )
 
-        ProjectButton.Primary.Medium(
-            text = if (voteValue == true) "O 선택 중" else "O",
-            onClick = onOVote
-        )
+            Box(
+                modifier = Modifier,
+                contentAlignment = Alignment.Center
+            ) {
+                if (room?.roomStatus == RoomStatus.WRITE) {
+                    ProjectTextField.OutlinedTextField(
+                        value = questionValue,
+                        onValueChange = {
+                            updateQuestionValue(it)
+                        }
+                    )
 
-        ProjectButton.Primary.Medium(
-            text = if (voteValue == false) "X 선택 중" else "X",
-            onClick = onXVote
-        )
+                } else if (room?.roomStatus == RoomStatus.ANSWER) {
+                    Text(
+                        text = room.questionList[currentQuestionNumber - 1].question
+                    )
+                }
+
+            }
+            ProjectButton.Primary.Medium(
+                text = "버튼",
+                onClick = onSubmitClick
+            )
+
+            ProjectButton.Primary.Medium(
+                text = if (voteValue == true) "O 선택 중" else "O",
+                onClick = onOVoteClick
+            )
+
+            ProjectButton.Primary.Medium(
+                text = if (voteValue == false) "X 선택 중" else "X",
+                onClick = onXVoteClick
+            )
+        }
     }
 }

@@ -8,6 +8,7 @@ import com.example.domain.model.MessageType
 import com.example.domain.model.Question
 import com.example.domain.model.RoomStatus
 import com.example.domain.repository.RoomRepository
+import com.example.domain.usecase.DisconnectWebSocketUseCase
 import com.example.domain.usecase.EmitEventUseCase
 import com.example.domain.usecase.EventHandlerUseCase
 import com.example.domain.usecase.SendMessageUseCase
@@ -31,7 +32,8 @@ class GameRoomViewModel @Inject constructor(
     private val emitEventUseCase: EmitEventUseCase,
     private val eventHandlerUseCase: EventHandlerUseCase,
     private val setMyQuestionListUseCase: SetMyQuestionListUseCase,
-    private val setMyAnswerListUseCase: SetMyAnswerListUseCase
+    private val setMyAnswerListUseCase: SetMyAnswerListUseCase,
+    private val disconnectWebSocketUseCase: DisconnectWebSocketUseCase
 ) : ProjectViewModel(
     viewModelTag = "GameRoomViewModel"
 ) {
@@ -136,6 +138,9 @@ class GameRoomViewModel @Inject constructor(
             }
 
         }
+    }
 
+    fun exitRoom() {
+        disconnectWebSocketUseCase()
     }
 }

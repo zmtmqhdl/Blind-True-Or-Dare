@@ -15,7 +15,7 @@
     <string name="component_start">시작</string>
     <string name="component_waiting_room">대기실</string>
     <string name="component_qr_code">QR 코드</string>
-    <string name="component_player">현재 플레이어 $1%d명</string>
+    <string name="component_player">현재 플레이어 %d명</string>
 
 
     <!-- main -->
@@ -27,6 +27,9 @@
     <string name="main_create_room_failure_dialog_text">대기실 생성에 실패했습니다. 잠시 후 다시 시도해주세요.</string>
     <string name="main_join_room_failure_dialog_title">대기실 입장 실패</string>
     <string name="main_join_room_failure_dialog_text">대기실 입장에 실패했습니다. 잠시 후 다시 시도해주세요.</string>
+
+    <string name="waiting_room_start_failure_dialog_title">시작 실패</string>
+    <string name="waiting_room_start_failure_dialog_message">시작을 위해서 최소 2명의 인원이 필요합니다.</string>
 
     <!-- question room -->
     <string name="question_room_question">$1%d번 질문</string>

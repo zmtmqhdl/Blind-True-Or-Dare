@@ -10,13 +10,15 @@ class EventHandlerUseCase @Inject constructor(
     suspend operator fun invoke(
         createRoomFailure: () -> Unit = {},
         writeNextQuestion: () -> Unit = {},
-        answerNextQuestion: () -> Unit = {}
+        answerNextQuestion: () -> Unit = {},
+        startFailure: () -> Unit = {}
     ) {
         loadingRepository.event.collect {
             when (it) {
                 is Event.CreateRoomFailure -> createRoomFailure()
                 is Event.WriteNextQuestion -> writeNextQuestion()
                 is Event.AnswerNextQuestion -> answerNextQuestion()
+                is Event.StartFailure -> startFailure()
             }
         }
     }

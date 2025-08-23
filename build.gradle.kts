@@ -11,3 +11,9 @@ plugins {
     // ksp
     alias(libs.plugins.ksp) apply false
 }
+
+extra.apply {
+    set("compileSdk", 36)
+    set("targetSdk", 36)
+    set("minSdk", 35)
+}

@@ -51,7 +51,6 @@ object ProjectScreen {
         Scaffold(
             modifier = Modifier
                 .imePadding()
-                .windowInsetsPadding(WindowInsets.systemBars)
                 .padding(
                     horizontal = ProjectTheme.space.space4
                 ),
@@ -60,11 +59,9 @@ object ProjectScreen {
             snackbarHost = snackBarHost,
             containerColor = containerColor
         ) { innerPadding ->
-            Column(
+            Box(
                 modifier = Modifier
-                    .imePadding()
                     .padding(innerPadding)
-
             ) {
                 content()
             }
@@ -81,6 +78,7 @@ object ProjectScreen {
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .windowInsetsPadding(WindowInsets.systemBars)
                 .background(color = containerColor)) {
             content()
 
@@ -88,7 +86,6 @@ object ProjectScreen {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .windowInsetsPadding(WindowInsets.systemBars)
                         .background(ProjectTheme.color.black.copy(alpha = 0.3f))
                         .clickable(enabled = false) {},
                     contentAlignment = Alignment.Center

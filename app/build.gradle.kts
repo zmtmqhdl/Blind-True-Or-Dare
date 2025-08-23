@@ -14,12 +14,12 @@ plugins {
 
 android {
     namespace = "com.example.blindTrueOrDare"
-    compileSdk = 35
+    compileSdk = rootProject.extra["compileSdk"] as Int
 
     defaultConfig {
         applicationId = "com.example.blindTrueOrDare"
-        minSdk = 35
-        targetSdk = 35
+        minSdk = rootProject.extra["minSdk"] as Int
+        targetSdk = rootProject.extra["targetSdk"] as Int
         versionCode = 1
         versionName = "1.0.0"
 
