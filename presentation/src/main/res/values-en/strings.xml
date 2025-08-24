@@ -30,6 +30,10 @@
     <string name="component_qr_code">QR Code</string>
     <string name="component_start">Start</string>
 
+    <!-- game room -->
+    <string name="game_room_exit_dialog_title">Exit Game</string>
+    <string name="game_room_exit_dialog_message">You will not be able to rejoin once you exit. Do you want to leave?</string>
+
     <!-- question room -->
     <string name="waiting_room_start_failure_dialog_message">At least 2 players are required to start.</string>
     <string name="question_room_question">Question No.$1%d</string>

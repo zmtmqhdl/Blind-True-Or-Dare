@@ -23,7 +23,6 @@ import com.example.core.component.ProjectIcon
 import com.example.core.component.ProjectScreen
 import com.example.core.component.ProjectTextField
 import com.example.core.theme.ProjectSpaces
-import com.example.core.theme.ProjectTheme
 import com.example.domain.model.Room
 import com.example.domain.model.RoomStatus
 import com.example.presentation.R
@@ -50,14 +49,14 @@ fun GameRoomRoute(
     // dialog
     if (exitDialog) {
         RowArrangement(
-            title = "",
-            text = "",
-            buttonText1 = "",
-            buttonText2 = "",
+            title = stringResource(R.string.game_room_exit_dialog_title),
+            text = stringResource(R.string.game_room_exit_dialog_message),
+            buttonText1 = stringResource(R.string.component_cancel),
+            buttonText2 = stringResource(R.string.component_okay),
             onClick1 = { exitDialog = false },
             onClick2 = {
                 exitDialog = false
-
+                gameRoomViewModel.exitRoom()
             }
         )
 
@@ -83,6 +82,12 @@ fun GameRoomRoute(
                         voteValue = voteValue!!
                     )
                 }
+            )
+        }
+
+        launch {
+            gameRoomViewModel.handleWebSocketConnect(
+                onDisconnect = popBackStack
             )
         }
     }

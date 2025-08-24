@@ -15,6 +15,7 @@ import com.example.domain.usecase.SendMessageUseCase
 import com.example.domain.usecase.SetMyAnswerListUseCase
 import com.example.domain.usecase.SetMyQuestionListUseCase
 import com.example.domain.usecase.WebSocketHandlerUseCase
+import com.example.domain.usecase.function.ExitGameFunction
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -33,7 +34,8 @@ class GameRoomViewModel @Inject constructor(
     private val eventHandlerUseCase: EventHandlerUseCase,
     private val setMyQuestionListUseCase: SetMyQuestionListUseCase,
     private val setMyAnswerListUseCase: SetMyAnswerListUseCase,
-    private val disconnectWebSocketUseCase: DisconnectWebSocketUseCase
+    private val disconnectWebSocketUseCase: DisconnectWebSocketUseCase,
+    private val exitGameFunction: ExitGameFunction,
 ) : ProjectViewModel(
     viewModelTag = "GameRoomViewModel"
 ) {
@@ -57,6 +59,19 @@ class GameRoomViewModel @Inject constructor(
         viewModelScope.launch {
             webSocketHandlerUseCase(
                 onDisconnect = {}
+            )
+        }
+    }
+
+    fun handleWebSocketConnect(
+        onDisconnect: () -> Unit
+    ) {
+        viewModelScope.launch {
+            webSocketHandlerUseCase(
+                onDisconnect = {
+                    exitGameFunction()
+                    onDisconnect()
+                }
             )
         }
     }

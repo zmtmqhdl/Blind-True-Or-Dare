@@ -28,8 +28,13 @@
     <string name="main_join_room_failure_dialog_title">대기실 입장 실패</string>
     <string name="main_join_room_failure_dialog_text">대기실 입장에 실패했습니다. 잠시 후 다시 시도해주세요.</string>
 
+    <!-- waiting room -->
     <string name="waiting_room_start_failure_dialog_title">시작 실패</string>
     <string name="waiting_room_start_failure_dialog_message">시작을 위해서 최소 2명의 인원이 필요합니다.</string>
+
+    <!-- game room -->
+    <string name="game_room_exit_dialog_title">게임 퇴장</string>
+    <string name="game_room_exit_dialog_message">퇴장 시 재입장이 불가능합니다. 퇴장하시겠습니까?</string>
 
     <!-- question room -->
     <string name="question_room_question">$1%d번 질문</string>
