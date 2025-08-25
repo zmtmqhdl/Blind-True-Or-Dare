@@ -40,8 +40,8 @@ import kotlin.math.max
 @Singleton
 class WebSocketRepositoryImpl @Inject constructor(
 ) : WebSocketRepository {
-    private val _webSocketConnect = MutableStateFlow<WebSocketStatus>(WebSocketStatus.WebSocketIdle)
-    override val webSocketConnect: StateFlow<WebSocketStatus> = _webSocketConnect.asStateFlow()
+    private val _webSocketConnect = MutableSharedFlow<WebSocketStatus>()
+    override val webSocketConnect: SharedFlow<WebSocketStatus> = _webSocketConnect.asSharedFlow()
 
     private val client = OkHttpClient()
     private var webSocket: WebSocket? = null
@@ -79,7 +79,7 @@ class WebSocketRepositoryImpl @Inject constructor(
                 reconnectAttempt = 0
                 _isConnected.value = true
                 scope.launch {
-                    _webSocketConnect.value = WebSocketStatus.WebSocketConnectSuccess(roomUrl = roomUrl)
+                    _webSocketConnect.emit(value = WebSocketStatus.WebSocketConnectSuccess(roomUrl = roomUrl))
                 }
             }
 
@@ -91,7 +91,7 @@ class WebSocketRepositoryImpl @Inject constructor(
 
             override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
                 scope.launch {
-                    _webSocketConnect.value = WebSocketStatus.WebSocketConnectFailure(error = t)
+                    _webSocketConnect.emit(value = WebSocketStatus.WebSocketConnectFailure(error = t))
                 }
             }
 
@@ -99,7 +99,7 @@ class WebSocketRepositoryImpl @Inject constructor(
                 this@WebSocketRepositoryImpl.webSocket = null
                 _isConnected.value = false
                 scope.launch {
-                    _webSocketConnect.value = WebSocketStatus.WebSocketDisconnect
+                    _webSocketConnect.emit(value = WebSocketStatus.WebSocketDisconnect)
                 }
             }
         })

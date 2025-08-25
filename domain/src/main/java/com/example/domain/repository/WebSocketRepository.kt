@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface WebSocketRepository {
     val message: SharedFlow<Message?>
-    val webSocketConnect: StateFlow<WebSocketStatus>
+    val webSocketConnect: SharedFlow<WebSocketStatus>
     val isConnected: StateFlow<Boolean>
 
 

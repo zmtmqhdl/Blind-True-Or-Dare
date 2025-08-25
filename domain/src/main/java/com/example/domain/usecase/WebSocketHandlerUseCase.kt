@@ -23,9 +23,7 @@ class WebSocketHandlerUseCase @Inject constructor(
                 is WebSocketStatus.WebSocketDisconnect -> {
                     onDisconnect()
                 }
-                is WebSocketStatus.WebSocketIdle -> {
 
-                }
             }
         }
     }
