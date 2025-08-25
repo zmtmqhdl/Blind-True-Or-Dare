@@ -1,6 +1,7 @@
 package com.example.presentation.waitingRoom
 
 import android.content.ClipData
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -65,12 +66,12 @@ fun WaitingRoomRoute(
     // local state
     val displayRoomId by remember {
         mutableStateOf(
-            waitingRoom!!.roomId.chunked(4).joinToString("-")
+            waitingRoom?.roomId?.chunked(4)?.joinToString("-")
         )
     }
     val clipboard = LocalClipboard.current
     val scope = rememberCoroutineScope()
-    val clipData = ClipData.newPlainText("label", waitingRoom!!.roomId)
+    val clipData = ClipData.newPlainText("label", waitingRoom?.roomId)
 
     // dialog
     if (startFailureDialog) {
@@ -86,7 +87,9 @@ fun WaitingRoomRoute(
     // effect
     LaunchedEffect(Unit) {
         waitingRoomViewModel.handleWebSocketConnect(
-            onDisconnect = popBackStack
+            onDisconnect = {
+                popBackStack()
+            }
         )
     }
 
@@ -112,14 +115,14 @@ fun WaitingRoomRoute(
         qrCode = qrCode,
         popBackStack = { waitingRoomViewModel.exitRoom() },
         onStartClick = { waitingRoomViewModel.sendStartMessage() },
-        isHost = player!!.playerId == waitingRoom!!.host.playerId
+        isHost = player?.playerId == waitingRoom?.host?.playerId
     )
 }
 
 @Composable
 fun WaitingRoomScreen(
     room: Room?,
-    displayRoomId: String,
+    displayRoomId: String?,
     onRoomIdClick: () -> Unit,
     qrCode: ImageBitmap?,
     popBackStack: () -> Unit,
@@ -129,7 +132,7 @@ fun WaitingRoomScreen(
     ProjectScreen.Scaffold(
         topBar = {
             Box(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().padding(top = ProjectTheme.space.space2),
                 contentAlignment = Alignment.Center
             ) {
                 ProjectIcon(
@@ -197,7 +200,7 @@ fun WaitingRoomScreen(
                                 text = stringResource(R.string.component_waiting_room_id)
                             )
                             Text(
-                                text = displayRoomId,
+                                text = displayRoomId ?: "",
                                 modifier = Modifier.clickable(
                                     interactionSource = remember { MutableInteractionSource() },
                                     indication = null,

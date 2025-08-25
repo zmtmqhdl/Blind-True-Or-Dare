@@ -20,6 +20,7 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -45,6 +46,8 @@ class MainViewModel @Inject constructor(
     private val _joinRoomFailureDialog = MutableStateFlow(false)
     val joinRoomFailureDialog: StateFlow<Boolean> = _joinRoomFailureDialog.asStateFlow()
 
+    private var job: Job? = null
+
     init {
         viewModelScope.launch {
             messageHandlerUseCase()
@@ -53,13 +56,6 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             eventHandlerUseCase(
                 createRoomFailure = { _createRoomFailureDialog.value = true },
-            )
-        }
-
-        viewModelScope.launch {
-            webSocketHandlerUseCase(
-                onConnect = { },
-                onConnectFailure = { _joinRoomFailureDialog.value = true }
             )
         }
     }
@@ -89,7 +85,8 @@ class MainViewModel @Inject constructor(
     fun handleWebSocketConnect(
         onConnect: () -> Unit
     ) {
-        viewModelScope.launch {
+        job?.cancel()
+        job = viewModelScope.launch {
             webSocketHandlerUseCase(
                 onConnect = {
                     setQrCodeUseCase(

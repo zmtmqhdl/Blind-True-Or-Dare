@@ -1,5 +1,7 @@
 package com.example.presentation.navigation
 
+import android.util.Log
+import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -17,6 +19,16 @@ fun NavGraphBuilder.main(navController: NavController) {
 
 
     composable(route = Route.WaitingRoom.route) {
+        LaunchedEffect(navController) {
+            navController.currentBackStackEntryFlow.collect { entry ->
+                Log.d("NavDebug", "=== Navigation Debug ===")
+                Log.d("NavDebug", "Current: ${entry.destination.route}")
+                Log.d("NavDebug", "Previous: ${navController.previousBackStackEntry?.destination?.route}")
+                Log.d("NavDebug", "Can pop back: ${navController.previousBackStackEntry != null}")
+                Log.d("NavDebug", "========================")
+            }
+        }
+
         WaitingRoomRoute(
             navigateToGameRoom = {
                 navController.navigate(Route.GameRoom.route) {
