@@ -11,4 +11,5 @@ sealed class WebSocketStatus {
     class WebSocketConnectSuccess(val roomUrl: String) : WebSocketStatus()
     class WebSocketConnectFailure(val error: Throwable) : WebSocketStatus()
     object WebSocketDisconnect : WebSocketStatus()
+    object WebSocketIdle: WebSocketStatus()
 }

@@ -46,8 +46,6 @@ class MainViewModel @Inject constructor(
     private val _joinRoomFailureDialog = MutableStateFlow(false)
     val joinRoomFailureDialog: StateFlow<Boolean> = _joinRoomFailureDialog.asStateFlow()
 
-    private var job: Job? = null
-
     init {
         viewModelScope.launch {
             messageHandlerUseCase()
@@ -85,8 +83,7 @@ class MainViewModel @Inject constructor(
     fun handleWebSocketConnect(
         onConnect: () -> Unit
     ) {
-        job?.cancel()
-        job = viewModelScope.launch {
+        viewModelScope.launch {
             webSocketHandlerUseCase(
                 onConnect = {
                     setQrCodeUseCase(
