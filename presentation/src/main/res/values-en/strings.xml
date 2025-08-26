@@ -36,6 +36,7 @@
 
     <!-- question room -->
     <string name="waiting_room_start_failure_dialog_message">At least 2 players are required to start.</string>
+    <string name="game_room_guide_message">The questions and answers you provided will all be entered anonymously.</string>
     <string name="question_room_question">Question No.$1%d</string>
     <string name="waiting_room_start_failure_dialog_title">Start failed</string>
 

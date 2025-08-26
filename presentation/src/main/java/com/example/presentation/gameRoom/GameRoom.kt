@@ -65,11 +65,14 @@ fun GameRoomRoute(
             text = stringResource(R.string.game_room_exit_dialog_message),
             buttonText1 = stringResource(R.string.component_cancel),
             buttonText2 = stringResource(R.string.component_okay),
-            onClick1 = { exitDialog = false },
+            onClick1 = {
+                exitDialog = false
+            },
             onClick2 = {
                 exitDialog = false
                 gameRoomViewModel.exitRoom()
-            }
+            },
+            onDismissRequest = { exitDialog = false }
         )
 
     }
@@ -130,7 +133,7 @@ fun GameRoomRoute(
         onXVoteClick = { voteValue = false },
         time = time,
         voteValue = voteValue,
-        popBackStack = popBackStack
+        popBackStack = { exitDialog = true }
     )
 }
 
@@ -168,37 +171,37 @@ fun GameRoomScreen(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally
+            Box(
+                modifier = Modifier,
+                contentAlignment = Alignment.Center
             ) {
-                Box(
-                    modifier = Modifier
-                        .height(45.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "현재 문제: $currentQuestionNumber / 문제 수: ${room?.questionNumber ?: 0}"
-                    )
-                }
-
                 Text(
-                    text = "남은 시간: $time / 총 시간: ${room?.writeTime ?: 0L}s"
+                    text = when (room?.roomStatus) {
+                        RoomStatus.WRITE -> "Q.$currentQuestionNumber"
+                        RoomStatus.ANSWER -> "A.$currentQuestionNumber"
+                        else -> ""
+                    },
+                    modifier = Modifier.align(alignment = Alignment.CenterStart)
                 )
 
+                Text(
+                    text = "남은 시간: $time / 총 시간: ${room?.writeTime ?: 0L}s",
+                    modifier = Modifier.align(alignment = Alignment.Center)
+                )
+            }
 
-                if (room?.roomStatus == RoomStatus.WRITE) {
-                    ProjectTextField.OutlinedTextField(
-                        value = questionValue,
-                        onValueChange = {
-                            updateQuestionValue(it)
-                        }
-                    )
+            if (room?.roomStatus == RoomStatus.WRITE) {
+                ProjectTextField.OutlinedTextField(
+                    value = questionValue,
+                    onValueChange = {
+                        updateQuestionValue(it)
+                    }
+                )
 
-                } else if (room?.roomStatus == RoomStatus.ANSWER) {
-                    Text(
-                        text = room.questionList[currentQuestionNumber - 1].question
-                    )
-                }
+            } else if (room?.roomStatus == RoomStatus.ANSWER) {
+                Text(
+                    text = room.questionList[currentQuestionNumber - 1].question
+                )
             }
 
 

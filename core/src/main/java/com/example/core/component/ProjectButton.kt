@@ -27,7 +27,7 @@ import com.example.core.type.IconPosition
 fun PrimaryButton(
     text: String,
     onClick: () -> Unit,
-    modifier: Modifier? = null,
+    modifier: Modifier = Modifier,
     enabled: Boolean,
     color: ProjectColorSet,
     width: Dp? = null,
@@ -38,7 +38,7 @@ fun PrimaryButton(
     iconPosition: IconPosition = IconPosition.DEFAULT,
 ) {
     Box(
-        modifier = modifier ?: Modifier
+        modifier = modifier
             .then(if (width != null) Modifier.width(width) else Modifier.fillMaxWidth())
             .height(height)
             .background(
@@ -51,12 +51,10 @@ fun PrimaryButton(
                 shape = ProjectTheme.shape.button
             )
             .clip(ProjectTheme.shape.button)
-            .then(
-                if (enabled) Modifier.clickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = null,
-                    onClick = onClick
-                ) else Modifier
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null,
+                onClick = onClick
             ),
         contentAlignment = Alignment.Center
     ) {
@@ -68,10 +66,11 @@ fun PrimaryButton(
             color = if (enabled) color.fontColor else color.fontColor,
             style = style
         )
+        if (icon != null && iconPosition == IconPosition.RIGHT) {
+            ProjectIcon(icon = icon, iconPosition = iconPosition)
+        }
     }
-    if (icon != null && iconPosition == IconPosition.RIGHT) {
-        ProjectIcon(icon = icon, iconPosition = iconPosition)
-    }
+
 }
 
 object ProjectButton {
@@ -80,7 +79,7 @@ object ProjectButton {
         fun Xlarge(
             text: String,
             onClick: () -> Unit,
-            modifier: Modifier? = null,
+            modifier: Modifier = Modifier,
             width: Dp? = null,
             state: Boolean = true,
             icon: ImageVector? = null,
@@ -105,7 +104,7 @@ object ProjectButton {
         fun Large(
             text: String,
             onClick: () -> Unit,
-            modifier: Modifier? = null,
+            modifier: Modifier = Modifier,
             width: Dp? = null,
             state: Boolean = true,
             icon: ImageVector? = null,
@@ -130,7 +129,7 @@ object ProjectButton {
         fun Medium(
             text: String,
             onClick: () -> Unit,
-            modifier: Modifier? = null,
+            modifier: Modifier = Modifier,
             width: Dp? = null,
             state: Boolean = true,
             icon: ImageVector? = null,
@@ -155,32 +154,32 @@ object ProjectButton {
         fun Small(
             text: String,
             onClick: () -> Unit,
-            modifier: Modifier? = null,
+            modifier: Modifier = Modifier,
             width: Dp? = null,
             enabled: Boolean = true,
             icon: ImageVector? = null,
             iconPosition: IconPosition = IconPosition.LEFT,
         ) {
-                PrimaryButton(
-                    text = text,
-                    onClick = onClick,
-                    enabled = enabled,
-                    color = ProjectTheme.color.primary,
-                    modifier = modifier,
-                    width = width,
-                    height = ProjectTheme.space.space8,
-                    space = ProjectTheme.space.space3,
-                    style = ProjectTheme.typography.s.regular,
-                    icon = icon,
-                    iconPosition = iconPosition
-                )
+            PrimaryButton(
+                text = text,
+                onClick = onClick,
+                enabled = enabled,
+                color = ProjectTheme.color.primary,
+                modifier = modifier,
+                width = width,
+                height = ProjectTheme.space.space8,
+                space = ProjectTheme.space.space3,
+                style = ProjectTheme.typography.s.regular,
+                icon = icon,
+                iconPosition = iconPosition
+            )
         }
 
         @Composable
         fun Tiny(
             text: String,
             onClick: () -> Unit,
-            modifier: Modifier? = null,
+            modifier: Modifier = Modifier,
             width: Dp? = null,
             state: Boolean = true,
             icon: ImageVector? = null,
@@ -207,7 +206,7 @@ object ProjectButton {
         fun Xlarge(
             text: String,
             onClick: () -> Unit,
-            modifier: Modifier? = null,
+            modifier: Modifier = Modifier,
             width: Dp? = null,
             state: Boolean = true,
             icon: ImageVector? = null,
@@ -232,7 +231,7 @@ object ProjectButton {
         fun Large(
             text: String,
             onClick: () -> Unit,
-            modifier: Modifier? = null,
+            modifier: Modifier = Modifier,
             width: Dp? = null,
             state: Boolean = true,
             icon: ImageVector? = null,
@@ -257,7 +256,7 @@ object ProjectButton {
         fun Medium(
             text: String,
             onClick: () -> Unit,
-            modifier: Modifier? = null,
+            modifier: Modifier = Modifier,
             width: Dp? = null,
             state: Boolean = true,
             icon: ImageVector? = null,
@@ -282,7 +281,7 @@ object ProjectButton {
         fun Small(
             text: String,
             onClick: () -> Unit,
-            modifier: Modifier? = null,
+            modifier: Modifier = Modifier,
             width: Dp? = null,
             state: Boolean = true,
             icon: ImageVector? = null,
@@ -307,7 +306,7 @@ object ProjectButton {
         fun Tiny(
             text: String,
             onClick: () -> Unit,
-            modifier: Modifier? = null,
+            modifier: Modifier = Modifier,
             width: Dp? = null,
             state: Boolean = true,
             icon: ImageVector? = null,
@@ -334,7 +333,7 @@ object ProjectButton {
         fun Xlarge(
             text: String,
             onClick: () -> Unit,
-            modifier: Modifier? = null,
+            modifier: Modifier = Modifier,
             width: Dp? = null,
             state: Boolean = true,
             icon: ImageVector? = null,
@@ -359,7 +358,7 @@ object ProjectButton {
         fun Large(
             text: String,
             onClick: () -> Unit,
-            modifier: Modifier? = null,
+            modifier: Modifier = Modifier,
             width: Dp? = null,
             state: Boolean = true,
             icon: ImageVector? = null,
@@ -384,7 +383,7 @@ object ProjectButton {
         fun Medium(
             text: String,
             onClick: () -> Unit,
-            modifier: Modifier? = null,
+            modifier: Modifier = Modifier,
             width: Dp? = null,
             state: Boolean = true,
             icon: ImageVector? = null,
@@ -409,7 +408,7 @@ object ProjectButton {
         fun Small(
             text: String,
             onClick: () -> Unit,
-            modifier: Modifier? = null,
+            modifier: Modifier = Modifier,
             width: Dp? = null,
             state: Boolean = true,
             icon: ImageVector? = null,
@@ -434,7 +433,7 @@ object ProjectButton {
         fun Tiny(
             text: String,
             onClick: () -> Unit,
-            modifier: Modifier? = null,
+            modifier: Modifier = Modifier,
             width: Dp? = null,
             state: Boolean = true,
             icon: ImageVector? = null,

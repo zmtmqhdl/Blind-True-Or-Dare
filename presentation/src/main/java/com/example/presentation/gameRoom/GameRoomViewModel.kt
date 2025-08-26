@@ -55,14 +55,6 @@ class GameRoomViewModel @Inject constructor(
     private val _myAnswerList: MutableStateFlow<MutableList<Answer>> =
         MutableStateFlow(mutableListOf())
 
-    init {
-        viewModelScope.launch {
-            webSocketHandlerUseCase(
-                onDisconnect = {}
-            )
-        }
-    }
-
     fun handleWebSocketConnect(
         onDisconnect: () -> Unit
     ) {

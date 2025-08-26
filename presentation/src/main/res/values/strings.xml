@@ -35,6 +35,7 @@
     <!-- game room -->
     <string name="game_room_exit_dialog_title">게임 퇴장</string>
     <string name="game_room_exit_dialog_message">퇴장 시 재입장이 불가능합니다. 퇴장하시겠습니까?</string>
+    <string name="game_room_guide_message">작성하신 질문 및 답변은 모두 익명으로 입력됩니다.</string>
 
     <!-- question room -->
     <string name="question_room_question">$1%d번 질문</string>

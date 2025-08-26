@@ -39,6 +39,7 @@ data class Answer(
 
 enum class RoomStatus {
     WAIT,
+    READY,
     WRITE,
     ANSWER,
     END

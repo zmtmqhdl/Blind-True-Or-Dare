@@ -181,15 +181,15 @@ object ProjectDialog {
             ) {
                 Row {
                     ProjectButton.Primary.Medium(
-                        text = buttonText2,
-                        onClick = onClick2,
-                        modifier = Modifier.Companion.weight(1f)
+                        text = buttonText1,
+                        onClick = onClick1,
+                        modifier = Modifier.weight(1f)
                     )
                     Spacer(modifier = Modifier.width(ProjectTheme.space.space2))
                     ProjectButton.Primary.Medium(
-                        text = buttonText1,
-                        onClick = onClick1,
-                        modifier = Modifier.Companion.weight(1f)
+                        text = buttonText2,
+                        onClick = onClick2,
+                        modifier = Modifier.weight(1f)
                     )
                 }
             }
