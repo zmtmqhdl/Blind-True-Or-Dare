@@ -82,68 +82,68 @@ class GameRoomViewModel @Inject constructor(
 
     fun submitQuestion(
         questionValue: String,
-        voteValue: Boolean
     ) {
-        if (room.value?.roomStatus == RoomStatus.WRITE) {
-            _myQuestionList.value.add(
-                Question(
-                    questionId = -1,
-                    playerId = player.value!!.playerId,
-                    question = questionValue,
-                    oVoters = setOf(),
-                    xVoters = setOf()
-                )
+        _myQuestionList.value.add(
+            Question(
+                questionId = -1,
+                playerId = player.value!!.playerId,
+                question = questionValue,
+                oVoters = setOf(),
+                xVoters = setOf()
             )
-            _currentQuestionNumber.value += 1
-            if (_currentQuestionNumber.value > room.value?.questionNumber!!) {
-                setMyQuestionListUseCase(myQuestionList = _myQuestionList.value)
-                sendMessageUseCase(
-                    messageType = MessageType.SEND_WRITE_END,
-                    data = _myQuestionList.value
-                )
-                timeJob?.cancel()
-                _currentQuestionNumber.value = 1
-            } else {
-                timeJob?.cancel()
-                timeJob = viewModelScope.launch {
-                    for (time in 30 downTo 0) {
-                        _time.value = time * 1000L
-                        if (time != 0) {
-                            delay(timeMillis = 1000L)
-                        }
-                    }
-                    emitEventUseCase(event = Event.WriteNextQuestion)
-                }
-            }
-        } else if (room.value?.roomStatus == RoomStatus.ANSWER) {
-            _myAnswerList.value.add(
-                Answer(
-                    questionId = room.value!!.questionList[_currentQuestionNumber.value - 1].questionId,
-                    playerId = player.value!!.playerId,
-                    answer = voteValue
-                )
+        )
+        _currentQuestionNumber.value += 1
+        if (_currentQuestionNumber.value > room.value?.questionNumber!!) {
+            setMyQuestionListUseCase(myQuestionList = _myQuestionList.value)
+            sendMessageUseCase(
+                messageType = MessageType.SEND_WRITE_END,
+                data = _myQuestionList.value
             )
-            _currentQuestionNumber.value += 1
-            if (_currentQuestionNumber.value > room.value?.questionList!!.size) {
-                setMyAnswerListUseCase(myAnswerList = _myAnswerList.value)
-                sendMessageUseCase(
-                    messageType = MessageType.SEND_ANSWER_END,
-                    data = _myAnswerList.value
-                )
-                timeJob?.cancel()
-            } else {
-                timeJob?.cancel()
-                timeJob = viewModelScope.launch {
-                    for (time in 30 downTo 0) {
-                        _time.value = time * 1000L
-                        if (time != 0) {
-                            delay(timeMillis = 1000L)
-                        }
+            timeJob?.cancel()
+            _currentQuestionNumber.value = 1
+        } else {
+            timeJob?.cancel()
+            timeJob = viewModelScope.launch {
+                for (time in 30 downTo 0) {
+                    _time.value = time * 1000L
+                    if (time != 0) {
+                        delay(timeMillis = 1000L)
                     }
-                    emitEventUseCase(event = Event.AnswerNextQuestion)
                 }
+                emitEventUseCase(event = Event.WriteNextQuestion)
             }
+        }
+    }
 
+    fun submitAnswer(
+        voteValue: Boolean?
+    ) {
+        _myAnswerList.value.add(
+            Answer(
+                questionId = room.value!!.questionList[_currentQuestionNumber.value - 1].questionId,
+                playerId = player.value!!.playerId,
+                answer = voteValue
+            )
+        )
+        _currentQuestionNumber.value += 1
+        if (_currentQuestionNumber.value > room.value?.questionList!!.size) {
+            setMyAnswerListUseCase(myAnswerList = _myAnswerList.value)
+            sendMessageUseCase(
+                messageType = MessageType.SEND_ANSWER_END,
+                data = _myAnswerList.value
+            )
+            timeJob?.cancel()
+        } else {
+            timeJob?.cancel()
+            timeJob = viewModelScope.launch {
+                for (time in 30 downTo 0) {
+                    _time.value = time * 1000L
+                    if (time != 0) {
+                        delay(timeMillis = 1000L)
+                    }
+                }
+                emitEventUseCase(event = Event.AnswerNextQuestion)
+            }
         }
     }
 

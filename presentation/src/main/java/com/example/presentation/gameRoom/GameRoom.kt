@@ -54,7 +54,6 @@ fun GameRoomRoute(
 
     // local state
     var questionValue by remember { mutableStateOf("") }
-    var voteValue by remember { mutableStateOf<Boolean?>(null) }
     var exitDialog by remember { mutableStateOf(false) }
 
 
@@ -84,17 +83,12 @@ fun GameRoomRoute(
                 writeNextQuestion = {
                     gameRoomViewModel.submitQuestion(
                         questionValue = questionValue,
-                        voteValue = voteValue!!
                     )
                     questionValue = ""
                 },
                 answerNextQuestion = {
-                    if (voteValue == null) {
-                        voteValue = true
-                    }
-                    gameRoomViewModel.submitQuestion(
-                        questionValue = questionValue,
-                        voteValue = voteValue!!
+                    gameRoomViewModel.submitAnswer(
+                        voteValue = null,
                     )
                 }
             )
@@ -123,16 +117,22 @@ fun GameRoomRoute(
         onSubmitClick = {
             gameRoomViewModel.submitQuestion(
                 questionValue = questionValue,
-                voteValue = voteValue ?: true
             )
             questionValue = ""
         },
         currentQuestionNumber = currentQuestionNumber,
         updateQuestionValue = { questionValue = it },
-        onOVoteClick = { voteValue = true },
-        onXVoteClick = { voteValue = false },
+        onOVoteClick = {
+            gameRoomViewModel.submitAnswer(
+                voteValue = true
+            )
+        },
+        onXVoteClick = {
+            gameRoomViewModel.submitAnswer(
+                voteValue = false
+            )
+        },
         time = time,
-        voteValue = voteValue,
         popBackStack = { exitDialog = true }
     )
 }
@@ -147,7 +147,6 @@ fun GameRoomScreen(
     onOVoteClick: () -> Unit,
     onXVoteClick: () -> Unit,
     time: Long,
-    voteValue: Boolean?,
     popBackStack: () -> Unit
 ) {
     ProjectScreen.Scaffold(
@@ -204,6 +203,7 @@ fun GameRoomScreen(
                 )
             }
 
+            Spacer(modifier = Modifier.height(ProjectSpaces.Space4))
 
             if (room?.roomStatus == RoomStatus.ANSWER) {
                 Row(
@@ -226,7 +226,7 @@ fun GameRoomScreen(
                         contentAlignment = Alignment.Center,
                     ) {
                         Text(
-                            text = if (voteValue == true) "O 선택 중" else "O",
+                            text = "O",
                             color = ProjectTheme.color.primary.fontColor,
                             style = ProjectTheme.typography.xxxl.medium
                         )
@@ -251,18 +251,18 @@ fun GameRoomScreen(
                         contentAlignment = Alignment.Center,
                     ) {
                         Text(
-                            text = if (voteValue == false) "X 선택 중" else "X",
+                            text = "X",
                             color = ProjectTheme.color.primary.fontColor,
                             style = ProjectTheme.typography.xxxl.medium
                         )
                     }
                 }
+            } else if (room?.roomStatus == RoomStatus.ANSWER) {
+                ProjectButton.Primary.Medium(
+                    text = "버튼",
+                    onClick = onSubmitClick
+                )
             }
-
-            ProjectButton.Primary.Medium(
-                text = "버튼",
-                onClick = onSubmitClick
-            )
         }
     }
 }

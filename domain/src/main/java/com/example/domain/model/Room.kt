@@ -34,7 +34,7 @@ data class Question(
 data class Answer(
     val questionId: Long,
     val playerId: String,
-    val answer: Boolean
+    val answer: Boolean?
 )
 
 enum class RoomStatus {
