@@ -95,7 +95,7 @@ fun WaitingRoomRoute(
 
     // 이벤트로 바꿔라...?
     LaunchedEffect(waitingRoom?.roomStatus) {
-        if (waitingRoom?.roomStatus == RoomStatus.READY) {
+        if (waitingRoom?.roomStatus == RoomStatus.WRITE) {
             navigateToGameRoom()
         }
     }

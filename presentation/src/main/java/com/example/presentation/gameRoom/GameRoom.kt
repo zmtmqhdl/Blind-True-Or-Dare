@@ -79,6 +79,7 @@ fun GameRoomRoute(
 
     // effect
     LaunchedEffect(Unit) {
+
         launch {
             gameRoomViewModel.eventHandler(
                 writeNextQuestion = {
@@ -134,7 +135,8 @@ fun GameRoomRoute(
             )
         },
         time = time,
-        popBackStack = { exitDialog = true }
+        popBackStack = { exitDialog = true },
+        isStart = isStart
     )
 }
 
@@ -148,7 +150,8 @@ fun GameRoomScreen(
     onOVoteClick: () -> Unit,
     onXVoteClick: () -> Unit,
     time: Long,
-    popBackStack: () -> Unit
+    popBackStack: () -> Unit,
+    isStart: Boolean
 ) {
     ProjectScreen.Scaffold(
         topBar = {
@@ -179,7 +182,7 @@ fun GameRoomScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 // todo - 같은 높이
-                if (room?.roomStatus == RoomStatus.READY) {
+                if (isStart) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
@@ -192,8 +195,6 @@ fun GameRoomScreen(
                         Text(
                             text = "$time"
                         )
-
-
                     }
                 } else {
                     Box(
