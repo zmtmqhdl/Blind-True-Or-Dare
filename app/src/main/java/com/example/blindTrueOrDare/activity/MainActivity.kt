@@ -1,4 +1,4 @@
-package com.example.presentation.activity
+package com.example.blindTrueOrDare.activity
 
 import android.os.Bundle
 import androidx.activity.compose.setContent

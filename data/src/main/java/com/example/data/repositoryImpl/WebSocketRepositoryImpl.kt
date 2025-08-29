@@ -69,7 +69,8 @@ class WebSocketRepositoryImpl @Inject constructor(
 
         val playerJson = Json.encodeToString(player.toDto())
         val encodedPlayerJson = URLEncoder.encode(playerJson, "UTF-8")
-        val roomUrl = "ws://10.0.2.2:8080/room?roomId=$roomId"
+        val roomUrl = "https://10.0.2.2:8080/room/$roomId"
+        // https://example.com/room/1234
         val request = Request.Builder()
             .url("$roomUrl&player=$encodedPlayerJson")
             .build()

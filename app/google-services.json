@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "440336316243",
+    "project_id": "blindtrueordare",
+    "storage_bucket": "blindtrueordare.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:440336316243:android:88ac43afe464dff13a93a6",
+        "android_client_info": {
+          "package_name": "com.example.blindTrueOrDare"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlzWJuW1HndBdnAHXeB3z8BusFfBOHli8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:440336316243:android:9a090182cfa6b9ab3a93a6",
+        "android_client_info": {
+          "package_name": "com.example.blindTrueOrDare.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlzWJuW1HndBdnAHXeB3z8BusFfBOHli8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

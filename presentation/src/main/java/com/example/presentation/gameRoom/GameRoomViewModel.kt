@@ -49,6 +49,9 @@ class GameRoomViewModel @Inject constructor(
     private val _currentQuestionNumber = MutableStateFlow(1)
     val currentQuestionNumber: StateFlow<Int> = _currentQuestionNumber.asStateFlow()
 
+    private val _isStart = MutableStateFlow(false)
+    val isStart: StateFlow<Boolean> = _isStart.asStateFlow()
+
     private val _myQuestionList: MutableStateFlow<MutableList<Question>> =
         MutableStateFlow(mutableListOf())
 
@@ -67,6 +70,22 @@ class GameRoomViewModel @Inject constructor(
             )
         }
     }
+
+    // todo - wirte모드 됫을 때 istart이벤트 감지해서 타이머
+    fun start() {
+        _time.value = 5 * 1000L
+        timeJob = viewModelScope.launch {
+            for (time in 5 downTo 0) {
+                _time.value = time * 1000L
+                if (time != 0) {
+                    delay(timeMillis = 1000L)
+                }
+            }
+//            emitEventUseCase(event = Event.WriteNextQuestion)
+        }
+    }
+
+
 
     fun eventHandler(
         writeNextQuestion: () -> Unit,

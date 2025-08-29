@@ -12,6 +12,7 @@
     <string name="component_okay">OK</string>
     <string name="component_cancel">Cancel</string>
     <string name="component_host_nickname">Host Nickname</string>
+    <string name="component_submit">Submit</string>
 
     <!-- main -->
     <string name="component_player">%d Players</string>

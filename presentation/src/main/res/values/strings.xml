@@ -16,6 +16,7 @@
     <string name="component_waiting_room">대기실</string>
     <string name="component_qr_code">QR 코드</string>
     <string name="component_player">현재 플레이어 %d명</string>
+    <string name="component_submit">제출</string>
 
 
     <!-- main -->

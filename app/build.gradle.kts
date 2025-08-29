@@ -10,6 +10,8 @@ plugins {
 
     // ksp
     alias(libs.plugins.ksp)
+
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -85,6 +87,11 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
+    implementation(libs.androidx.appcompat)
+
+    // firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
 
     // module
     implementation(project(":data"))
@@ -95,6 +102,13 @@ dependencies {
     // hilt
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+
+    // navigation
+    implementation(libs.androidx.navigation.compose)
+
+    // splash
+    implementation(libs.androidx.core.splashscreen)
 
     // room
     implementation(libs.androidx.room.ktx)

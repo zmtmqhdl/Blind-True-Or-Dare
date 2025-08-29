@@ -51,6 +51,7 @@ fun GameRoomRoute(
     val room by gameRoomViewModel.room.collectAsState()
     val time by gameRoomViewModel.time.collectAsState()
     val currentQuestionNumber by gameRoomViewModel.currentQuestionNumber.collectAsState()
+    val isStart by gameRoomViewModel.isStart.collectAsState()
 
     // local state
     var questionValue by remember { mutableStateOf("") }
@@ -170,24 +171,57 @@ fun GameRoomScreen(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Box(
-                modifier = Modifier,
-                contentAlignment = Alignment.Center
+            Column(
+                modifier = Modifier.border(
+                    width = ProjectSpaces.Space0,
+                    color = ProjectTheme.color.primary.outline,
+                ),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    text = when (room?.roomStatus) {
-                        RoomStatus.WRITE -> "Q.$currentQuestionNumber"
-                        RoomStatus.ANSWER -> "A.$currentQuestionNumber"
-                        else -> ""
-                    },
-                    modifier = Modifier.align(alignment = Alignment.CenterStart)
-                )
+                // todo - 같은 높이
+                if (room?.roomStatus == RoomStatus.READY) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = stringResource(R.string.game_room_guide_message),
+                        )
 
-                Text(
-                    text = "남은 시간: $time / 총 시간: ${room?.writeTime ?: 0L}s",
-                    modifier = Modifier.align(alignment = Alignment.Center)
-                )
+                        Spacer(modifier = Modifier.height(ProjectSpaces.Space2))
+
+                        Text(
+                            text = "$time"
+                        )
+
+
+                    }
+                } else {
+                    Box(
+                        modifier = Modifier,
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = when (room?.roomStatus) {
+                                RoomStatus.WRITE -> "Q.$currentQuestionNumber"
+                                RoomStatus.ANSWER -> "A.$currentQuestionNumber"
+                                else -> ""
+                            },
+                            modifier = Modifier.align(alignment = Alignment.CenterStart)
+                        )
+
+                        Text(
+                            text = "남은 시간: $time / 총 시간: ${room?.writeTime ?: 0L}s",
+                            modifier = Modifier.align(alignment = Alignment.Center)
+                        )
+                    }
+                }
             }
+
+
+
+
+
+
 
             if (room?.roomStatus == RoomStatus.WRITE) {
                 ProjectTextField.OutlinedTextField(
@@ -259,7 +293,7 @@ fun GameRoomScreen(
                 }
             } else if (room?.roomStatus == RoomStatus.ANSWER) {
                 ProjectButton.Primary.Medium(
-                    text = "버튼",
+                    text = stringResource(R.string.component_submit),
                     onClick = onSubmitClick
                 )
             }

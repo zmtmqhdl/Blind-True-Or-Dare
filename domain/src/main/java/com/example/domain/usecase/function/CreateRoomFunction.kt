@@ -12,7 +12,7 @@ import com.example.domain.usecase.ShowLoadingUseCase
 import com.example.domain.usecase.generatePlayerUseCase
 import javax.inject.Inject
 
-class CreateRoomFunction @Inject constructor(
+class   CreateRoomFunction @Inject constructor(
     private val createRoomUseCase: CreateRoomUseCase,
     private val hideLoadingUseCase: HideLoadingUseCase,
     private val showLoadingUseCase: ShowLoadingUseCase,

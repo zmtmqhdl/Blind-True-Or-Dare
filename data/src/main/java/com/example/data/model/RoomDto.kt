@@ -44,5 +44,5 @@ data class QuestionDto(
 data class AnswerDto(
     val questionId: Long,
     val playerId: String,
-    val answer: Boolean
+    val answer: Boolean?
 )

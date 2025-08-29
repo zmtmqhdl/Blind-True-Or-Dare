@@ -15,9 +15,3 @@ inline fun <T> ApiResponse<T>.onFailure(action: (Throwable) -> Unit): ApiRespons
     return this
 }
 
-suspend fun <T> request(block: suspend () -> T): ApiResponse<T> =
-    runCatching { block() }
-        .fold(
-            onSuccess = { ApiResponse.Success(it) },
-            onFailure = { ApiResponse.Error(it) }
-        )

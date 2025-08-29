@@ -18,6 +18,32 @@
         android:supportsRtl="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:enableOnBackInvokedCallback="true">
+
+        <activity
+            android:name="com.example.blindTrueOrDare.activity.MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.project.Splash">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- 실제 도메인으로 변경 -->
+                <data
+                    android:scheme="https"
+                    android:host="example.com"
+                    android:pathPrefix="/room" />
+            </intent-filter>
+
+            <!-- 런처 액티비티 -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+
+
+        </activity>
     </application>
 
 
