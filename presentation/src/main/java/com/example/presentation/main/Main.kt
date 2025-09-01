@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
@@ -54,7 +53,7 @@ fun MainRoute(
 
     // local state
     var nickname by remember { mutableStateOf("") }
-    var waitingRoomId by remember { mutableStateOf("") }
+    var roomId by remember { mutableStateOf("") }
     val focusRequester = remember { FocusRequester() }
 
     // dialog
@@ -135,8 +134,8 @@ fun MainRoute(
                 Spacer(modifier = Modifier.height(ProjectTheme.space.space2))
 
                 ProjectTextField.OutlinedTextField(
-                    value = waitingRoomId,
-                    onValueChange = { waitingRoomId = it },
+                    value = roomId,
+                    onValueChange = { roomId = it },
                     modifier = Modifier.focusRequester(focusRequester = focusRequester),
                     textCenter = true,
                     visualTransformation = RoomIdTransformationUseCase()
@@ -149,7 +148,7 @@ fun MainRoute(
                     onClick = {
                         mainViewModel.joinRoom(
                             nickname = nickname,
-                            roomId = waitingRoomId
+                            roomId = roomId
                         )
                         joinWaitingRoomDialog = false
                     },
@@ -158,7 +157,7 @@ fun MainRoute(
             },
             onDismissRequest = {
                 nickname = ""
-                waitingRoomId = ""
+                roomId = ""
                 joinWaitingRoomDialog = false
             }
         )

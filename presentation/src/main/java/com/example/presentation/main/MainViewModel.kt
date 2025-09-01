@@ -101,7 +101,7 @@ class MainViewModel @Inject constructor(
                     )
                     onConnect()
                 },
-                onConnectFailure = { _joinRoomFailureDialog.value = true },
+                onConnectFailure = { logD("$it") },
             )
         }
     }
