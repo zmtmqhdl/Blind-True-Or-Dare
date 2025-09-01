@@ -74,7 +74,6 @@ class GameRoomViewModel @Inject constructor(
     // todo - wirte모드 됫을 때 istart이벤트 감지해서 타이머
     fun start() {
         timeJob = viewModelScope.launch {
-            delay(3000L)
             for (time in 5 downTo 0) {
                 _time.value = time * 1000L
                 if (time != 0) {

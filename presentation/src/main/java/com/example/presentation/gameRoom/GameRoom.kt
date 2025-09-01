@@ -79,7 +79,6 @@ fun GameRoomRoute(
 
     // effect
     LaunchedEffect(Unit) {
-
         launch {
             gameRoomViewModel.eventHandler(
                 writeNextQuestion = {
@@ -107,6 +106,10 @@ fun GameRoomRoute(
         if (room?.roomStatus == RoomStatus.END) {
             navigateToResultRoom()
         }
+    }
+
+    LaunchedEffect(isStart) {
+        gameRoomViewModel.start()
     }
 
     BackHandler {
@@ -216,26 +219,21 @@ fun GameRoomScreen(
                         )
                     }
                 }
-            }
 
 
+                if (room?.roomStatus == RoomStatus.WRITE) {
+                    ProjectTextField.OutlinedTextField(
+                        value = questionValue,
+                        onValueChange = {
+                            updateQuestionValue(it)
+                        }
+                    )
 
-
-
-
-
-            if (room?.roomStatus == RoomStatus.WRITE) {
-                ProjectTextField.OutlinedTextField(
-                    value = questionValue,
-                    onValueChange = {
-                        updateQuestionValue(it)
-                    }
-                )
-
-            } else if (room?.roomStatus == RoomStatus.ANSWER) {
-                Text(
-                    text = room.questionList[currentQuestionNumber - 1].question
-                )
+                } else if (room?.roomStatus == RoomStatus.ANSWER) {
+                    Text(
+                        text = room.questionList[currentQuestionNumber - 1].question
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(ProjectSpaces.Space4))

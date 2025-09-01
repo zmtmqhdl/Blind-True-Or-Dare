@@ -58,7 +58,6 @@ dependencies {
 
     // retrofit
     implementation(libs.retrofit)
-    implementation(libs.converter.gson)
 
     // room
     implementation(libs.androidx.room.ktx)

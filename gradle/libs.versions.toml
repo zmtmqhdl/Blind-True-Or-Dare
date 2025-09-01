@@ -2,7 +2,6 @@
 agp = "8.12.2"
 barcodeScanning = "17.3.0"
 cameraCamera2 = "1.4.2"
-converterGson = "3.0.0"
 core = "3.5.3"
 coreSplashscreen = "1.0.1"
 firebaseBom = "34.2.0"
@@ -45,7 +44,6 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref =
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomCompiler" }
 androidx-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "runtime" }
 barcode-scanning = { module = "com.google.mlkit:barcode-scanning", version.ref = "barcodeScanning" }
-converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 core = { module = "com.google.zxing:core", version.ref = "core" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
