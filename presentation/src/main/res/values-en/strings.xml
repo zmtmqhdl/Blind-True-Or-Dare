@@ -13,9 +13,10 @@
     <string name="component_cancel">Cancel</string>
     <string name="component_host_nickname">Host Nickname</string>
     <string name="component_submit">Submit</string>
+    <string name="component_player">%d Players</string>
+
 
     <!-- main -->
-    <string name="component_player">%d Players</string>
     <string name="main_dialog_input_nickname">Input your nickname.</string>
     <string name="main_dialog_input_room_id">Input room ID.</string>
     <string name="main_create_room">Create Room</string>
@@ -30,15 +31,21 @@
     <string name="component_waiting_room">Waiting Room</string>
     <string name="component_qr_code">QR Code</string>
     <string name="component_start">Start</string>
+    <string name="waiting_room_start_failure_dialog_title">Start failed</string>
+    <string name="waiting_room_start_failure_dialog_message">At least 2 players are required to start.</string>
+
+
 
     <!-- game room -->
     <string name="game_room_exit_dialog_title">Exit Game</string>
     <string name="game_room_exit_dialog_message">You will not be able to rejoin once you exit. Do you want to leave?</string>
+    <string name="game_room_write_question_end_message">You have finished writing all the questions. Please wait a moment.</string>
+    <string name="game_room_guide_message">The questions and answers you provided will all be entered anonymously.</string>
+    <string name="game_room_answer_question_end_message">You have finished all the answers. Please wait a moment.</string>
 
     <!-- question room -->
-    <string name="waiting_room_start_failure_dialog_message">At least 2 players are required to start.</string>
-    <string name="game_room_guide_message">The questions and answers you provided will all be entered anonymously.</string>
     <string name="question_room_question">Question No.$1%d</string>
-    <string name="waiting_room_start_failure_dialog_title">Start failed</string>
+
+
 
 </resources>

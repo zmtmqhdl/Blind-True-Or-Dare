@@ -43,7 +43,7 @@ class GameRoomViewModel @Inject constructor(
     val player = roomRepository.player
     var timeJob: Job? = null
 
-    private val _time = MutableStateFlow(5 * 1000L)
+    private val _time = MutableStateFlow(5L)
     val time: StateFlow<Long> = _time.asStateFlow()
 
     private val _currentQuestionNumber = MutableStateFlow(1)
@@ -58,6 +58,12 @@ class GameRoomViewModel @Inject constructor(
     private val _myAnswerList: MutableStateFlow<MutableList<Answer>> =
         MutableStateFlow(mutableListOf())
 
+    init {
+        viewModelScope.launch {
+            start()
+        }
+    }
+
     fun handleWebSocketConnect(
         onDisconnect: () -> Unit
     ) {
@@ -71,20 +77,26 @@ class GameRoomViewModel @Inject constructor(
         }
     }
 
-    // todo - wirte모드 됫을 때 istart이벤트 감지해서 타이머
     fun start() {
         timeJob = viewModelScope.launch {
-            for (time in 5 downTo 0) {
-                _time.value = time * 1000L
-                if (time != 0) {
+            for (time in 10L downTo 0) {
+                _time.value = time
+                if (time != 0L) {
                     delay(timeMillis = 1000L)
                 }
             }
+            logD("${room.value!!}")
+
             _isStart.value = true
-//            emitEventUseCase(event = Event.WriteNextQuestion)
+            for (time in room.value!!.writeTime downTo 0L) {
+                _time.value = time
+                if (time != 0L) {
+                    delay(timeMillis = 1000L)
+                }
+            }
+            emitEventUseCase(event = Event.WriteNextQuestion)
         }
     }
-
 
 
     fun eventHandler(
@@ -119,13 +131,13 @@ class GameRoomViewModel @Inject constructor(
                 data = _myQuestionList.value
             )
             timeJob?.cancel()
-            _currentQuestionNumber.value = 1
+            // 여기서 인덱스 컨트롤 고려해봐야할듯
         } else {
             timeJob?.cancel()
             timeJob = viewModelScope.launch {
-                for (time in 30 downTo 0) {
-                    _time.value = time * 1000L
-                    if (time != 0) {
+                for (time in room.value!!.writeTime downTo 0L) {
+                    _time.value = time
+                    if (time != 0L) {
                         delay(timeMillis = 1000L)
                     }
                 }
@@ -155,9 +167,9 @@ class GameRoomViewModel @Inject constructor(
         } else {
             timeJob?.cancel()
             timeJob = viewModelScope.launch {
-                for (time in 30 downTo 0) {
-                    _time.value = time * 1000L
-                    if (time != 0) {
+                for (time in 30L downTo 0L) {
+                    _time.value = time
+                    if (time != 0L) {
                         delay(timeMillis = 1000L)
                     }
                 }

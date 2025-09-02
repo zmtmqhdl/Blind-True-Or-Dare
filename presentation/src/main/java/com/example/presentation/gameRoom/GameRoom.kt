@@ -108,10 +108,6 @@ fun GameRoomRoute(
         }
     }
 
-    LaunchedEffect(isStart) {
-        gameRoomViewModel.start()
-    }
-
     BackHandler {
         exitDialog = true
     }
@@ -186,22 +182,8 @@ fun GameRoomScreen(
             ) {
                 // todo - 같은 높이
                 if (isStart) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text(
-                            text = stringResource(R.string.game_room_guide_message),
-                        )
-
-                        Spacer(modifier = Modifier.height(ProjectSpaces.Space2))
-
-                        Text(
-                            text = "$time"
-                        )
-                    }
-                } else {
                     Box(
-                        modifier = Modifier,
+                        modifier = Modifier.fillMaxWidth(),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
@@ -214,88 +196,113 @@ fun GameRoomScreen(
                         )
 
                         Text(
-                            text = "남은 시간: $time / 총 시간: ${room?.writeTime ?: 0L}s",
+                            text = "남은 시간: $time",
                             modifier = Modifier.align(alignment = Alignment.Center)
                         )
                     }
-                }
+
+                    if (room?.roomStatus == RoomStatus.WRITE && currentQuestionNumber.toLong() == room.questionNumber) {
+                        Text(
+                            text = stringResource(R.string.game_room_write_question_end_message)
+                        )
+                    } else if (room?.roomStatus == RoomStatus.WRITE) {
+                        ProjectTextField.OutlinedTextField(
+                            value = questionValue,
+                            onValueChange = {
+                                updateQuestionValue(it)
+                            }
+                        )
+                    } else if (room?.roomStatus == RoomStatus.ANSWER && currentQuestionNumber == room.questionList.size) {
+                        Text(
+                            text = stringResource(R.string.game_room_answer_question_end_message)
+                        )
+                    } else if (room?.roomStatus == RoomStatus.ANSWER) {
+                        Text(
+                            text = room.questionList[currentQuestionNumber - 1].question
+                        )
+                    }
 
 
-                if (room?.roomStatus == RoomStatus.WRITE) {
-                    ProjectTextField.OutlinedTextField(
-                        value = questionValue,
-                        onValueChange = {
-                            updateQuestionValue(it)
-                        }
-                    )
+                } else {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = stringResource(R.string.game_room_guide_message),
+                        )
 
-                } else if (room?.roomStatus == RoomStatus.ANSWER) {
-                    Text(
-                        text = room.questionList[currentQuestionNumber - 1].question
-                    )
+                        Spacer(modifier = Modifier.height(ProjectSpaces.Space4))
+
+                        Text(
+                            text = "$time"
+                        )
+                    }
                 }
             }
 
             Spacer(modifier = Modifier.height(ProjectSpaces.Space4))
 
-            if (room?.roomStatus == RoomStatus.ANSWER) {
-                Row(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .weight(0.5f)
-                            .height(100.dp)
-                            .border(
-                                width = ProjectTheme.space.space1,
-                                color = ProjectTheme.color.primary.outline,
-                                shape = ProjectTheme.shape.button
-                            )
-                            .clickable(
-                                interactionSource = remember { MutableInteractionSource() },
-                                indication = null,
-                                onClick = onOVoteClick
-                            ),
-                        contentAlignment = Alignment.Center,
+            if (isStart) {
+                if (room?.roomStatus == RoomStatus.WRITE) {
+                    ProjectButton.Primary.Medium(
+                        text = stringResource(R.string.component_submit),
+                        onClick = onSubmitClick
+                    )
+                } else if (room?.roomStatus == RoomStatus.ANSWER) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text(
-                            text = "O",
-                            color = ProjectTheme.color.primary.fontColor,
-                            style = ProjectTheme.typography.xxxl.medium
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.width(ProjectTheme.space.space4))
-
-                    Box(
-                        modifier = Modifier
-                            .weight(0.5f)
-                            .height(100.dp)
-                            .border(
-                                width = ProjectTheme.space.space1,
-                                color = ProjectTheme.color.primary.outline,
-                                shape = ProjectTheme.shape.button
+                        Box(
+                            modifier = Modifier
+                                .weight(0.5f)
+                                .height(100.dp)
+                                .border(
+                                    width = ProjectTheme.space.space1,
+                                    color = ProjectTheme.color.primary.outline,
+                                    shape = ProjectTheme.shape.button
+                                )
+                                .clickable(
+                                    interactionSource = remember { MutableInteractionSource() },
+                                    indication = null,
+                                    onClick = onOVoteClick
+                                ),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            Text(
+                                text = "O",
+                                color = ProjectTheme.color.primary.fontColor,
+                                style = ProjectTheme.typography.xxxl.medium
                             )
-                            .clickable(
-                                interactionSource = remember { MutableInteractionSource() },
-                                indication = null,
-                                onClick = onXVoteClick
-                            ),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        Text(
-                            text = "X",
-                            color = ProjectTheme.color.primary.fontColor,
-                            style = ProjectTheme.typography.xxxl.medium
-                        )
+                        }
+
+                        Spacer(modifier = Modifier.width(ProjectTheme.space.space4))
+
+                        Box(
+                            modifier = Modifier
+                                .weight(0.5f)
+                                .height(100.dp)
+                                .border(
+                                    width = ProjectTheme.space.space1,
+                                    color = ProjectTheme.color.primary.outline,
+                                    shape = ProjectTheme.shape.button
+                                )
+                                .clickable(
+                                    interactionSource = remember { MutableInteractionSource() },
+                                    indication = null,
+                                    onClick = onXVoteClick
+                                ),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            Text(
+                                text = "X",
+                                color = ProjectTheme.color.primary.fontColor,
+                                style = ProjectTheme.typography.xxxl.medium
+                            )
+                        }
                     }
                 }
-            } else if (room?.roomStatus == RoomStatus.ANSWER) {
-                ProjectButton.Primary.Medium(
-                    text = stringResource(R.string.component_submit),
-                    onClick = onSubmitClick
-                )
             }
+
         }
     }
 }
