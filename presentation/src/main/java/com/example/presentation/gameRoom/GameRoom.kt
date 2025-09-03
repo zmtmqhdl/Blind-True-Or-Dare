@@ -101,11 +101,11 @@ fun GameRoomRoute(
                 onDisconnect = popBackStack
             )
         }
-    }
 
-    LaunchedEffect(room?.roomStatus) {
-        if (room?.roomStatus == RoomStatus.RESULT) {
-            navigateToResultRoom()
+        launch {
+            gameRoomViewModel.roomStatusHandler(
+                result = navigateToResultRoom
+            )
         }
     }
 
@@ -187,24 +187,35 @@ fun GameRoomScreen(
                 ),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Box(
-                    modifier = Modifier.fillMaxWidth(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    // 번호랑 타이머
-                    Text(
-                        text = when (room?.roomStatus) {
-                            RoomStatus.WRITE -> "Q.$currentQuestionNumber"
-                            RoomStatus.ANSWER -> "A.$currentQuestionNumber"
-                            else -> ""
-                        },
-                        modifier = Modifier.align(alignment = Alignment.CenterStart)
-                    )
+                if (room?.roomStatus in listOf(RoomStatus.WRITE, RoomStatus.ANSWER)) {
+                    Box(
+                        modifier = Modifier.fillMaxWidth(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        // 번호랑 타이머
+                        Text(
+                            text = when (room?.roomStatus) {
+                                RoomStatus.WRITE -> "Q.$currentQuestionNumber"
+                                RoomStatus.ANSWER -> "A.$currentQuestionNumber"
+                                else -> ""
+                            },
+                            modifier = Modifier.align(alignment = Alignment.CenterStart)
+                        )
 
-                    Text(
-                        text = "남은 시간: $time",
-                        modifier = Modifier.align(alignment = Alignment.Center)
-                    )
+                        Text(
+                            text = "남은 시간: $time",
+                            modifier = Modifier.align(alignment = Alignment.Center)
+                        )
+                    }
+                } else if (room?.roomStatus == RoomStatus.RESULT) {
+                    Box(
+                        modifier = Modifier.fillMaxWidth(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = stringResource(R.string.game_room_result_message)
+                        )
+                    }
                 }
 
                 when (room?.roomStatus) {

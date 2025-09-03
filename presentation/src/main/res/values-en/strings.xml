@@ -43,6 +43,7 @@
     <string name="game_room_write_question_guide_message">The questions and answers you provided will all be entered anonymously.</string>
     <string name="game_room_answer_question_end_message">You have finished all the answers. Please wait a moment.</string>
     <string name="game_room_answer_question_guide_message">The answer phase will begin in %d seconds.</string>
+    <string name="game_room_result_message">Preparing to show the answers. Please wait a moment.</string>
 
 
 

@@ -6,7 +6,6 @@ import com.example.domain.Event
 import com.example.domain.model.Answer
 import com.example.domain.model.MessageType
 import com.example.domain.model.Question
-import com.example.domain.model.RoomStatus
 import com.example.domain.repository.RoomRepository
 import com.example.domain.usecase.DisconnectWebSocketUseCase
 import com.example.domain.usecase.EmitEventUseCase
@@ -63,7 +62,9 @@ class GameRoomViewModel @Inject constructor(
     private val _myAnswerList: MutableStateFlow<MutableList<Answer>> =
         MutableStateFlow(mutableListOf())
 
-    init {
+    fun roomStatusHandler(
+        result: suspend () -> Unit
+    ) {
         viewModelScope.launch {
             roomStatusHandlerUseCase(
                 write = {
@@ -72,10 +73,15 @@ class GameRoomViewModel @Inject constructor(
                 answer = {
                     _currentQuestionNumber.value = 1
                     startAnswerQuestion()
+                },
+                result = {
+                    delay(timeMillis = 3000L)
+                    result()
                 }
             )
         }
     }
+
 
     fun handleWebSocketConnect(
         onDisconnect: () -> Unit
