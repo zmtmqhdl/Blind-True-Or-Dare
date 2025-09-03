@@ -51,7 +51,8 @@ fun GameRoomRoute(
     val room by gameRoomViewModel.room.collectAsState()
     val time by gameRoomViewModel.time.collectAsState()
     val currentQuestionNumber by gameRoomViewModel.currentQuestionNumber.collectAsState()
-    val isStart by gameRoomViewModel.isStart.collectAsState()
+    val isWriteStart by gameRoomViewModel.isWriteStart.collectAsState()
+    val isAnswerStart by gameRoomViewModel.isAnswerStart.collectAsState()
 
     // local state
     var questionValue by remember { mutableStateOf("") }
@@ -103,7 +104,7 @@ fun GameRoomRoute(
     }
 
     LaunchedEffect(room?.roomStatus) {
-        if (room?.roomStatus == RoomStatus.END) {
+        if (room?.roomStatus == RoomStatus.RESULT) {
             navigateToResultRoom()
         }
     }
@@ -135,7 +136,10 @@ fun GameRoomRoute(
         },
         time = time,
         popBackStack = { exitDialog = true },
-        isStart = isStart
+        isWriteStart = isWriteStart,
+        isAnswerStart = isAnswerStart,
+        isWriteEnd = currentQuestionNumber.toLong() > room!!.questionNumber,
+        isAnswerEnd = currentQuestionNumber.toLong() > room!!.questionList.size
     )
 }
 
@@ -150,7 +154,10 @@ fun GameRoomScreen(
     onXVoteClick: () -> Unit,
     time: Long,
     popBackStack: () -> Unit,
-    isStart: Boolean
+    isWriteStart: Boolean,
+    isAnswerStart: Boolean,
+    isWriteEnd: Boolean,
+    isAnswerEnd: Boolean
 ) {
     ProjectScreen.Scaffold(
         topBar = {
@@ -180,129 +187,141 @@ fun GameRoomScreen(
                 ),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // todo - 같은 높이
-                if (isStart) {
-                    Box(
-                        modifier = Modifier.fillMaxWidth(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = when (room?.roomStatus) {
-                                RoomStatus.WRITE -> "Q.$currentQuestionNumber"
-                                RoomStatus.ANSWER -> "A.$currentQuestionNumber"
-                                else -> ""
-                            },
-                            modifier = Modifier.align(alignment = Alignment.CenterStart)
-                        )
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    // 번호랑 타이머
+                    Text(
+                        text = when (room?.roomStatus) {
+                            RoomStatus.WRITE -> "Q.$currentQuestionNumber"
+                            RoomStatus.ANSWER -> "A.$currentQuestionNumber"
+                            else -> ""
+                        },
+                        modifier = Modifier.align(alignment = Alignment.CenterStart)
+                    )
 
-                        Text(
-                            text = "남은 시간: $time",
-                            modifier = Modifier.align(alignment = Alignment.Center)
-                        )
-                    }
+                    Text(
+                        text = "남은 시간: $time",
+                        modifier = Modifier.align(alignment = Alignment.Center)
+                    )
+                }
 
-                    if (room?.roomStatus == RoomStatus.WRITE && currentQuestionNumber.toLong() == room.questionNumber) {
-                        Text(
-                            text = stringResource(R.string.game_room_write_question_end_message)
-                        )
-                    } else if (room?.roomStatus == RoomStatus.WRITE) {
-                        ProjectTextField.OutlinedTextField(
-                            value = questionValue,
-                            onValueChange = {
-                                updateQuestionValue(it)
+                when (room?.roomStatus) {
+                    RoomStatus.WRITE -> {
+                        if (isWriteStart) {
+                            ProjectTextField.OutlinedTextField(
+                                value = questionValue,
+                                onValueChange = {
+                                    updateQuestionValue(it)
+                                }
+                            )
+                        } else if (isWriteEnd) {
+                            Text(
+                                text = stringResource(R.string.game_room_write_question_end_message)
+                            )
+                        } else {
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.game_room_write_question_guide_message),
+                                )
+
+                                Spacer(modifier = Modifier.height(ProjectSpaces.Space4))
+
+                                Text(
+                                    text = "$time"
+                                )
                             }
-                        )
-                    } else if (room?.roomStatus == RoomStatus.ANSWER && currentQuestionNumber == room.questionList.size) {
-                        Text(
-                            text = stringResource(R.string.game_room_answer_question_end_message)
-                        )
-                    } else if (room?.roomStatus == RoomStatus.ANSWER) {
-                        Text(
-                            text = room.questionList[currentQuestionNumber - 1].question
-                        )
+                        }
                     }
 
+                    RoomStatus.ANSWER -> {
+                        if (isAnswerStart) {
+                            Text(
+                                text = room.questionList[currentQuestionNumber - 1].question
+                            )
 
-                } else {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text(
-                            text = stringResource(R.string.game_room_guide_message),
-                        )
-
-                        Spacer(modifier = Modifier.height(ProjectSpaces.Space4))
-
-                        Text(
-                            text = "$time"
-                        )
+                        } else if (isAnswerEnd) {
+                            Text(
+                                text = stringResource(R.string.game_room_answer_question_end_message)
+                            )
+                        } else {
+                            Text(
+                                text = stringResource(
+                                    R.string.game_room_answer_question_guide_message,
+                                    time
+                                )
+                            )
+                        }
                     }
+
+                    else -> {}
                 }
             }
 
             Spacer(modifier = Modifier.height(ProjectSpaces.Space4))
 
-            if (isStart) {
-                if (room?.roomStatus == RoomStatus.WRITE) {
-                    ProjectButton.Primary.Medium(
-                        text = stringResource(R.string.component_submit),
-                        onClick = onSubmitClick
-                    )
-                } else if (room?.roomStatus == RoomStatus.ANSWER) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth()
+            if (isWriteStart) {
+                ProjectButton.Primary.Medium(
+                    text = stringResource(R.string.component_submit),
+                    onClick = onSubmitClick
+                )
+            } else if (isAnswerStart) {
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .weight(0.5f)
+                            .height(100.dp)
+                            .border(
+                                width = ProjectTheme.space.space1,
+                                color = ProjectTheme.color.primary.outline,
+                                shape = ProjectTheme.shape.button
+                            )
+                            .clickable(
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null,
+                                onClick = onOVoteClick
+                            ),
+                        contentAlignment = Alignment.Center,
                     ) {
-                        Box(
-                            modifier = Modifier
-                                .weight(0.5f)
-                                .height(100.dp)
-                                .border(
-                                    width = ProjectTheme.space.space1,
-                                    color = ProjectTheme.color.primary.outline,
-                                    shape = ProjectTheme.shape.button
-                                )
-                                .clickable(
-                                    interactionSource = remember { MutableInteractionSource() },
-                                    indication = null,
-                                    onClick = onOVoteClick
-                                ),
-                            contentAlignment = Alignment.Center,
-                        ) {
-                            Text(
-                                text = "O",
-                                color = ProjectTheme.color.primary.fontColor,
-                                style = ProjectTheme.typography.xxxl.medium
-                            )
-                        }
+                        Text(
+                            text = "O",
+                            color = ProjectTheme.color.primary.fontColor,
+                            style = ProjectTheme.typography.xxxl.medium
+                        )
+                    }
 
-                        Spacer(modifier = Modifier.width(ProjectTheme.space.space4))
+                    Spacer(modifier = Modifier.width(ProjectTheme.space.space4))
 
-                        Box(
-                            modifier = Modifier
-                                .weight(0.5f)
-                                .height(100.dp)
-                                .border(
-                                    width = ProjectTheme.space.space1,
-                                    color = ProjectTheme.color.primary.outline,
-                                    shape = ProjectTheme.shape.button
-                                )
-                                .clickable(
-                                    interactionSource = remember { MutableInteractionSource() },
-                                    indication = null,
-                                    onClick = onXVoteClick
-                                ),
-                            contentAlignment = Alignment.Center,
-                        ) {
-                            Text(
-                                text = "X",
-                                color = ProjectTheme.color.primary.fontColor,
-                                style = ProjectTheme.typography.xxxl.medium
+                    Box(
+                        modifier = Modifier
+                            .weight(0.5f)
+                            .height(100.dp)
+                            .border(
+                                width = ProjectTheme.space.space1,
+                                color = ProjectTheme.color.primary.outline,
+                                shape = ProjectTheme.shape.button
                             )
-                        }
+                            .clickable(
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null,
+                                onClick = onXVoteClick
+                            ),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Text(
+                            text = "X",
+                            color = ProjectTheme.color.primary.fontColor,
+                            style = ProjectTheme.typography.xxxl.medium
+                        )
                     }
                 }
-            }
 
+            }
         }
     }
 }

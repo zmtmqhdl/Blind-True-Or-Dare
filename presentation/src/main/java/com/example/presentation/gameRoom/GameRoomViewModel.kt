@@ -11,6 +11,7 @@ import com.example.domain.repository.RoomRepository
 import com.example.domain.usecase.DisconnectWebSocketUseCase
 import com.example.domain.usecase.EmitEventUseCase
 import com.example.domain.usecase.EventHandlerUseCase
+import com.example.domain.usecase.RoomStatusHandlerUseCase
 import com.example.domain.usecase.SendMessageUseCase
 import com.example.domain.usecase.SetMyAnswerListUseCase
 import com.example.domain.usecase.SetMyQuestionListUseCase
@@ -36,6 +37,7 @@ class GameRoomViewModel @Inject constructor(
     private val setMyAnswerListUseCase: SetMyAnswerListUseCase,
     private val disconnectWebSocketUseCase: DisconnectWebSocketUseCase,
     private val exitGameFunction: ExitGameFunction,
+    private val roomStatusHandlerUseCase: RoomStatusHandlerUseCase
 ) : ProjectViewModel(
     viewModelTag = "GameRoomViewModel"
 ) {
@@ -49,8 +51,11 @@ class GameRoomViewModel @Inject constructor(
     private val _currentQuestionNumber = MutableStateFlow(1)
     val currentQuestionNumber: StateFlow<Int> = _currentQuestionNumber.asStateFlow()
 
-    private val _isStart = MutableStateFlow(false)
-    val isStart: StateFlow<Boolean> = _isStart.asStateFlow()
+    private val _isWriteStart = MutableStateFlow(false)
+    val isWriteStart: StateFlow<Boolean> = _isWriteStart.asStateFlow()
+
+    private val _isAnswerStart = MutableStateFlow(false)
+    val isAnswerStart: StateFlow<Boolean> = _isAnswerStart.asStateFlow()
 
     private val _myQuestionList: MutableStateFlow<MutableList<Question>> =
         MutableStateFlow(mutableListOf())
@@ -60,7 +65,15 @@ class GameRoomViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            start()
+            roomStatusHandlerUseCase(
+                write = {
+                    startWriteQuestion()
+                },
+                answer = {
+                    _currentQuestionNumber.value = 1
+                    startAnswerQuestion()
+                }
+            )
         }
     }
 
@@ -77,17 +90,15 @@ class GameRoomViewModel @Inject constructor(
         }
     }
 
-    fun start() {
+    fun startWriteQuestion() {
         timeJob = viewModelScope.launch {
-            for (time in 10L downTo 0) {
+            for (time in 10L downTo 0L) {
                 _time.value = time
                 if (time != 0L) {
                     delay(timeMillis = 1000L)
                 }
             }
-            logD("${room.value!!}")
-
-            _isStart.value = true
+            _isWriteStart.value = true
             for (time in room.value!!.writeTime downTo 0L) {
                 _time.value = time
                 if (time != 0L) {
@@ -95,6 +106,25 @@ class GameRoomViewModel @Inject constructor(
                 }
             }
             emitEventUseCase(event = Event.WriteNextQuestion)
+        }
+    }
+
+    fun startAnswerQuestion() {
+        timeJob = viewModelScope.launch {
+            for (time in 5L downTo 0L) {
+                _time.value = time
+                if (time != 0L) {
+                    delay(timeMillis = 1000L)
+                }
+            }
+            _isAnswerStart.value = true
+            for (time in 30L downTo 0L) {
+                _time.value = time
+                if (time != 0L) {
+                    delay(timeMillis = 1000L)
+                }
+            }
+            emitEventUseCase(event = Event.AnswerNextQuestion)
         }
     }
 
@@ -131,7 +161,7 @@ class GameRoomViewModel @Inject constructor(
                 data = _myQuestionList.value
             )
             timeJob?.cancel()
-            // 여기서 인덱스 컨트롤 고려해봐야할듯
+            _isWriteStart.value = false
         } else {
             timeJob?.cancel()
             timeJob = viewModelScope.launch {
@@ -164,6 +194,7 @@ class GameRoomViewModel @Inject constructor(
                 data = _myAnswerList.value
             )
             timeJob?.cancel()
+            _isAnswerStart.value = false
         } else {
             timeJob?.cancel()
             timeJob = viewModelScope.launch {
