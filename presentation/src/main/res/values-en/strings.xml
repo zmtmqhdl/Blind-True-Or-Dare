@@ -50,6 +50,9 @@
     <!-- question room -->
     <string name="question_room_question">Question No.$1%d</string>
 
+    <!-- result room -->
+    <string name="result_room_title">Q&amp;A Result</string>
+
 
 
 </resources>

@@ -45,5 +45,8 @@
     <!-- question room -->
     <string name="question_room_question">$1%d번 질문</string>
 
+    <!-- result room -->
+    <string name="result_room_title">Q&amp;A 결과</string>
+
 
 </resources>
