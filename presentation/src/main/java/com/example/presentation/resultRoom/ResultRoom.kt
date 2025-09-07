@@ -104,7 +104,7 @@ fun ResultRoomScreen(
 
                 ProjectButton.Primary.Xlarge(
                     text = stringResource(R.string.component_start),
-                    onClick = onStartClick
+                    onClick = { }
                 )
 
                 Spacer(modifier = Modifier.height(ProjectSpaces.Space7))

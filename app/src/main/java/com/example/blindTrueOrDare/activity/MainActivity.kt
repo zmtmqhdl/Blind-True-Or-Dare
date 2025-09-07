@@ -14,6 +14,7 @@ import com.example.core.theme.ProjectTheme
 import com.example.domain.repository.LoadingRepository
 import com.example.domain.repository.RoomRepository
 import com.example.domain.repository.WebSocketRepository
+import com.example.presentation.content.Content
 import com.example.presentation.navigation.MainGraph
 import com.example.presentation.splash.SplashViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,20 +38,9 @@ class MainActivity : AppCompatActivity() {
         installSplashScreen()
         setContent {
             val splashViewModel: SplashViewModel = hiltViewModel()
-            val navController = rememberNavController()
 
-            val loading by loadingRepository.loading.collectAsState()
+            Content()
 
-
-            ProjectTheme {
-                ProjectScreen.LoadingScreen(
-                    loading = loading,
-                    loadingColor = ProjectTheme.color.white,
-                    content = {
-                        MainGraph(navController = navController)
-                    }
-                )
-            }
         }
     }
 
