@@ -5,10 +5,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.example.presentation.main.MainRoute
-import com.example.presentation.gameRoom.GameRoomRoute
-import com.example.presentation.resultRoom.ResultRoomRoute
-import com.example.presentation.waitingRoom.WaitingRoomRoute
+import com.example.presentation.content.main.MainRoute
+import com.example.presentation.content.gameRoom.GameRoomRoute
+import com.example.presentation.content.resultRoom.ResultRoomRoute
+import com.example.presentation.content.waitingRoom.WaitingRoomRoute
 
 fun NavGraphBuilder.main(navController: NavController) {
     composable(route = Route.Main.route) {

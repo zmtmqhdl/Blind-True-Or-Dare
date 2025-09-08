@@ -1,4 +1,4 @@
-package com.example.presentation.gameRoom
+package com.example.presentation.content.gameRoom
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.border

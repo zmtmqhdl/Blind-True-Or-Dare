@@ -1,7 +1,6 @@
-package com.example.presentation.waitingRoom
+package com.example.presentation.content.waitingRoom
 
 import android.content.ClipData
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

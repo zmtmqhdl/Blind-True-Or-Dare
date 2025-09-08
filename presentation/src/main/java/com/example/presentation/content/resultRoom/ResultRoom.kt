@@ -1,4 +1,4 @@
-package com.example.presentation.resultRoom
+package com.example.presentation.content.resultRoom
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -111,28 +112,53 @@ fun ResultRoomScreen(
             }
         },
         content = {
-            Spacer(modifier = Modifier.height(ProjectTheme.space.space12))
-
-            Text(
-                text = "제목",
-            )
-
-            Box(
-                modifier = Modifier
+            Column(
+                modifier = Modifier.fillMaxSize()
             ) {
+                Spacer(modifier = Modifier.height(ProjectTheme.space.space12))
 
-            }
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Box(
+                        modifier = Modifier.fillMaxWidth(0.6f),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "제목"
+                        )
+                    }
 
-            LazyColumn {
-                item {
+                    Box(
+                        modifier = Modifier.fillMaxWidth(0.2f),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "O"
+                        )
+                    }
 
+                    Box(
+                        modifier = Modifier.fillMaxWidth(0.2f),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "X"
+                        )
+                    }
                 }
 
-                items(room.questionList) {
-                    QuestionBox(
-                        question = it,
-                        onClick = { onSelectedQuestionClick(it) }
-                    )
+                LazyColumn {
+                    item {
+
+                    }
+
+                    items(room.questionList) {
+                        QuestionBox(
+                            question = it,
+                            onClick = { onSelectedQuestionClick(it) }
+                        )
+                    }
                 }
             }
         }
@@ -174,7 +200,7 @@ fun QuestionBox(
         }
 
         Box(
-            modifier = Modifier.fillMaxWidth(0.6f),
+            modifier = Modifier.fillMaxWidth(0.2f),
             contentAlignment = Alignment.Center
         ) {
             Text(

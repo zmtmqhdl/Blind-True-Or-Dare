@@ -1,4 +1,4 @@
-package com.example.presentation.main
+package com.example.presentation.content.main
 
 import androidx.compose.runtime.remember
 import androidx.lifecycle.viewModelScope

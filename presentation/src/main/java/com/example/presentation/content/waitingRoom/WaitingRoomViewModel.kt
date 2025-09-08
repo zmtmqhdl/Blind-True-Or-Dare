@@ -1,4 +1,4 @@
-package com.example.presentation.waitingRoom
+package com.example.presentation.content.waitingRoom
 
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.lifecycle.viewModelScope

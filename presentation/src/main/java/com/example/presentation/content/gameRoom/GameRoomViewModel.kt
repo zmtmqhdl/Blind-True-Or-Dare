@@ -1,4 +1,4 @@
-package com.example.presentation.gameRoom
+package com.example.presentation.content.gameRoom
 
 import androidx.lifecycle.viewModelScope
 import com.example.core.core.ProjectViewModel

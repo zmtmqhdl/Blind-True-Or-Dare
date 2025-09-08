@@ -1,4 +1,4 @@
-package com.example.presentation.resultRoom
+package com.example.presentation.content.resultRoom
 
 import com.example.core.core.ProjectViewModel
 import com.example.domain.repository.RoomRepository
