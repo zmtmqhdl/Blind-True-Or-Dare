@@ -153,10 +153,11 @@ class GameRoomViewModel @Inject constructor(
         _myQuestionList.value.add(
             Question(
                 questionId = -1,
-                playerId = player.value!!.playerId,
+                player = player.value!!,
                 question = questionValue,
-                oVoters = setOf(),
-                xVoters = setOf()
+                oVoter = setOf(),
+                xVoter = setOf(),
+                skipper = setOf()
             )
         )
         _currentQuestionNumber.value += 1
@@ -188,7 +189,7 @@ class GameRoomViewModel @Inject constructor(
         _myAnswerList.value.add(
             Answer(
                 questionId = room.value!!.questionList[_currentQuestionNumber.value - 1].questionId,
-                playerId = player.value!!.playerId,
+                player = player.value!!,
                 answer = voteValue
             )
         )

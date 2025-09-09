@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class MessageDto(
     val type: MessageType,
-    val playerId: String? = null,
+    val player: PlayerDto? = null,
     val data: String? = null,
     val timestamp: Long
 )

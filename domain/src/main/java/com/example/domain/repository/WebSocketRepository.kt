@@ -20,7 +20,7 @@ interface WebSocketRepository {
 
     fun send(
         messageType: MessageType,
-        playerId: String,
+        player: Player,
         data: Any?,
         timestamp: Long
     )

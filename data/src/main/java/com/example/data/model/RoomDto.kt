@@ -34,15 +34,16 @@ data class CreateRoomRequestDto(
 @Serializable
 data class QuestionDto(
     val questionId: Long,
-    val playerId: String,
+    val player: PlayerDto,
     val question: String,
-    val oVoters: Set<String>,
-    val xVoters: Set<String>
+    val oVoter: Set<PlayerDto>,
+    val xVoter: Set<PlayerDto>,
+    val skipper: Set<PlayerDto>
 )
 
 @Serializable
 data class AnswerDto(
     val questionId: Long,
-    val playerId: String,
+    val player: PlayerDto,
     val answer: Boolean?
 )

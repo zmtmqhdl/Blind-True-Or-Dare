@@ -58,7 +58,7 @@ fun MessageDto.toDomain(): Message =
 fun Message.toDto(): MessageDto =
     MessageDto(
         type = type,
-        playerId = playerId,
+        player = player?.toDto(),
         data = data,
         timestamp = timestamp
     )
@@ -66,31 +66,26 @@ fun Message.toDto(): MessageDto =
 fun QuestionDto.toDomain(): Question =
     Question(
         questionId = questionId,
-        playerId = playerId,
+        player = player.toDomain(),
         question = question,
-        oVoters = oVoters,
-        xVoters = xVoters
+        oVoter = oVoter.map { it.toDomain() }.toSet(),
+        xVoter = xVoter.map { it.toDomain() }.toSet(),
+        skipper = skipper.map { it.toDomain() }.toSet()
     )
 
 fun Question.toDto(): QuestionDto =
     QuestionDto(
         questionId = questionId,
-        playerId = playerId,
+        player = player.toDto(),
         question = question,
-        oVoters = oVoters,
-        xVoters = xVoters
+        oVoter = oVoter.map { it.toDto() }.toSet(),
+        xVoter = xVoter.map { it.toDto() }.toSet(),
+        skipper = skipper.map { it.toDto() }.toSet()
     )
 
 fun Answer.toDto(): AnswerDto =
     AnswerDto(
         questionId = questionId,
-        playerId = playerId,
-        answer = answer
-    )
-
-fun AnswerDto.toDomain(): Answer =
-    Answer(
-        questionId = questionId,
-        playerId = playerId,
+        player = player.toDto(),
         answer = answer
     )

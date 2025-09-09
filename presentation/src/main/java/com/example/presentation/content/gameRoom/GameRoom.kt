@@ -1,5 +1,6 @@
 package com.example.presentation.content.gameRoom
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -79,6 +80,10 @@ fun GameRoomRoute(
     }
 
     // effect
+    LaunchedEffect(currentQuestionNumber) {
+        Log.d("yayaya", "$currentQuestionNumber")
+    }
+
     LaunchedEffect(Unit) {
         launch {
             gameRoomViewModel.eventHandler(

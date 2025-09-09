@@ -15,7 +15,7 @@ class SendMessageUseCase @Inject constructor(
     ) {
         webSocketRepository.send(
             messageType = messageType,
-            playerId = roomRepository.player.value!!.playerId,
+            player = roomRepository.player.value!!,
             data = data,
             timestamp = System.currentTimeMillis()
         )

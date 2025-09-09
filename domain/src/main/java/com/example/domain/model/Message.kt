@@ -2,7 +2,7 @@ package com.example.domain.model
 
 data class Message (
     val type: MessageType,
-    val playerId: String? = null,
+    val player: Player? = null,
     val data: String? = null,
     val timestamp: Long
 )

@@ -1,5 +1,6 @@
 package com.example.presentation.content.resultRoom
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
@@ -24,7 +26,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.Icon.Back
+import com.example.core.component.PrimaryDialog
 import com.example.core.component.ProjectButton
+import com.example.core.component.ProjectDialog
 import com.example.core.component.ProjectIcon
 import com.example.core.component.ProjectScreen
 import com.example.core.theme.ProjectSpaces
@@ -49,7 +53,72 @@ fun ResultRoomRoute(
     var selectedQuestion by remember { mutableStateOf<Question?>(null) }
 
     if (selectedQuestion != null) {
+        PrimaryDialog {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .border(
+                            width = ProjectSpaces.Space0,
+                            color = ProjectTheme.color.primary.outline
 
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = selectedQuestion!!.question
+                    )
+                }
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .weight(0.5f)
+                            .border(
+                                width = ProjectSpaces.Space0,
+                                color = ProjectTheme.color.primary.outline
+
+                            ),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = selectedQuestion!!.oVoter.size.toString()
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.width(ProjectSpaces.Space4))
+
+                    Box(
+                        modifier = Modifier
+                            .weight(0.5f)
+                            .border(
+                                width = ProjectSpaces.Space0,
+                                color = ProjectTheme.color.primary.outline
+
+                            ),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = selectedQuestion!!.xVoter.size.toString()
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(ProjectSpaces.Space10))
+
+                ProjectButton.Primary.Medium(
+                    text = stringResource(R.string.component_okay),
+                    onClick = { selectedQuestion = null }
+                )
+
+            }
+        }
     }
 
     // screen
@@ -121,7 +190,7 @@ fun ResultRoomScreen(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Box(
-                        modifier = Modifier.fillMaxWidth(0.6f),
+                        modifier = Modifier.fillMaxWidth(0.4f),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
@@ -146,6 +215,14 @@ fun ResultRoomScreen(
                             text = "X"
                         )
                     }
+                    Box(
+                        modifier = Modifier.fillMaxWidth(0.2f),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "Skip"
+                        )
+                    }
                 }
 
                 LazyColumn {
@@ -160,6 +237,8 @@ fun ResultRoomScreen(
                         )
                     }
                 }
+
+
             }
         }
     )
@@ -182,7 +261,7 @@ fun QuestionBox(
             )
     ) {
         Box(
-            modifier = Modifier.fillMaxWidth(0.6f),
+            modifier = Modifier.fillMaxWidth(0.4f),
             contentAlignment = Alignment.Center
         ) {
             Text(
@@ -195,7 +274,7 @@ fun QuestionBox(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = question.oVoters.size.toString()
+                text = question.oVoter.size.toString()
             )
         }
 
@@ -204,7 +283,16 @@ fun QuestionBox(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = question.xVoters.size.toString()
+                text = question.xVoter.size.toString()
+            )
+        }
+
+        Box(
+            modifier = Modifier.fillMaxWidth(0.2f),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = question.skipper.size.toString()
             )
         }
     }

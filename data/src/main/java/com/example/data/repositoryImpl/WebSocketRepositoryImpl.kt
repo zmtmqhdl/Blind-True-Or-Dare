@@ -108,7 +108,7 @@ class WebSocketRepositoryImpl @Inject constructor(
 
     override fun send(
         messageType: MessageType,
-        playerId: String,
+        player: Player,
         data: Any?,
         timestamp: Long
     ) {
@@ -116,7 +116,7 @@ class WebSocketRepositoryImpl @Inject constructor(
             MessageType.SEND_START -> {
                 Message(
                     type = MessageType.SEND_START,
-                    playerId = playerId,
+                    player = player,
                     timestamp = System.currentTimeMillis()
                 )
             }
@@ -125,7 +125,7 @@ class WebSocketRepositoryImpl @Inject constructor(
                 val questionList = data as List<Question>
                 Message(
                     type = MessageType.SEND_WRITE_END,
-                    playerId = playerId,
+                    player = player,
                     data = Json.encodeToString<List<QuestionDto>>(value = questionList.map { it.toDto() }),
                     timestamp = System.currentTimeMillis()
                 )
@@ -135,7 +135,7 @@ class WebSocketRepositoryImpl @Inject constructor(
                 val answerList = data as List<Answer>
                 Message(
                     type = MessageType.SEND_ANSWER_END,
-                    playerId = playerId,
+                    player = player,
                     data = Json.encodeToString<List<AnswerDto>>(value = answerList.map { it.toDto() }),
                     timestamp = System.currentTimeMillis()
                 )

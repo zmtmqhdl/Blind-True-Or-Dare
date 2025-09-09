@@ -25,21 +25,21 @@ data class Player(
 
 data class Question(
     val questionId: Long,
-    val playerId: String,
+    val player: Player,
     val question: String,
-    val oVoters: Set<String>,
-    val xVoters: Set<String>
+    val oVoter: Set<Player>,
+    val xVoter: Set<Player>,
+    val skipper: Set<Player>
 )
 
 data class Answer(
     val questionId: Long,
-    val playerId: String,
+    val player: Player,
     val answer: Boolean?
 )
 
 enum class RoomStatus {
     WAIT,
-    READY,
     WRITE,
     ANSWER,
     RESULT
