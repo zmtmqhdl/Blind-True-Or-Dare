@@ -17,6 +17,9 @@
     <string name="component_qr_code">QR 코드</string>
     <string name="component_player">현재 플레이어 %d명</string>
     <string name="component_submit">제출</string>
+    <string name="component_no_answer">미응답</string>
+    <string name="component_exit_game">게임 퇴장</string>
+    <string name="component_re_entry">대기실 재입장</string>
 
 
     <!-- main -->
@@ -34,7 +37,6 @@
     <string name="waiting_room_start_failure_dialog_message">시작을 위해서 최소 2명의 인원이 필요합니다.</string>
 
     <!-- game room -->
-    <string name="game_room_exit_dialog_title">게임 퇴장</string>
     <string name="game_room_exit_dialog_message">퇴장 시 재입장이 불가능합니다. 퇴장하시겠습니까?</string>
     <string name="game_room_write_question_guide_message">작성하신 질문 및 답변은 모두 익명으로 입력됩니다.</string>
     <string name="game_room_answer_question_guide_message">%d초 후 답변을 시작합니다.</string>
@@ -47,6 +49,7 @@
 
     <!-- result room -->
     <string name="result_room_title">Q&amp;A 결과</string>
+    <string name="result_room_no_question">이런…아무도 질문을 작성하지 않았어요…</string>
 
 
 </resources>

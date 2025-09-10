@@ -29,7 +29,7 @@ data class Question(
     val question: String,
     val oVoter: Set<Player>,
     val xVoter: Set<Player>,
-    val skipper: Set<Player>
+    val noAnswer: Set<Player>
 )
 
 data class Answer(

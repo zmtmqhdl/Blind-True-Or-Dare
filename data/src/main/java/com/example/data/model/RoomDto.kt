@@ -38,7 +38,7 @@ data class QuestionDto(
     val question: String,
     val oVoter: Set<PlayerDto>,
     val xVoter: Set<PlayerDto>,
-    val skipper: Set<PlayerDto>
+    val noAnswer: Set<PlayerDto>
 )
 
 @Serializable

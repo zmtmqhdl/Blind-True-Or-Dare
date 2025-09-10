@@ -157,7 +157,7 @@ class GameRoomViewModel @Inject constructor(
                 question = questionValue,
                 oVoter = setOf(),
                 xVoter = setOf(),
-                skipper = setOf()
+                noAnswer = setOf()
             )
         )
         _currentQuestionNumber.value += 1

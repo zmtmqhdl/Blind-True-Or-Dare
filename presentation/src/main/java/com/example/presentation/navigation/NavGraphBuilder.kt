@@ -19,20 +19,12 @@ fun NavGraphBuilder.main(navController: NavController) {
 
 
     composable(route = Route.WaitingRoom.route) {
-        LaunchedEffect(navController) {
-            navController.currentBackStackEntryFlow.collect { entry ->
-                Log.d("NavDebug", "=== Navigation Debug ===")
-                Log.d("NavDebug", "Current: ${entry.destination.route}")
-                Log.d("NavDebug", "Previous: ${navController.previousBackStackEntry?.destination?.route}")
-                Log.d("NavDebug", "Can pop back: ${navController.previousBackStackEntry != null}")
-                Log.d("NavDebug", "========================")
-            }
-        }
-
         WaitingRoomRoute(
             navigateToGameRoom = {
                 navController.navigate(Route.GameRoom.route) {
-                    popUpTo(Route.WaitingRoom.route) { inclusive = true }
+                    popUpTo(Route.WaitingRoom.route) {
+                        inclusive = true
+                    }
                     launchSingleTop = true
                 }
             },
@@ -42,7 +34,13 @@ fun NavGraphBuilder.main(navController: NavController) {
 
     composable(route = Route.GameRoom.route) {
         GameRoomRoute(
-            navigateToResultRoom = { navController.navigate(route = Route.ResultRoom.route)},
+            navigateToResultRoom = {
+                navController.navigate(route = Route.ResultRoom.route) {
+                    popUpTo(Route.GameRoom.route) {
+                        inclusive = true
+                    }
+                }
+            },
             popBackStack = { navController.popBackStack() }
         )
     }

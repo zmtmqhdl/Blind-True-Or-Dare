@@ -3,6 +3,7 @@ package com.example.presentation.content.resultRoom
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,9 +27,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.Icon.Back
+import com.example.core.Icon.OpenedFolder
 import com.example.core.component.PrimaryDialog
 import com.example.core.component.ProjectButton
-import com.example.core.component.ProjectDialog
+import com.example.core.component.ProjectDialog.Double.RowArrangement
 import com.example.core.component.ProjectIcon
 import com.example.core.component.ProjectScreen
 import com.example.core.theme.ProjectSpaces
@@ -51,6 +53,27 @@ fun ResultRoomRoute(
 
     // local state
     var selectedQuestion by remember { mutableStateOf<Question?>(null) }
+    var exitDialog by remember { mutableStateOf(false) }
+
+
+    // dialog
+    if (exitDialog) {
+        RowArrangement(
+            title = stringResource(R.string.component_exit_game),
+            text = stringResource(R.string.game_room_exit_dialog_message),
+            buttonText1 = stringResource(R.string.component_cancel),
+            buttonText2 = stringResource(R.string.component_okay),
+            onClick1 = {
+                exitDialog = false
+            },
+            onClick2 = {
+                exitDialog = false
+                resultRoomViewModel.exitRoom()
+            },
+            onDismissRequest = { exitDialog = false }
+        )
+
+    }
 
     if (selectedQuestion != null) {
         PrimaryDialog {
@@ -79,7 +102,7 @@ fun ResultRoomRoute(
                 ) {
                     Box(
                         modifier = Modifier
-                            .weight(0.5f)
+                            .weight(0.4f)
                             .border(
                                 width = ProjectSpaces.Space0,
                                 color = ProjectTheme.color.primary.outline
@@ -96,7 +119,24 @@ fun ResultRoomRoute(
 
                     Box(
                         modifier = Modifier
-                            .weight(0.5f)
+                            .weight(0.4f)
+                            .border(
+                                width = ProjectSpaces.Space0,
+                                color = ProjectTheme.color.primary.outline
+
+                            ),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = selectedQuestion!!.noAnswer.size.toString()
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.width(ProjectSpaces.Space4))
+
+                    Box(
+                        modifier = Modifier
+                            .weight(0.4f)
                             .border(
                                 width = ProjectSpaces.Space0,
                                 color = ProjectTheme.color.primary.outline
@@ -127,6 +167,9 @@ fun ResultRoomRoute(
         onSelectedQuestionClick = {
             selectedQuestion = it
         },
+        onReEntryClick = {
+
+        },
         onShareClick = {
 
         },
@@ -141,6 +184,7 @@ fun ResultRoomRoute(
 fun ResultRoomScreen(
     room: Room,
     onSelectedQuestionClick: (Question) -> Unit,
+    onReEntryClick: () -> Unit,
     onShareClick: () -> Unit,
     onExitClick: () -> Unit,
     popBackStack: () -> Unit
@@ -172,73 +216,103 @@ fun ResultRoomScreen(
             Column {
                 Spacer(modifier = Modifier.height(ProjectSpaces.Space4))
 
-                ProjectButton.Primary.Xlarge(
-                    text = stringResource(R.string.component_start),
-                    onClick = { }
-                )
+                Row {
+                    ProjectButton.Primary.Xlarge(
+                        text = stringResource(R.string.component_re_entry),
+                        modifier = Modifier.fillMaxWidth(0.5f),
+                        onClick = onReEntryClick
+                    )
+
+                    Spacer(modifier = Modifier.height(ProjectSpaces.Space3))
+
+                    ProjectButton.Primary.Xlarge(
+                        text = stringResource(R.string.component_exit_game),
+                        modifier = Modifier.fillMaxWidth(0.5f),
+                        onClick = onExitClick
+                    )
+                }
+
 
                 Spacer(modifier = Modifier.height(ProjectSpaces.Space7))
             }
         },
         content = {
-            Column(
-                modifier = Modifier.fillMaxSize()
-            ) {
-                Spacer(modifier = Modifier.height(ProjectTheme.space.space12))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth()
+            if (room.questionList.isEmpty()) {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Box(
-                        modifier = Modifier.fillMaxWidth(0.4f),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = "제목"
-                        )
-                    }
+                    ProjectIcon(
+                        icon = OpenedFolder,
+                        size = ProjectSpaces.Space12
+                    )
 
-                    Box(
-                        modifier = Modifier.fillMaxWidth(0.2f),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = "O"
-                        )
-                    }
+                    Text(
+                        text = stringResource(R.string.result_room_no_question)
+                    )
 
-                    Box(
-                        modifier = Modifier.fillMaxWidth(0.2f),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = "X"
-                        )
-                    }
-                    Box(
-                        modifier = Modifier.fillMaxWidth(0.2f),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = "Skip"
-                        )
-                    }
                 }
+            } else {
+                Column(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    Spacer(modifier = Modifier.height(ProjectTheme.space.space12))
 
-                LazyColumn {
-                    item {
+                    Row(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Box(
+                            modifier = Modifier.fillMaxWidth(0.4f),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "제목"
+                            )
+                        }
 
+                        Box(
+                            modifier = Modifier.fillMaxWidth(0.2f),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "O"
+                            )
+                        }
+
+                        Box(
+                            modifier = Modifier.fillMaxWidth(0.2f),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "X"
+                            )
+                        }
+                        Box(
+                            modifier = Modifier.fillMaxWidth(0.2f),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = stringResource(R.string.component_no_answer)
+                            )
+                        }
                     }
 
-                    items(room.questionList) {
-                        QuestionBox(
-                            question = it,
-                            onClick = { onSelectedQuestionClick(it) }
-                        )
+                    LazyColumn {
+                        item {
+
+                        }
+
+                        items(room.questionList) {
+                            QuestionBox(
+                                question = it,
+                                onClick = { onSelectedQuestionClick(it) }
+                            )
+                        }
                     }
+
+
                 }
-
-
             }
         }
     )
@@ -292,7 +366,7 @@ fun QuestionBox(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = question.skipper.size.toString()
+                text = question.noAnswer.size.toString()
             )
         }
     }

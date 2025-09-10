@@ -70,7 +70,7 @@ fun QuestionDto.toDomain(): Question =
         question = question,
         oVoter = oVoter.map { it.toDomain() }.toSet(),
         xVoter = xVoter.map { it.toDomain() }.toSet(),
-        skipper = skipper.map { it.toDomain() }.toSet()
+        noAnswer = noAnswer.map { it.toDomain() }.toSet()
     )
 
 fun Question.toDto(): QuestionDto =
@@ -80,7 +80,7 @@ fun Question.toDto(): QuestionDto =
         question = question,
         oVoter = oVoter.map { it.toDto() }.toSet(),
         xVoter = xVoter.map { it.toDto() }.toSet(),
-        skipper = skipper.map { it.toDto() }.toSet()
+        noAnswer = noAnswer.map { it.toDto() }.toSet()
     )
 
 fun Answer.toDto(): AnswerDto =

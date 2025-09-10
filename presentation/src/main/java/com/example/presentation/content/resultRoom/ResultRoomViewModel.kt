@@ -1,14 +1,18 @@
 package com.example.presentation.content.resultRoom
 
+import androidx.lifecycle.viewModelScope
 import com.example.core.core.ProjectViewModel
 import com.example.domain.repository.RoomRepository
+import com.example.domain.usecase.DisconnectWebSocketUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ResultRoomViewModel @Inject
 constructor(
-    private val roomRepository: RoomRepository
+    private val roomRepository: RoomRepository,
+    private val disconnectWebSocketUseCase: DisconnectWebSocketUseCase
 ): ProjectViewModel(
     viewModelTag = "ResultRoomViewModel"
 ) {
@@ -21,5 +25,11 @@ constructor(
     init {
 
 
+    }
+
+    fun exitRoom() {
+        viewModelScope.launch {
+            disconnectWebSocketUseCase()
+        }
     }
 }

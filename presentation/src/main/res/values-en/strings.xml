@@ -14,9 +14,11 @@
     <string name="component_host_nickname">Host Nickname</string>
     <string name="component_submit">Submit</string>
     <string name="component_player">%d Players</string>
-
+    <string name="component_exit_game">Exit Game</string>
+    <string name="component_re_entry">Re-entry Room</string>
 
     <!-- main -->
+    <string name="component_no_answer">"    No Answer"</string>
     <string name="main_dialog_input_nickname">Input your nickname.</string>
     <string name="main_dialog_input_room_id">Input room ID.</string>
     <string name="main_create_room">Create Room</string>
@@ -37,7 +39,6 @@
 
 
     <!-- game room -->
-    <string name="game_room_exit_dialog_title">Exit Game</string>
     <string name="game_room_exit_dialog_message">You will not be able to rejoin once you exit. Do you want to leave?</string>
     <string name="game_room_write_question_end_message">You have finished writing all the questions. Please wait a moment.</string>
     <string name="game_room_write_question_guide_message">The questions and answers you provided will all be entered anonymously.</string>
@@ -52,6 +53,7 @@
 
     <!-- result room -->
     <string name="result_room_title">Q&amp;A Result</string>
+    <string name="result_room_no_question">Oops…No one has written a question…</string>
 
 
 

@@ -1,6 +1,5 @@
 package com.example.presentation.content.gameRoom
 
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -63,7 +62,7 @@ fun GameRoomRoute(
     // dialog
     if (exitDialog) {
         RowArrangement(
-            title = stringResource(R.string.game_room_exit_dialog_title),
+            title = stringResource(R.string.component_exit_game),
             text = stringResource(R.string.game_room_exit_dialog_message),
             buttonText1 = stringResource(R.string.component_cancel),
             buttonText2 = stringResource(R.string.component_okay),
@@ -77,11 +76,6 @@ fun GameRoomRoute(
             onDismissRequest = { exitDialog = false }
         )
 
-    }
-
-    // effect
-    LaunchedEffect(currentQuestionNumber) {
-        Log.d("yayaya", "$currentQuestionNumber")
     }
 
     LaunchedEffect(Unit) {
