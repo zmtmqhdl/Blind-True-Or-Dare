@@ -110,7 +110,6 @@ class WebSocketRepositoryImpl @Inject constructor(
         messageType: MessageType,
         player: Player,
         data: Any?,
-        timestamp: Long
     ) {
         val message = when (messageType) {
             MessageType.SEND_START -> {
@@ -137,6 +136,13 @@ class WebSocketRepositoryImpl @Inject constructor(
                     type = MessageType.SEND_ANSWER_END,
                     player = player,
                     data = Json.encodeToString<List<AnswerDto>>(value = answerList.map { it.toDto() }),
+                    timestamp = System.currentTimeMillis()
+                )
+            }
+            MessageType.REJOIN -> {
+                Message(
+                    type = MessageType.REJOIN,
+                    player = player,
                     timestamp = System.currentTimeMillis()
                 )
             }

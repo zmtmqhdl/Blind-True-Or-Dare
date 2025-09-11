@@ -22,7 +22,6 @@ interface WebSocketRepository {
         messageType: MessageType,
         player: Player,
         data: Any?,
-        timestamp: Long
     )
 
     fun close()

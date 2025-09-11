@@ -15,7 +15,7 @@
     <string name="component_submit">Submit</string>
     <string name="component_player">%d Players</string>
     <string name="component_exit_game">Exit Game</string>
-    <string name="component_re_entry">Re-entry Room</string>
+    <string name="component_re_join">Re-join Room</string>
 
     <!-- main -->
     <string name="component_no_answer">"    No Answer"</string>

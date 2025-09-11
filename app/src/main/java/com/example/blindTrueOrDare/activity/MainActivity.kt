@@ -6,7 +6,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.domain.repository.LoadingRepository
+import com.example.domain.repository.UiFlowRepository
 import com.example.domain.repository.RoomRepository
 import com.example.domain.repository.WebSocketRepository
 import com.example.presentation.content.Content
@@ -18,7 +18,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var loadingRepository: LoadingRepository
+    lateinit var uiFlowRepository: UiFlowRepository
 
     @Inject
     lateinit var roomDataRepository: RoomRepository

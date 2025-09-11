@@ -83,15 +83,6 @@ fun WaitingRoomRoute(
         )
     }
 
-    // effect
-    LaunchedEffect(Unit) {
-        waitingRoomViewModel.handleWebSocketConnect(
-            onDisconnect = {
-                popBackStack()
-            }
-        )
-    }
-
     // 이벤트로 바꿔라...?
     LaunchedEffect(waitingRoom?.roomStatus) {
         if (waitingRoom?.roomStatus == RoomStatus.WRITE) {

@@ -17,7 +17,6 @@ class SendMessageUseCase @Inject constructor(
             messageType = messageType,
             player = roomRepository.player.value!!,
             data = data,
-            timestamp = System.currentTimeMillis()
         )
     }
 }

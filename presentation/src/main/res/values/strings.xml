@@ -19,7 +19,7 @@
     <string name="component_submit">제출</string>
     <string name="component_no_answer">미응답</string>
     <string name="component_exit_game">게임 퇴장</string>
-    <string name="component_re_entry">대기실 재입장</string>
+    <string name="component_re_join">대기실 재입장</string>
 
 
     <!-- main -->

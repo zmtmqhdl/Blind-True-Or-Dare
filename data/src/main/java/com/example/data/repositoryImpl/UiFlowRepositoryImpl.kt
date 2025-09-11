@@ -3,8 +3,7 @@ package com.example.data.repositoryImpl
 import android.os.Handler
 import android.os.Looper
 import com.example.domain.Event
-import com.example.domain.model.Player
-import com.example.domain.repository.LoadingRepository
+import com.example.domain.repository.UiFlowRepository
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -18,10 +17,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class LoadingRepositoryImpl
+class UiFlowRepositoryImpl
 @Inject
 constructor(
-) : LoadingRepository {
+) : UiFlowRepository {
     private val loadingCount = AtomicInteger(0)
 
     private val _loading = MutableStateFlow(false)

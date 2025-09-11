@@ -98,7 +98,7 @@ class GameRoomViewModel @Inject constructor(
 
     fun startWriteQuestion() {
         timeJob = viewModelScope.launch {
-            for (time in 10L downTo 0L) {
+            for (time in 5L downTo 0L) {
                 _time.value = time
                 if (time != 0L) {
                     delay(timeMillis = 1000L)

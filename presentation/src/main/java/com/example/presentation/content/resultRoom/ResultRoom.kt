@@ -41,6 +41,7 @@ import com.example.presentation.R
 
 @Composable
 fun ResultRoomRoute(
+    navigateToWaitingRoom: () -> Unit,
     popBackStack: () -> Unit
 ) {
     // view model
@@ -167,14 +168,15 @@ fun ResultRoomRoute(
         onSelectedQuestionClick = {
             selectedQuestion = it
         },
-        onReEntryClick = {
-
+        onReJoinClick = {
+            resultRoomViewModel.rejoinRoom()
+            navigateToWaitingRoom()
         },
         onShareClick = {
 
         },
         onExitClick = {
-
+            resultRoomViewModel.exitRoom()
         },
         popBackStack = popBackStack
     )
@@ -184,7 +186,7 @@ fun ResultRoomRoute(
 fun ResultRoomScreen(
     room: Room,
     onSelectedQuestionClick: (Question) -> Unit,
-    onReEntryClick: () -> Unit,
+    onReJoinClick: () -> Unit,
     onShareClick: () -> Unit,
     onExitClick: () -> Unit,
     popBackStack: () -> Unit
@@ -218,9 +220,9 @@ fun ResultRoomScreen(
 
                 Row {
                     ProjectButton.Primary.Xlarge(
-                        text = stringResource(R.string.component_re_entry),
+                        text = stringResource(R.string.component_re_join),
                         modifier = Modifier.fillMaxWidth(0.5f),
-                        onClick = onReEntryClick
+                        onClick = onReJoinClick
                     )
 
                     Spacer(modifier = Modifier.height(ProjectSpaces.Space3))

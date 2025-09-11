@@ -183,15 +183,6 @@ fun MainRoute(
         )
     }
 
-    // effect
-    LaunchedEffect(Unit) {
-        launch {
-            mainViewModel.handleWebSocketConnect(
-                onConnect = { navigateToWaitingRoom() }
-            )
-        }
-    }
-
     // screen
     MainScreen(
         onCreateClick = { createWaitingRoomDialog = true },

@@ -4,7 +4,7 @@ import com.example.domain.Event
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 
-interface LoadingRepository {
+interface UiFlowRepository {
     val loading: StateFlow<Boolean>
     val event: SharedFlow<Event>
 

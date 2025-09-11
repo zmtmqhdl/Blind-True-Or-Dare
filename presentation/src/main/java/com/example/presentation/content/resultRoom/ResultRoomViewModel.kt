@@ -2,8 +2,10 @@ package com.example.presentation.content.resultRoom
 
 import androidx.lifecycle.viewModelScope
 import com.example.core.core.ProjectViewModel
+import com.example.domain.model.MessageType
 import com.example.domain.repository.RoomRepository
 import com.example.domain.usecase.DisconnectWebSocketUseCase
+import com.example.domain.usecase.SendMessageUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -12,7 +14,8 @@ import javax.inject.Inject
 class ResultRoomViewModel @Inject
 constructor(
     private val roomRepository: RoomRepository,
-    private val disconnectWebSocketUseCase: DisconnectWebSocketUseCase
+    private val disconnectWebSocketUseCase: DisconnectWebSocketUseCase,
+    private val sendMessageUseCase: SendMessageUseCase
 ): ProjectViewModel(
     viewModelTag = "ResultRoomViewModel"
 ) {
@@ -30,6 +33,14 @@ constructor(
     fun exitRoom() {
         viewModelScope.launch {
             disconnectWebSocketUseCase()
+        }
+    }
+
+    fun rejoinRoom() {
+        viewModelScope.launch {
+            sendMessageUseCase(
+                messageType = MessageType.REJOIN
+            )
         }
     }
 }
