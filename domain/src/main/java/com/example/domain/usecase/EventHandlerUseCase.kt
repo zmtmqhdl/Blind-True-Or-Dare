@@ -11,7 +11,8 @@ class EventHandlerUseCase @Inject constructor(
         createRoomFailure: () -> Unit = {},
         writeNextQuestion: () -> Unit = {},
         answerNextQuestion: () -> Unit = {},
-        startFailure: () -> Unit = {}
+        startFailure: () -> Unit = {},
+        webSocketRejoin: () -> Unit = {}
     ) {
         uiFlowRepository.event.collect {
             when (it) {
@@ -19,6 +20,7 @@ class EventHandlerUseCase @Inject constructor(
                 is Event.WriteNextQuestion -> writeNextQuestion()
                 is Event.AnswerNextQuestion -> answerNextQuestion()
                 is Event.StartFailure -> startFailure()
+                is Event.WebSocketRejoin -> webSocketRejoin()
             }
         }
     }

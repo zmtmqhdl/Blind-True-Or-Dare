@@ -5,6 +5,8 @@ import com.example.core.core.ProjectViewModel
 import com.example.domain.model.MessageType
 import com.example.domain.repository.RoomRepository
 import com.example.domain.usecase.DisconnectWebSocketUseCase
+import com.example.domain.usecase.EventHandlerUseCase
+import com.example.domain.usecase.MessageHandlerUseCase
 import com.example.domain.usecase.SendMessageUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -15,7 +17,8 @@ class ResultRoomViewModel @Inject
 constructor(
     private val roomRepository: RoomRepository,
     private val disconnectWebSocketUseCase: DisconnectWebSocketUseCase,
-    private val sendMessageUseCase: SendMessageUseCase
+    private val sendMessageUseCase: SendMessageUseCase,
+    private val eventHandlerUseCase: EventHandlerUseCase
 ): ProjectViewModel(
     viewModelTag = "ResultRoomViewModel"
 ) {
@@ -25,10 +28,6 @@ constructor(
 
     // 질문의 정렬? ox보여주고 내질문 및 답변에 대한건 따로 표기 (별표..?)
 
-    init {
-
-
-    }
 
     fun exitRoom() {
         viewModelScope.launch {
@@ -40,6 +39,16 @@ constructor(
         viewModelScope.launch {
             sendMessageUseCase(
                 messageType = MessageType.REJOIN
+            )
+        }
+    }
+
+    fun eventHandler(
+        webSocketRejoin: () -> Unit
+    ) {
+        viewModelScope.launch {
+            eventHandlerUseCase(
+                webSocketRejoin = webSocketRejoin
             )
         }
     }

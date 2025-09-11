@@ -75,7 +75,6 @@ fun GameRoomRoute(
             },
             onDismissRequest = { exitDialog = false }
         )
-
     }
 
     LaunchedEffect(Unit) {

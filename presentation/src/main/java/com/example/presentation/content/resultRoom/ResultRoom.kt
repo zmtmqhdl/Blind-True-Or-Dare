@@ -1,5 +1,6 @@
 package com.example.presentation.content.resultRoom
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -17,6 +18,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,6 +40,7 @@ import com.example.core.theme.ProjectTheme
 import com.example.domain.model.Question
 import com.example.domain.model.Room
 import com.example.presentation.R
+import kotlinx.coroutines.launch
 
 @Composable
 fun ResultRoomRoute(
@@ -162,16 +165,26 @@ fun ResultRoomRoute(
         }
     }
 
+    // side effect
+    LaunchedEffect(Unit) {
+        launch {
+            resultRoomViewModel.eventHandler(
+                webSocketRejoin = navigateToWaitingRoom
+            )
+        }
+    }
+
+    BackHandler {
+        exitDialog = true
+    }
+
     // screen
     ResultRoomScreen(
         room = room!!,
         onSelectedQuestionClick = {
             selectedQuestion = it
         },
-        onReJoinClick = {
-            resultRoomViewModel.rejoinRoom()
-            navigateToWaitingRoom()
-        },
+        onReJoinClick = { resultRoomViewModel.rejoinRoom() },
         onShareClick = {
 
         },

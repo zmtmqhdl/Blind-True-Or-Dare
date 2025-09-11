@@ -26,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
@@ -37,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.Icon.Back
 import com.example.core.component.ProjectButton
+import com.example.core.component.ProjectDialog.Double.RowArrangement
 import com.example.core.component.ProjectDialog.Single.SingleArrangement
 import com.example.core.component.ProjectIcon
 import com.example.core.component.ProjectScreen
@@ -71,6 +73,8 @@ fun WaitingRoomRoute(
     val clipboard = LocalClipboard.current
     val scope = rememberCoroutineScope()
     val clipData = ClipData.newPlainText("label", waitingRoom?.roomId)
+    var exitDialog by remember { mutableStateOf(false) }
+
 
     // dialog
     if (startFailureDialog) {
@@ -80,6 +84,23 @@ fun WaitingRoomRoute(
             buttonText = stringResource(R.string.component_okay),
             onClick = { waitingRoomViewModel.dismissStartFailureDialog() }
 
+        )
+    }
+
+    if (exitDialog) {
+        RowArrangement(
+            title = stringResource(R.string.component_exit_game),
+            text = stringResource(R.string.game_room_exit_dialog_message),
+            buttonText1 = stringResource(R.string.component_cancel),
+            buttonText2 = stringResource(R.string.component_okay),
+            onClick1 = {
+                exitDialog = false
+            },
+            onClick2 = {
+                exitDialog = false
+                waitingRoomViewModel.exitRoom()
+            },
+            onDismissRequest = { exitDialog = false }
         )
     }
 
@@ -103,7 +124,7 @@ fun WaitingRoomRoute(
             }
         },
         qrCode = qrCode,
-        popBackStack = { waitingRoomViewModel.exitRoom() },
+        popBackStack = { exitDialog = true },
         onStartClick = { waitingRoomViewModel.sendStartMessage() },
         isHost = player?.playerId == waitingRoom?.host?.playerId
     )

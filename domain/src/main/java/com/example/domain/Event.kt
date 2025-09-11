@@ -5,6 +5,7 @@ sealed class Event {
     object WriteNextQuestion : Event()
     object AnswerNextQuestion : Event()
     object StartFailure: Event()
+    object WebSocketRejoin: Event()
 }
 
 sealed class WebSocketStatus {
