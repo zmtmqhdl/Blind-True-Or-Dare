@@ -6,6 +6,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.core.theme.ProjectTheme
 import com.example.domain.repository.UiFlowRepository
 import com.example.domain.repository.RoomRepository
 import com.example.domain.repository.WebSocketRepository
@@ -32,8 +33,9 @@ class MainActivity : AppCompatActivity() {
         installSplashScreen()
         setContent {
             val splashViewModel: SplashViewModel = hiltViewModel()
-
-            Content()
+            ProjectTheme {
+                Content()
+            }
 
         }
     }

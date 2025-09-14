@@ -58,7 +58,7 @@ fun WaitingRoomRoute(
     // view model
     val waitingRoomViewModel: WaitingRoomViewModel = hiltViewModel()
 
-    // waiting room view model state value
+    // view model state value
     val waitingRoom by waitingRoomViewModel.room.collectAsState()
     val qrCode by waitingRoomViewModel.qrCode.collectAsState()
     val player by waitingRoomViewModel.player.collectAsState()

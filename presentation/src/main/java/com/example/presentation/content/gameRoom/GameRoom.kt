@@ -47,7 +47,7 @@ fun GameRoomRoute(
     // view model
     val gameRoomViewModel: GameRoomViewModel = hiltViewModel()
 
-    // question view model state value
+    // view model state value
     val room by gameRoomViewModel.room.collectAsState()
     val time by gameRoomViewModel.time.collectAsState()
     val currentQuestionNumber by gameRoomViewModel.currentQuestionNumber.collectAsState()

@@ -1,16 +1,22 @@
 package com.example.presentation.content
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 import com.example.core.component.ProjectScreen
 import com.example.core.theme.ProjectTheme
 import com.example.presentation.navigation.MainGraph
 import com.example.presentation.navigation.Route
-import com.example.presentation.navigation.popCurrentAndNavigate
+import com.example.presentation.navigation.popNavigate
 import kotlinx.coroutines.launch
 
 @Composable
@@ -30,12 +36,16 @@ fun Content(
         launch {
             contentViewModel.handleWebSocketConnect(
                 onConnect = { navController.navigate(Route.WaitingRoom.route) },
-                onDisconnect = { navController.popCurrentAndNavigate(Route.Main.route) }
+                onDisconnect = { navController.popNavigate(Route.Main.route) }
             )
         }
     }
 
-    ProjectTheme {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .windowInsetsPadding(WindowInsets.systemBars)
+    ) {
         ProjectScreen.LoadingScreen(
             loading = loading,
             loadingColor = ProjectTheme.color.white,
@@ -44,4 +54,5 @@ fun Content(
             }
         )
     }
+
 }

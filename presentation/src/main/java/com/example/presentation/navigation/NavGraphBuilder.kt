@@ -1,7 +1,5 @@
 package com.example.presentation.navigation
 
-import android.util.Log
-import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -21,7 +19,7 @@ fun NavGraphBuilder.main(navController: NavController) {
     composable(route = Route.WaitingRoom.route) {
         WaitingRoomRoute(
             navigateToGameRoom = {
-                navController.popCurrentAndNavigate(Route.GameRoom.route)
+                navController.popNavigate(Route.GameRoom.route)
             },
             popBackStack = { navController.popBackStack() }
         )
@@ -30,7 +28,7 @@ fun NavGraphBuilder.main(navController: NavController) {
     composable(route = Route.GameRoom.route) {
         GameRoomRoute(
             navigateToResultRoom = {
-                navController.popCurrentAndNavigate(route = Route.ResultRoom.route)
+                navController.popNavigate(route = Route.ResultRoom.route)
             },
             popBackStack = { navController.popBackStack() }
         )
@@ -38,7 +36,7 @@ fun NavGraphBuilder.main(navController: NavController) {
 
     composable(route = Route.ResultRoom.route) {
         ResultRoomRoute(
-            navigateToWaitingRoom = { navController.popCurrentAndNavigate(route = Route.WaitingRoom.route) },
+            navigateToWaitingRoom = { navController.popNavigate(route = Route.WaitingRoom.route) },
             popBackStack = { navController.popBackStack() }
         )
     }

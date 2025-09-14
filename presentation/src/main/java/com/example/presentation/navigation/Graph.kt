@@ -17,7 +17,7 @@ fun MainGraph(
     }
 }
 
-fun NavController.popCurrentAndNavigate(route: String) {
+fun NavController.popNavigate(route: String) {
     val currentRoute = this.currentDestination?.route
     this.navigate(route = route) {
         currentRoute?.let { popUpTo(it) { inclusive = true } }

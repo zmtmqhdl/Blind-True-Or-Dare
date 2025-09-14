@@ -47,7 +47,7 @@ fun MainRoute(
     // view model
     val mainViewModel: MainViewModel = hiltViewModel()
 
-    // main view model state value
+    // model state value
     val createRoomFailureDialog by mainViewModel.createRoomFailureDialog.collectAsState()
     val joinRoomFailureDialog by mainViewModel.joinRoomFailureDialog.collectAsState()
 
