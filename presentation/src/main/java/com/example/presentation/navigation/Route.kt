@@ -17,6 +17,10 @@ sealed class Route(
         route = "main",
     )
 
+    data object QrCodeScan : Route(
+        route = "qr_code_scan"
+    )
+
     data object WaitingRoom: Route(
         route = "waiting_room",
     )

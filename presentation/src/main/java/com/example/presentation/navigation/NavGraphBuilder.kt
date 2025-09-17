@@ -5,14 +5,19 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.example.presentation.content.main.MainRoute
 import com.example.presentation.content.gameRoom.GameRoomRoute
+import com.example.presentation.content.qrCodeScan.QrCodeScanRoute
 import com.example.presentation.content.resultRoom.ResultRoomRoute
 import com.example.presentation.content.waitingRoom.WaitingRoomRoute
 
 fun NavGraphBuilder.main(navController: NavController) {
     composable(route = Route.Main.route) {
         MainRoute(
-            navigateToWaitingRoom = { navController.navigate(route = Route.WaitingRoom.route) }
+            navigateToQrCodeScan = {navController.navigate(Route.QrCodeScan.route)}
         )
+    }
+
+    composable(route = Route.QrCodeScan.route) {
+        QrCodeScanRoute()
     }
 
 

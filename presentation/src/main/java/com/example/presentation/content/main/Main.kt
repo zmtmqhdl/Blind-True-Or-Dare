@@ -42,7 +42,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun MainRoute(
-    navigateToWaitingRoom: () -> Unit
+    navigateToQrCodeScan: () -> Unit
 ) {
     // view model
     val mainViewModel: MainViewModel = hiltViewModel()
@@ -55,9 +55,13 @@ fun MainRoute(
     var nickname by remember { mutableStateOf("") }
     var roomId by remember { mutableStateOf("") }
     val focusRequester = remember { FocusRequester() }
+    var createWaitingRoomDialog by remember { mutableStateOf(false) }
+    var joinWaitingRoomViaEnterCodeDialog by remember { mutableStateOf(false) }
+    var joinWaitingRoomViaQrCodeDialog by remember { mutableStateOf(false) }
+    var enterNickNameDialog by remember { mutableStateOf(false) }
+
 
     // dialog
-    var createWaitingRoomDialog by remember { mutableStateOf(false) }
     if (createWaitingRoomDialog) {
         LaunchedEffect(Unit) {
             focusRequester.requestFocus()
@@ -100,8 +104,7 @@ fun MainRoute(
         )
     }
 
-    var joinWaitingRoomDialog by remember { mutableStateOf(false) }
-    if (joinWaitingRoomDialog) {
+    if (joinWaitingRoomViaEnterCodeDialog) {
         LaunchedEffect(Unit) {
             focusRequester.requestFocus()
         }
@@ -150,7 +153,7 @@ fun MainRoute(
                             nickname = nickname,
                             roomId = roomId
                         )
-                        joinWaitingRoomDialog = false
+                        joinWaitingRoomViaEnterCodeDialog = false
                     },
                     enabled = nickname.isNotEmpty()
                 )
@@ -158,9 +161,17 @@ fun MainRoute(
             onDismissRequest = {
                 nickname = ""
                 roomId = ""
-                joinWaitingRoomDialog = false
+                joinWaitingRoomViaEnterCodeDialog = false
             }
         )
+    }
+
+    if (joinWaitingRoomViaEnterCodeDialog) {
+
+    }
+
+    if (enterNickNameDialog) {
+
     }
 
     if (createRoomFailureDialog) {
@@ -186,7 +197,7 @@ fun MainRoute(
     // screen
     MainScreen(
         onCreateClick = { createWaitingRoomDialog = true },
-        onJoinClick = { joinWaitingRoomDialog = true }
+        onJoinClick = navigateToQrCodeScan
     )
 }
 
@@ -301,16 +312,5 @@ fun MainScreen(
             }
         }
 
-    }
-}
-
-@ProjectPreview
-@Composable
-fun MainScreenPreview() {
-    ProjectTheme {
-        MainScreen(
-            onCreateClick = {},
-            onJoinClick = {}
-        )
     }
 }

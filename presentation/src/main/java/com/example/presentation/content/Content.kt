@@ -20,9 +20,7 @@ import com.example.presentation.navigation.popNavigate
 import kotlinx.coroutines.launch
 
 @Composable
-fun Content(
-
-) {
+fun Content() {
     // view model
     val contentViewModel: ContentViewModel = hiltViewModel()
 
