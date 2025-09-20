@@ -11,7 +11,6 @@ import androidx.camera.view.PreviewView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,106 +26,114 @@ import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleOwner
 import com.example.core.component.ProjectScreen
-import com.example.core.theme.ProjectShapes.Box
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
+import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 @Composable
-fun QrCodeScanRoute() {
+fun QrCodeScanRoute(
 
+) {
     // view model
     val qrCodeScanViewModel: QrCodeScanViewModel = hiltViewModel()
 
-    // view model state value
+    // local value
+    val cameraExecutor = remember { Executors.newSingleThreadExecutor() }
+    val lifecycleOwner = LocalContext.current as LifecycleOwner
 
-    // local state
 
 
-    // screen
     QrCodeScanScreen(
-        onQrScanned = {}
+        onQrScanned = { },
+        cameraExecutor = cameraExecutor,
+        lifecycleOwner = lifecycleOwner
     )
 }
 
 @OptIn(ExperimentalGetImage::class)
 @Composable
 fun QrCodeScanScreen(
-    onQrScanned: (String) -> Unit
+    onQrScanned: (String) -> Unit,
+    cameraExecutor: ExecutorService,
+    lifecycleOwner: LifecycleOwner
 ) {
-    val context = LocalContext.current
-    val lifecycleOwner = LocalContext.current as LifecycleOwner
-    val cameraExecutor = remember { Executors.newSingleThreadExecutor() }
-
-    ProjectScreen.Screen {
-        Column(
+    ProjectScreen.Screen(
+        padding = false
+    ){
+        Box(
             modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
+            contentAlignment = Alignment.Center
         ) {
-            AndroidView(factory = { ctx ->
-                val previewView = PreviewView(ctx)
-
-                val cameraProviderFuture = ProcessCameraProvider.getInstance(ctx)
-                cameraProviderFuture.addListener({
-                    val cameraProvider = cameraProviderFuture.get()
-
-                    // Preview
-                    val preview = Preview.Builder().build().also {
-                        it.setSurfaceProvider(previewView.surfaceProvider)
+            AndroidView(
+                factory = { ctx ->
+                    val previewView = PreviewView(ctx).apply {
+                        implementationMode = PreviewView.ImplementationMode.COMPATIBLE
                     }
 
-                    // ImageAnalysis
-                    val imageAnalysis = ImageAnalysis.Builder()
-                        .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-                        .build()
-                        .also { analysis ->
-                            val scanner = BarcodeScanning.getClient()
-                            analysis.setAnalyzer(cameraExecutor) { imageProxy ->
-                                val mediaImage = imageProxy.image
-                                if (mediaImage != null) {
-                                    val image = InputImage.fromMediaImage(
-                                        mediaImage,
-                                        imageProxy.imageInfo.rotationDegrees
-                                    )
-                                    scanner.process(image)
-                                        .addOnSuccessListener { barcodes ->
-                                            for (barcode in barcodes) {
-                                                barcode.rawValue?.let { value ->
-                                                    onQrScanned(value)
-                                                }
-                                            }
-                                        }
-                                        .addOnFailureListener { it.printStackTrace() }
-                                        .addOnCompleteListener { imageProxy.close() }
-                                } else {
-                                    imageProxy.close()
-                                }
-                            }
+                    val cameraProviderFuture = ProcessCameraProvider.getInstance(ctx)
+                    cameraProviderFuture.addListener({
+                        val cameraProvider = cameraProviderFuture.get()
+
+                        val preview = Preview.Builder().build().also {
+                            it.surfaceProvider = previewView.surfaceProvider
                         }
 
-                    val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-                    try {
-                        cameraProvider.unbindAll()
-                        cameraProvider.bindToLifecycle(
-                            lifecycleOwner,
-                            cameraSelector,
-                            preview,
-                            imageAnalysis
-                        )
-                    } catch (exc: Exception) {
-                        Log.e("QrCodeScan", "Camera binding failed", exc)
-                    }
+                        val imageAnalysis = ImageAnalysis.Builder()
+                            .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+                            .build().also { analysis ->
+                                val scanner = BarcodeScanning.getClient()
+                                analysis.setAnalyzer(cameraExecutor) { imageProxy ->
+                                    val mediaImage = imageProxy.image
+                                    if (mediaImage != null) {
+                                        val image = InputImage.fromMediaImage(
+                                            mediaImage,
+                                            imageProxy.imageInfo.rotationDegrees
+                                        )
+                                        scanner.process(image)
+                                            .addOnSuccessListener { barcodes ->
+                                                for (barcode in barcodes) {
+                                                    barcode.rawValue?.let { value ->
+                                                        onQrScanned(value)
+                                                    }
+                                                }
+                                            }
+                                            .addOnFailureListener { it.printStackTrace() }
+                                            .addOnCompleteListener { imageProxy.close() }
+                                    } else {
+                                        imageProxy.close()
+                                    }
+                                }
+                            }
 
-                }, ContextCompat.getMainExecutor(ctx))
+                        val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+                        try {
+                            cameraProvider.unbindAll()
+                            cameraProvider.bindToLifecycle(
+                                lifecycleOwner,
+                                cameraSelector,
+                                preview,
+                                imageAnalysis
+                            )
+                        } catch (exc: Exception) {
+                            Log.e("QrCodeScan", "Camera binding failed", exc)
+                        }
 
-                previewView
-            }, modifier = Modifier.fillMaxSize())
+                    }, ContextCompat.getMainExecutor(ctx))
 
-            // 중앙 스캔 영역
+                    previewView
+                },
+                modifier = Modifier.fillMaxSize()
+            )
+
             Box(
                 modifier = Modifier
                     .size(250.dp)
-                    .border(width = 3.dp, color = Color.Green, shape = RoundedCornerShape(8.dp))
+                    .border(
+                        width = 3.dp,
+                        color = Color.Green,
+                        shape = RoundedCornerShape(size = 8.dp)
+                    )
                     .background(Color.Transparent)
             )
         }

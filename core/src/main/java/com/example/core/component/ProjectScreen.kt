@@ -24,15 +24,14 @@ object ProjectScreen {
     fun Screen(
         containerColor: Color = ProjectTheme.color.background,
         imePadding: Boolean = false,
+        padding: Boolean = true,
         content: @Composable () -> Unit
     ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .windowInsetsPadding(WindowInsets.systemBars)
-                .padding(
-                    horizontal = ProjectTheme.space.space4
-                )
+                .then(if (padding) Modifier.padding(horizontal = ProjectTheme.space.space4) else Modifier)
                 .then(if (imePadding) Modifier.imePadding() else Modifier)
                 .background(color = containerColor)
         ) {

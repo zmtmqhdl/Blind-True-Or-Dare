@@ -1,5 +1,9 @@
 package com.example.presentation.content.main
 
+import android.Manifest
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -24,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -33,12 +38,11 @@ import com.example.core.component.ProjectButton
 import com.example.core.component.ProjectDialog
 import com.example.core.component.ProjectScreen
 import com.example.core.component.ProjectTextField
-import com.example.core.core.ProjectPreview
 import com.example.core.theme.ProjectSpaces
 import com.example.core.theme.ProjectTheme
 import com.example.domain.usecase.RoomIdTransformationUseCase
 import com.example.presentation.R
-import kotlinx.coroutines.launch
+import com.example.presentation.util.permissionRequestLauncher
 
 @Composable
 fun MainRoute(
@@ -59,13 +63,16 @@ fun MainRoute(
     var joinWaitingRoomViaEnterCodeDialog by remember { mutableStateOf(false) }
     var joinWaitingRoomViaQrCodeDialog by remember { mutableStateOf(false) }
     var enterNickNameDialog by remember { mutableStateOf(false) }
-
+    val permissionRequestLauncher = permissionRequestLauncher()
+    val context = LocalContext.current
+    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+        data = Uri.fromParts("package", context.packageName, null)
+        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    }
+    var permissionRequestDialog by remember { mutableStateOf(false) }
 
     // dialog
     if (createWaitingRoomDialog) {
-        LaunchedEffect(Unit) {
-            focusRequester.requestFocus()
-        }
         PrimaryDialog(
             title = stringResource(R.string.main_create_room),
             content = {
@@ -105,9 +112,6 @@ fun MainRoute(
     }
 
     if (joinWaitingRoomViaEnterCodeDialog) {
-        LaunchedEffect(Unit) {
-            focusRequester.requestFocus()
-        }
         PrimaryDialog(
             title = stringResource(R.string.main_join_room),
             content = {
@@ -194,10 +198,28 @@ fun MainRoute(
         )
     }
 
+    if (permissionRequestDialog) {
+
+    }
+
+    // side effect
+    LaunchedEffect(createWaitingRoomDialog, joinWaitingRoomViaEnterCodeDialog) {
+        if (createWaitingRoomDialog || joinWaitingRoomViaEnterCodeDialog) {
+            focusRequester.requestFocus()
+        }
+    }
+
     // screen
     MainScreen(
         onCreateClick = { createWaitingRoomDialog = true },
-        onJoinClick = navigateToQrCodeScan
+        onJoinClick = {
+            permissionRequestLauncher(
+                listOf(Manifest.permission.CAMERA),
+                { navigateToQrCodeScan() },
+                {},
+                { context.startActivity(intent) }
+            )
+        }
     )
 }
 
