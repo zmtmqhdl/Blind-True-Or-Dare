@@ -27,6 +27,8 @@
     <string name="main_create_room_failure_dialog_text">Failed to create the room. Please try again later.</string>
     <string name="main_join_room_failure_dialog_title">Failed to Join Room</string>
     <string name="main_join_room_failure_dialog_text">Failed to join the room. Please try again later.</string>
+    <string name="main_permission_request_dialog_title">Permission Request</string>
+    <string name="main_permission_request_dialog_message">Camera permission is required. Please allow camera access in Settings.</string>
 
 
     <!-- waiting room -->

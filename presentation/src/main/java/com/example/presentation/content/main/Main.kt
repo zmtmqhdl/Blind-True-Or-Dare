@@ -199,7 +199,17 @@ fun MainRoute(
     }
 
     if (permissionRequestDialog) {
-
+        ProjectDialog.Double.RowArrangement(
+            title = stringResource(R.string.main_permission_request_dialog_title),
+            text = stringResource(R.string.main_permission_request_dialog_message),
+            buttonText1 = stringResource(R.string.component_cancel),
+            buttonText2 = stringResource(R.string.component_okay),
+            onClick1 = { permissionRequestDialog = false },
+            onClick2= {
+                permissionRequestDialog = false
+                context.startActivity(intent)
+            }
+        )
     }
 
     // side effect
