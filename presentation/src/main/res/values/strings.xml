@@ -14,12 +14,14 @@
     <string name="component_host_nickname">방장 닉네임</string>
     <string name="component_start">시작</string>
     <string name="component_waiting_room">대기실</string>
-    <string name="component_qr_code">QR 코드</string>
+    <string name="component_qr_code_scan">QR 코드 스캔</string>
     <string name="component_player">현재 플레이어 %d명</string>
     <string name="component_submit">제출</string>
     <string name="component_no_answer">미응답</string>
     <string name="component_exit_game">게임 퇴장</string>
     <string name="component_re_join">대기실 재입장</string>
+    <string name="component_input_room_id">대기실 ID 입력</string>
+    <string name="component_adjust_focus">초점 맞추기</string>
 
 
     <!-- main -->
@@ -33,6 +35,10 @@
     <string name="main_join_room_failure_dialog_text">대기실 입장에 실패했습니다. 잠시 후 다시 시도해주세요.</string>
     <string name="main_permission_request_dialog_title">권한 요청</string>
     <string name="main_permission_request_dialog_message">카메라 권한이 필요합니다. 설정에서 카메라 권한을 허용해주세요.</string>
+
+    <!-- scan qr code -->
+    <string name="scan_qr_code_scan_qr_code">QR 코드를 스캔해주세요.</string>
+    <string name="scan_qr_code_input_room_id">대기실 ID 및 닉네임을 입력해주세요.</string>
 
     <!-- waiting room -->
     <string name="waiting_room_start_failure_dialog_title">시작 실패</string>

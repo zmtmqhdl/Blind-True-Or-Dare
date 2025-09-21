@@ -16,9 +16,15 @@
     <string name="component_player">%d Players</string>
     <string name="component_exit_game">Exit Game</string>
     <string name="component_re_join">Re-join Room</string>
+    <string name="component_waiting_room">Waiting Room</string>
+    <string name="component_qr_code_scan">Scan QR Code</string>
+    <string name="component_start">Start</string>
+    <string name="component_no_answer">No Answer</string>
+    <string name="component_input_room_id">Input Room ID</string>
+    <string name="component_adjust_focus">Adjust Focus</string>
+
 
     <!-- main -->
-    <string name="component_no_answer">"    No Answer"</string>
     <string name="main_dialog_input_nickname">Input your nickname.</string>
     <string name="main_dialog_input_room_id">Input room ID.</string>
     <string name="main_create_room">Create Room</string>
@@ -30,14 +36,14 @@
     <string name="main_permission_request_dialog_title">Permission Request</string>
     <string name="main_permission_request_dialog_message">Camera permission is required. Please allow camera access in Settings.</string>
 
+    <!-- scan qr code -->
+    <string name="scan_qr_code_scan_qr_code">Please scan the QR code.</string>
+    <string name="scan_qr_code_input_room_id">Please enter the waiting room ID and Nickname.</string>
+
 
     <!-- waiting room -->
-    <string name="component_waiting_room">Waiting Room</string>
-    <string name="component_qr_code">QR Code</string>
-    <string name="component_start">Start</string>
     <string name="waiting_room_start_failure_dialog_title">Start failed</string>
     <string name="waiting_room_start_failure_dialog_message">At least 2 players are required to start.</string>
-
 
 
     <!-- game room -->

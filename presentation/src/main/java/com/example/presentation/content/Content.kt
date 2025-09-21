@@ -33,7 +33,6 @@ fun Content() {
     LaunchedEffect(Unit) {
         launch {
             contentViewModel.handleWebSocketConnect(
-                onConnect = { navController.navigate(Route.WaitingRoom.route) },
                 onDisconnect = { navController.popNavigate(Route.Main.route) }
             )
         }

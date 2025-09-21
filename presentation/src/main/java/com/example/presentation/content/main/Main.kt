@@ -43,10 +43,12 @@ import com.example.core.theme.ProjectTheme
 import com.example.domain.usecase.RoomIdTransformationUseCase
 import com.example.presentation.R
 import com.example.presentation.util.permissionRequestLauncher
+import kotlinx.coroutines.launch
 
 @Composable
 fun MainRoute(
-    navigateToQrCodeScan: () -> Unit
+    navigateToQrCodeScan: () -> Unit,
+    navigateToWaitingRoom: () -> Unit
 ) {
     // view model
     val mainViewModel: MainViewModel = hiltViewModel()
@@ -93,16 +95,32 @@ fun MainRoute(
 
                 Spacer(modifier = Modifier.height(ProjectTheme.space.space4))
 
-                ProjectButton.Primary.Small(
-                    text = stringResource(R.string.component_create),
-                    onClick = {
-                        mainViewModel.createRoom(
-                            nickname = nickname
-                        )
-                        createWaitingRoomDialog = false
-                    },
-                    enabled = nickname.isNotEmpty()
-                )
+                Row {
+                    ProjectButton.Primary.Small(
+                        text = stringResource(R.string.component_cancel),
+                        onClick = {
+                            createWaitingRoomDialog = false
+                            nickname = ""
+                        },
+                        modifier = Modifier.weight(0.5f),
+                        enabled = nickname.isNotEmpty()
+                    )
+
+                    Spacer(modifier = Modifier.width(ProjectSpaces.Space4))
+
+                    ProjectButton.Primary.Small(
+                        text = stringResource(R.string.component_create),
+                        onClick = {
+                            mainViewModel.createRoom(
+                                nickname = nickname
+                            )
+                            createWaitingRoomDialog = false
+                        },
+                        modifier = Modifier.weight(0.5f),
+                        enabled = nickname.isNotEmpty()
+                    )
+                }
+
             },
             onDismissRequest = {
                 nickname = ""
@@ -219,6 +237,14 @@ fun MainRoute(
         }
     }
 
+    LaunchedEffect(Unit) {
+        launch {
+            mainViewModel.handleWebSocketConnect(
+                onConnect = navigateToWaitingRoom
+            )
+        }
+    }
+
     // screen
     MainScreen(
         onCreateClick = { createWaitingRoomDialog = true },
@@ -227,7 +253,7 @@ fun MainRoute(
                 listOf(Manifest.permission.CAMERA),
                 { navigateToQrCodeScan() },
                 {},
-                { context.startActivity(intent) }
+                { permissionRequestDialog = true }
             )
         }
     )

@@ -112,7 +112,7 @@ fun WaitingRoomRoute(
     }
 
     BackHandler {
-        waitingRoomViewModel.exitRoom()
+        exitDialog = true
     }
 
     WaitingRoomScreen(

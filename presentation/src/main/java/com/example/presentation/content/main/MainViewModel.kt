@@ -4,9 +4,15 @@ import androidx.lifecycle.viewModelScope
 import com.example.core.core.ProjectViewModel
 import com.example.domain.usecase.EventHandlerUseCase
 import com.example.domain.usecase.MessageHandlerUseCase
+import com.example.domain.usecase.SetQrCodeUseCase
+import com.example.domain.usecase.WebSocketHandlerUseCase
 import com.example.domain.usecase.function.CreateRoomFunction
 import com.example.domain.usecase.function.JoinRoomFunction
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.MultiFormatWriter
+import com.journeyapps.barcodescanner.BarcodeEncoder
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,7 +24,9 @@ class MainViewModel @Inject constructor(
     private val messageHandlerUseCase: MessageHandlerUseCase,
     private val eventHandlerUseCase: EventHandlerUseCase,
     private val createRoomFunction: CreateRoomFunction,
-    private val joinRoomFunction: JoinRoomFunction
+    private val joinRoomFunction: JoinRoomFunction,
+    private val webSocketHandlerUseCase: WebSocketHandlerUseCase,
+    private val setQrCodeUseCase: SetQrCodeUseCase
 ) : ProjectViewModel(
     viewModelTag = "MainViewModel"
 ) {
@@ -28,6 +36,7 @@ class MainViewModel @Inject constructor(
     private val _joinRoomFailureDialog = MutableStateFlow(false)
     val joinRoomFailureDialog: StateFlow<Boolean> = _joinRoomFailureDialog.asStateFlow()
 
+    private var job: Job? = null
 
     init {
         viewModelScope.launch {
@@ -47,6 +56,30 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             createRoomFunction(
                 nickname = nickname
+            )
+        }
+    }
+
+    fun handleWebSocketConnect(
+        onConnect: () -> Unit,
+    ) {
+        if (job?.isActive == true) return
+        job = viewModelScope.launch {
+            webSocketHandlerUseCase(
+                onConnect = {
+                    setQrCodeUseCase(
+                        qrCode = BarcodeEncoder().createBitmap(
+                            MultiFormatWriter().encode(
+                                it,
+                                BarcodeFormat.QR_CODE,
+                                1024,
+                                1024
+                            )
+                        )
+                    )
+                    onConnect()
+                },
+                onConnectFailure = { logD("$it") },
             )
         }
     }
