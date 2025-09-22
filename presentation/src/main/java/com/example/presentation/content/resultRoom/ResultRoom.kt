@@ -48,12 +48,12 @@ fun ResultRoomRoute(
     popBackStack: () -> Unit
 ) {
     // view model
-    val resultRoomViewModel: ResultRoomViewModel = hiltViewModel()
+    val viewModel: ResultRoomViewModel = hiltViewModel()
 
     // view model state value
-    val room by resultRoomViewModel.room.collectAsState()
-    val myQuestionList by resultRoomViewModel.myQuestionList.collectAsState()
-    val myAnswerList by resultRoomViewModel.myAnswerList.collectAsState()
+    val room by viewModel.room.collectAsState()
+    val myQuestionList by viewModel.myQuestionList.collectAsState()
+    val myAnswerList by viewModel.myAnswerList.collectAsState()
 
     // local state
     var selectedQuestion by remember { mutableStateOf<Question?>(null) }
@@ -72,7 +72,7 @@ fun ResultRoomRoute(
             },
             onClick2 = {
                 exitDialog = false
-                resultRoomViewModel.exitRoom()
+                viewModel.exitRoom()
             },
             onDismissRequest = { exitDialog = false }
         )
@@ -168,7 +168,7 @@ fun ResultRoomRoute(
     // side effect
     LaunchedEffect(Unit) {
         launch {
-            resultRoomViewModel.eventHandler(
+            viewModel.eventHandler(
                 webSocketRejoin = navigateToWaitingRoom
             )
         }
@@ -184,12 +184,12 @@ fun ResultRoomRoute(
         onSelectedQuestionClick = {
             selectedQuestion = it
         },
-        onReJoinClick = { resultRoomViewModel.rejoinRoom() },
+        onReJoinClick = { viewModel.rejoinRoom() },
         onShareClick = {
 
         },
         onExitClick = {
-            resultRoomViewModel.exitRoom()
+            viewModel.exitRoom()
         },
         popBackStack = popBackStack
     )

@@ -1,6 +1,5 @@
 package com.example.domain.usecase.function
 
-import android.util.Log
 import com.example.domain.Event
 import com.example.domain.common.onFailure
 import com.example.domain.common.onSuccess

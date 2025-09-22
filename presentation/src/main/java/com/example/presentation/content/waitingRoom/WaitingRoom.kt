@@ -53,16 +53,15 @@ import kotlinx.coroutines.launch
 @Composable
 fun WaitingRoomRoute(
     navigateToGameRoom: () -> Unit,
-    popBackStack: () -> Unit
 ) {
     // view model
-    val waitingRoomViewModel: WaitingRoomViewModel = hiltViewModel()
+    val viewModel: WaitingRoomViewModel = hiltViewModel()
 
     // view model state value
-    val waitingRoom by waitingRoomViewModel.room.collectAsState()
-    val qrCode by waitingRoomViewModel.qrCode.collectAsState()
-    val player by waitingRoomViewModel.player.collectAsState()
-    val startFailureDialog by waitingRoomViewModel.startFailureDialog.collectAsState()
+    val waitingRoom by viewModel.room.collectAsState()
+    val qrCode by viewModel.qrCode.collectAsState()
+    val player by viewModel.player.collectAsState()
+    val startFailureDialog by viewModel.startFailureDialog.collectAsState()
 
     // local state
     val displayRoomId by remember {
@@ -82,7 +81,7 @@ fun WaitingRoomRoute(
             title = stringResource(R.string.waiting_room_start_failure_dialog_title),
             text = stringResource(R.string.waiting_room_start_failure_dialog_message),
             buttonText = stringResource(R.string.component_okay),
-            onClick = { waitingRoomViewModel.dismissStartFailureDialog() }
+            onClick = { viewModel.dismissStartFailureDialog() }
 
         )
     }
@@ -98,7 +97,7 @@ fun WaitingRoomRoute(
             },
             onClick2 = {
                 exitDialog = false
-                waitingRoomViewModel.exitRoom()
+                viewModel.exitRoom()
             },
             onDismissRequest = { exitDialog = false }
         )
@@ -125,7 +124,7 @@ fun WaitingRoomRoute(
         },
         qrCode = qrCode,
         popBackStack = { exitDialog = true },
-        onStartClick = { waitingRoomViewModel.sendStartMessage() },
+        onStartClick = { viewModel.sendStartMessage() },
         isHost = player?.playerId == waitingRoom?.host?.playerId
     )
 }
@@ -208,7 +207,7 @@ fun WaitingRoomScreen(
 
                         ) {
                             Text(
-                                text = stringResource(R.string.component_waiting_room_id)
+                                text = stringResource(R.string.component_room_id)
                             )
                             Text(
                                 text = displayRoomId ?: "",

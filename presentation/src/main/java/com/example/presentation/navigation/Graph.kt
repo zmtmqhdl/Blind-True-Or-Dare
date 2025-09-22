@@ -20,6 +20,13 @@ fun MainGraph(
 fun NavController.popNavigate(route: String) {
     val currentRoute = this.currentDestination?.route
     this.navigate(route = route) {
-        currentRoute?.let { popUpTo(it) { inclusive = true } }
+        launchSingleTop = true
+        currentRoute?.let {
+            popUpTo(
+                route = it
+            ) {
+                inclusive = true
+            }
+        }
     }
 }

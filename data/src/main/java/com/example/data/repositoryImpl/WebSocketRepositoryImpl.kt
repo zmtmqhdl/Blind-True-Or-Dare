@@ -1,6 +1,5 @@
 package com.example.data.repositoryImpl
 
-import android.util.Log
 import com.example.data.model.AnswerDto
 import com.example.data.model.MessageDto
 import com.example.data.model.QuestionDto
@@ -34,7 +33,6 @@ import okhttp3.WebSocketListener
 import java.net.URLEncoder
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.math.max
 
 @Suppress("UNCHECKED_CAST")
 @Singleton
@@ -70,40 +68,45 @@ class WebSocketRepositoryImpl @Inject constructor(
         val playerJson = Json.encodeToString(player.toDto())
         val encodedPlayerJson = URLEncoder.encode(playerJson, "UTF-8")
         val roomUrl = "ws://10.0.2.2:8080/room?roomId=$roomId"
-        // https://example.com/room/1234
         val request = Request.Builder()
             .url("$roomUrl&player=$encodedPlayerJson")
             .build()
 
-        webSocket = client.newWebSocket(request, object : WebSocketListener() {
-            override fun onOpen(webSocket: WebSocket, response: Response) {
-                reconnectAttempt = 0
-                _isConnected.value = true
-                scope.launch {
-                    _webSocketConnect.emit(value = WebSocketStatus.WebSocketConnectSuccess(roomUrl = roomUrl))
+        webSocket = client.newWebSocket(
+            request = request,
+            object : WebSocketListener() {
+                override fun onOpen(webSocket: WebSocket, response: Response) {
+                    reconnectAttempt = 0
+                    _isConnected.value = true
+                    scope.launch {
+                        _webSocketConnect.emit(
+                            value = WebSocketStatus.WebSocketConnectSuccess(
+                                roomId = roomId
+                            )
+                        )
+                    }
                 }
-            }
 
-            override fun onMessage(webSocket: WebSocket, text: String) {
-                scope.launch {
-                    _message.emit(value = Json.decodeFromString<MessageDto>(text).toDomain())
+                override fun onMessage(webSocket: WebSocket, text: String) {
+                    scope.launch {
+                        _message.emit(value = Json.decodeFromString<MessageDto>(text).toDomain())
+                    }
                 }
-            }
 
-            override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
-                scope.launch {
-                    _webSocketConnect.emit(value = WebSocketStatus.WebSocketConnectFailure(error = t))
+                override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
+                    scope.launch {
+                        _webSocketConnect.emit(value = WebSocketStatus.WebSocketConnectFailure(error = t))
+                    }
                 }
-            }
 
-            override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
-                this@WebSocketRepositoryImpl.webSocket = null
-                _isConnected.value = false
-                scope.launch {
-                    _webSocketConnect.emit(value = WebSocketStatus.WebSocketDisconnect)
+                override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
+                    this@WebSocketRepositoryImpl.webSocket = null
+                    _isConnected.value = false
+                    scope.launch {
+                        _webSocketConnect.emit(value = WebSocketStatus.WebSocketDisconnect)
+                    }
                 }
-            }
-        })
+            })
     }
 
     override fun send(
@@ -139,6 +142,7 @@ class WebSocketRepositoryImpl @Inject constructor(
                     timestamp = System.currentTimeMillis()
                 )
             }
+
             MessageType.REJOIN -> {
                 Message(
                     type = MessageType.REJOIN,

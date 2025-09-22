@@ -19,12 +19,12 @@ import com.example.presentation.content.waitingRoom.WaitingRoomRoute
 fun NavGraphBuilder.main(navController: NavController) {
     slideComposable(route = Route.Main.route) {
         MainRoute(
-            navigateToQrCodeScan = {navController.navigate(Route.QrCodeScan.route)},
+            navigateToScanQrCode = {navController.navigate(Route.ScanQrCode.route)},
             navigateToWaitingRoom = {navController.navigate(Route.WaitingRoom.route)}
         )
     }
 
-    slideComposable(route = Route.QrCodeScan.route) {
+    slideComposable(route = Route.ScanQrCode.route) {
         ScanQrCodeRoute(
             popBackStack = { navController.popBackStack() },
             navigateToWaitingRoom = {navController.popNavigate(Route.WaitingRoom.route)}
@@ -34,18 +34,13 @@ fun NavGraphBuilder.main(navController: NavController) {
 
     slideComposable(route = Route.WaitingRoom.route) {
         WaitingRoomRoute(
-            navigateToGameRoom = {
-                navController.popNavigate(Route.GameRoom.route)
-            },
-            popBackStack = { navController.popBackStack() }
+            navigateToGameRoom = { navController.popNavigate(Route.GameRoom.route) },
         )
     }
 
     slideComposable(route = Route.GameRoom.route) {
         GameRoomRoute(
-            navigateToResultRoom = {
-                navController.popNavigate(route = Route.ResultRoom.route)
-            },
+            navigateToResultRoom = { navController.popNavigate(route = Route.ResultRoom.route) },
             popBackStack = { navController.popBackStack() }
         )
     }
@@ -61,7 +56,7 @@ fun NavGraphBuilder.main(navController: NavController) {
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.slideComposable(
     route: String,
-    duration: Int = 500,
+    duration: Int = 3000,
     content: @Composable (AnimatedContentScope.(NavBackStackEntry) -> Unit)
 ) {
     composable(
@@ -69,25 +64,37 @@ fun NavGraphBuilder.slideComposable(
         enterTransition = {
             slideIntoContainer(
                 towards = AnimatedContentTransitionScope.SlideDirection.Left,
-                animationSpec = tween(duration, easing = FastOutSlowInEasing)
+                animationSpec = tween(
+                    durationMillis = duration,
+                    easing = FastOutSlowInEasing
+                )
             )
         },
         exitTransition = {
             slideOutOfContainer(
                 towards = AnimatedContentTransitionScope.SlideDirection.Left,
-                animationSpec = tween(duration, easing = FastOutSlowInEasing)
+                animationSpec = tween(
+                    durationMillis = duration,
+                    easing = FastOutSlowInEasing
+                )
             )
         },
         popEnterTransition = {
             slideIntoContainer(
                 towards = AnimatedContentTransitionScope.SlideDirection.Right,
-                animationSpec = tween(duration, easing = FastOutSlowInEasing)
+                animationSpec = tween(
+                    durationMillis = duration,
+                    easing = FastOutSlowInEasing
+                )
             )
         },
         popExitTransition = {
             slideOutOfContainer(
                 towards = AnimatedContentTransitionScope.SlideDirection.Right,
-                animationSpec = tween(duration, easing = FastOutSlowInEasing)
+                animationSpec = tween(
+                    durationMillis = duration,
+                    easing = FastOutSlowInEasing
+                )
             )
         },
         content = content

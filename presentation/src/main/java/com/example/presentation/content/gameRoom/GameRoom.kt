@@ -45,14 +45,14 @@ fun GameRoomRoute(
     popBackStack: () -> Unit
 ) {
     // view model
-    val gameRoomViewModel: GameRoomViewModel = hiltViewModel()
+    val viewModel: GameRoomViewModel = hiltViewModel()
 
     // view model state value
-    val room by gameRoomViewModel.room.collectAsState()
-    val time by gameRoomViewModel.time.collectAsState()
-    val currentQuestionNumber by gameRoomViewModel.currentQuestionNumber.collectAsState()
-    val isWriteStart by gameRoomViewModel.isWriteStart.collectAsState()
-    val isAnswerStart by gameRoomViewModel.isAnswerStart.collectAsState()
+    val room by viewModel.room.collectAsState()
+    val time by viewModel.time.collectAsState()
+    val currentQuestionNumber by viewModel.currentQuestionNumber.collectAsState()
+    val isWriteStart by viewModel.isWriteStart.collectAsState()
+    val isAnswerStart by viewModel.isAnswerStart.collectAsState()
 
     // local state
     var questionValue by remember { mutableStateOf("") }
@@ -71,7 +71,7 @@ fun GameRoomRoute(
             },
             onClick2 = {
                 exitDialog = false
-                gameRoomViewModel.exitRoom()
+                viewModel.exitRoom()
             },
             onDismissRequest = { exitDialog = false }
         )
@@ -79,15 +79,15 @@ fun GameRoomRoute(
 
     LaunchedEffect(Unit) {
         launch {
-            gameRoomViewModel.eventHandler(
+            viewModel.eventHandler(
                 writeNextQuestion = {
-                    gameRoomViewModel.submitQuestion(
+                    viewModel.submitQuestion(
                         questionValue = questionValue,
                     )
                     questionValue = ""
                 },
                 answerNextQuestion = {
-                    gameRoomViewModel.submitAnswer(
+                    viewModel.submitAnswer(
                         voteValue = null,
                     )
                 }
@@ -95,13 +95,13 @@ fun GameRoomRoute(
         }
 
         launch {
-            gameRoomViewModel.handleWebSocketConnect(
+            viewModel.handleWebSocketConnect(
                 onDisconnect = popBackStack
             )
         }
 
         launch {
-            gameRoomViewModel.roomStatusHandler(
+            viewModel.roomStatusHandler(
                 result = navigateToResultRoom
             )
         }
@@ -115,7 +115,7 @@ fun GameRoomRoute(
         room = room,
         questionValue = questionValue,
         onSubmitClick = {
-            gameRoomViewModel.submitQuestion(
+            viewModel.submitQuestion(
                 questionValue = questionValue,
             )
             questionValue = ""
@@ -123,12 +123,12 @@ fun GameRoomRoute(
         currentQuestionNumber = currentQuestionNumber,
         updateQuestionValue = { questionValue = it },
         onOVoteClick = {
-            gameRoomViewModel.submitAnswer(
+            viewModel.submitAnswer(
                 voteValue = true
             )
         },
         onXVoteClick = {
-            gameRoomViewModel.submitAnswer(
+            viewModel.submitAnswer(
                 voteValue = false
             )
         },
@@ -136,8 +136,8 @@ fun GameRoomRoute(
         popBackStack = { exitDialog = true },
         isWriteStart = isWriteStart,
         isAnswerStart = isAnswerStart,
-        isWriteEnd = currentQuestionNumber.toLong() > room!!.questionNumber,
-        isAnswerEnd = currentQuestionNumber.toLong() > room!!.questionList.size
+        isWriteEnd = room != null && currentQuestionNumber.toLong() > room!!.questionNumber,
+        isAnswerEnd = room != null && currentQuestionNumber.toLong() > room!!.questionList.size
     )
 }
 

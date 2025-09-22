@@ -7,7 +7,6 @@ import com.example.domain.usecase.MessageHandlerUseCase
 import com.example.domain.usecase.SetQrCodeUseCase
 import com.example.domain.usecase.WebSocketHandlerUseCase
 import com.example.domain.usecase.function.CreateRoomFunction
-import com.example.domain.usecase.function.JoinRoomFunction
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.journeyapps.barcodescanner.BarcodeEncoder
@@ -24,7 +23,6 @@ class MainViewModel @Inject constructor(
     private val messageHandlerUseCase: MessageHandlerUseCase,
     private val eventHandlerUseCase: EventHandlerUseCase,
     private val createRoomFunction: CreateRoomFunction,
-    private val joinRoomFunction: JoinRoomFunction,
     private val webSocketHandlerUseCase: WebSocketHandlerUseCase,
     private val setQrCodeUseCase: SetQrCodeUseCase
 ) : ProjectViewModel(
@@ -84,17 +82,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun joinRoom(
-        nickname: String,
-        roomId: String
-    ) {
-        viewModelScope.launch {
-            joinRoomFunction(
-                nickname = nickname,
-                roomId = roomId
-            )
-        }
-    }
+
 
     fun dismissCreateRoomFailureDialog() {
         _createRoomFailureDialog.value = false

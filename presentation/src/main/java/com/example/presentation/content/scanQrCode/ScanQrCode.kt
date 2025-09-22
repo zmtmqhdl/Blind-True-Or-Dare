@@ -40,6 +40,7 @@ import androidx.core.content.ContextCompat
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.LifecycleOwner
 import com.example.core.Icon.Back
+import com.example.core.component.PrimaryDialog
 import com.example.core.component.ProjectButton
 import com.example.core.component.ProjectIcon
 import com.example.core.component.ProjectScreen
@@ -60,20 +61,76 @@ fun ScanQrCodeRoute(
     navigateToWaitingRoom: () -> Unit
 ) {
     // view model
-    val scanQrCodeViewModel: ScanQrCodeViewModel = hiltViewModel()
+    val viewModel: ScanQrCodeViewModel = hiltViewModel()
 
     // local value
     val cameraExecutor = remember { Executors.newSingleThreadExecutor() }
     val lifecycleOwner = LocalContext.current as LifecycleOwner
     var isQrScanMode by remember { mutableStateOf(true) }
-    var nicknameValue by remember { mutableStateOf("") }
-    var roomIdValue by remember { mutableStateOf("") }
+    var nickname by remember { mutableStateOf("") }
+    var roomId by remember { mutableStateOf("") }
     val focusRequester = remember { FocusRequester() }
+    var inputNameDialog by remember { mutableStateOf(false) }
+
+    // dialog
+    if (inputNameDialog) {
+        PrimaryDialog(
+            title = stringResource(id = R.string.component_join_room),
+            onDismissRequest = {
+                nickname = ""
+                inputNameDialog = false
+            }
+        ) {
+            Text(
+                text = stringResource(R.string.component_input_nickname),
+                style = ProjectTheme.typography.s.medium,
+                color = ProjectTheme.color.primary.fontColor
+            )
+
+            Spacer(modifier = Modifier.height(ProjectTheme.space.space2))
+
+            ProjectTextField.OutlinedTextField(
+                value = nickname,
+                onValueChange = { nickname = it },
+                modifier = Modifier.focusRequester(focusRequester = focusRequester),
+                textCenter = true
+            )
+
+            Spacer(modifier = Modifier.height(ProjectTheme.space.space4))
+
+            Row {
+                ProjectButton.Primary.Small(
+                    text = stringResource(id = R.string.component_cancel),
+                    onClick = {
+                        inputNameDialog = false
+                        nickname = ""
+                    },
+                    modifier = Modifier.weight(0.5f),
+                    enabled = nickname.isNotEmpty()
+                )
+
+                Spacer(modifier = Modifier.width(ProjectSpaces.Space4))
+
+                ProjectButton.Primary.Small(
+                    text = stringResource(id = R.string.component_enter),
+                    onClick = {
+                        viewModel.joinRoom(
+                            nickname = nickname,
+                            roomId = roomId
+                        )
+                        inputNameDialog = false
+                    },
+                    modifier = Modifier.weight(0.5f),
+                    enabled = nickname.length in 1..20
+                )
+            }
+        }
+    }
 
     // side effect
     LaunchedEffect(Unit) {
         launch {
-            scanQrCodeViewModel.handleWebSocketConnect(
+            viewModel.handleWebSocketConnect(
                 onConnect = navigateToWaitingRoom
             )
         }
@@ -81,13 +138,16 @@ fun ScanQrCodeRoute(
 
     LaunchedEffect(isQrScanMode) {
         if (!isQrScanMode) {
+            roomId = ""
             focusRequester.requestFocus()
         }
     }
 
-
     ScanQrCodeScreen(
-        onQrScanned = { },
+        onQrScanned = {
+            roomId = it
+            inputNameDialog = true
+        },
         cameraExecutor = cameraExecutor,
         lifecycleOwner = lifecycleOwner,
         popBackStack = popBackStack,
@@ -95,10 +155,17 @@ fun ScanQrCodeRoute(
         onQrCodeScanModeClick = { isQrScanMode = true },
         onInputRoomIdModeClick = { isQrScanMode = false },
         focusRequester = focusRequester,
-        nicknameValue = nicknameValue,
-        roomIdValue = roomIdValue,
-        onNicknameValueChange = { nicknameValue = it },
-        onRoomIdValueChange = { roomIdValue = it }
+        nicknameValue = nickname,
+        roomIdValue = roomId,
+        onNicknameValueChange = { nickname = it },
+        onRoomIdValueChange = { roomId = it },
+        onAdjustFocusClick = {},
+        onJoinRoomClick = {
+            viewModel.joinRoom(
+                nickname = nickname,
+                roomId = roomId
+            )
+        }
     )
 }
 
@@ -116,7 +183,9 @@ fun ScanQrCodeScreen(
     nicknameValue: String,
     roomIdValue: String,
     onNicknameValueChange: (String) -> Unit,
-    onRoomIdValueChange: (String) -> Unit
+    onRoomIdValueChange: (String) -> Unit,
+    onAdjustFocusClick: () -> Unit,
+    onJoinRoomClick: () -> Unit,
 ) {
     ProjectScreen.Screen(
         padding = false,
@@ -162,13 +231,11 @@ fun ScanQrCodeScreen(
                                     }
                                 }
                             }
-
-                        val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
                         try {
                             cameraProvider.unbindAll()
                             cameraProvider.bindToLifecycle(
-                                lifecycleOwner,
-                                cameraSelector,
+                                lifecycleOwner = lifecycleOwner,
+                                cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA,
                                 preview,
                                 imageAnalysis
                             )
@@ -209,107 +276,119 @@ fun ScanQrCodeScreen(
             },
             containerColor = Color.Transparent
         ) {
-            Column(
+            Box(
                 modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally
+                contentAlignment = Alignment.Center
             ) {
-                Spacer(modifier = Modifier.height(height = ProjectSpaces.Space8))
-
-                Text(
-                    text = if (isQrScanMode) {
-                        stringResource(id = R.string.scan_qr_code_scan_qr_code)
-                    } else {
-                        stringResource(
-                            id = R.string.scan_qr_code_input_room_id
-                        )
-                    },
-                    color = ProjectTheme.color.primary.fontColor,
-                    style = ProjectTheme.typography.m.medium,
-                )
-
-                Spacer(modifier = Modifier.height(height = ProjectSpaces.Space4))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth()
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(alignment = Alignment.TopStart),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    ProjectButton.Primary.Xlarge(
-                        text = stringResource(R.string.component_qr_code_scan),
-                        modifier = Modifier.weight(0.5f),
-                        onClick = onQrCodeScanModeClick,
+                    Spacer(modifier = Modifier.height(height = ProjectSpaces.Space8))
+
+                    Text(
+                        text = if (isQrScanMode) {
+                            stringResource(id = R.string.scan_qr_code_scan_qr_code)
+                        } else {
+                            stringResource(id = R.string.scan_qr_code_input_room_id)
+                        },
+                        color = ProjectTheme.color.primary.fontColor,
+                        style = ProjectTheme.typography.m.medium,
                     )
 
-                    Spacer(modifier = Modifier.width(width = ProjectSpaces.Space4))
+                    Spacer(modifier = Modifier.height(height = ProjectSpaces.Space4))
 
-                    ProjectButton.Primary.Xlarge(
-                        text = stringResource(R.string.component_input_room_id),
-                        modifier = Modifier.weight(0.5f),
+                    Row(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        ProjectButton.Primary.Xlarge(
+                            text = stringResource(R.string.component_qr_code_scan),
+                            modifier = Modifier.weight(0.5f),
+                            onClick = onQrCodeScanModeClick,
+                        )
 
-                        onClick = onInputRoomIdModeClick
-                    )
+                        Spacer(modifier = Modifier.width(width = ProjectSpaces.Space4))
+
+                        ProjectButton.Primary.Xlarge(
+                            text = stringResource(R.string.component_input_room_id),
+                            modifier = Modifier.weight(0.5f),
+
+                            onClick = onInputRoomIdModeClick
+                        )
+                    }
                 }
 
-                Spacer(modifier = Modifier.height(height = ProjectSpaces.Space4))
-
                 if (isQrScanMode) {
-                    Box(
-                        modifier = Modifier
-                            .size(250.dp)
-                            .border(
-                                width = 3.dp,
-                                color = Color.Green,
-                                shape = RoundedCornerShape(size = 8.dp)
-                            )
-                    )
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        // qr코드 인식칸은 여기 box칸만
+                        Box(
+                            modifier = Modifier
+                                .size(250.dp)
+                                .border(
+                                    width = 3.dp,
+                                    color = Color.Green,
+                                    shape = RoundedCornerShape(size = 8.dp)
+                                )
+                        )
 
-                    Spacer(modifier = Modifier.height(height = ProjectSpaces.Space2))
+                        Spacer(modifier = Modifier.height(height = ProjectSpaces.Space2))
 
-                    ProjectButton.Primary.Medium(
-                        text = stringResource(id = R.string.component_adjust_focus),
-                        onClick = {}
-                    )
+                        ProjectButton.Primary.Medium(
+                            text = stringResource(id = R.string.component_adjust_focus),
+                            onClick = {}
+                        )
+                    }
                 } else {
-                    Text(
-                        text = stringResource(R.string.main_dialog_input_nickname),
-                        style = ProjectTheme.typography.s.medium,
-                        color = ProjectTheme.color.primary.fontColor
-                    )
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = stringResource(R.string.component_nickname),
+                            style = ProjectTheme.typography.s.medium,
+                            color = ProjectTheme.color.primary.fontColor
+                        )
 
-                    Spacer(modifier = Modifier.height(ProjectTheme.space.space2))
+                        Spacer(modifier = Modifier.height(ProjectTheme.space.space2))
 
-                    ProjectTextField.OutlinedTextField(
-                        value = nicknameValue,
-                        onValueChange = { onNicknameValueChange(it) },
-                        modifier = Modifier.focusRequester(focusRequester = focusRequester),
-                        textCenter = true
-                    )
+                        ProjectTextField.OutlinedTextField(
+                            value = nicknameValue,
+                            onValueChange = { onNicknameValueChange(it) },
+                            modifier = Modifier.focusRequester(focusRequester = focusRequester),
+                            textCenter = true
+                        )
 
-                    Spacer(modifier = Modifier.height(ProjectTheme.space.space4))
+                        Spacer(modifier = Modifier.height(ProjectTheme.space.space4))
 
-                    Text(
-                        text = stringResource(R.string.main_dialog_input_room_id),
-                        style = ProjectTheme.typography.s.medium,
-                        color = ProjectTheme.color.primary.fontColor
-                    )
+                        Text(
+                            text = stringResource(R.string.component_room_id),
+                            style = ProjectTheme.typography.s.medium,
+                            color = ProjectTheme.color.primary.fontColor
+                        )
 
-                    Spacer(modifier = Modifier.height(ProjectTheme.space.space2))
+                        Spacer(modifier = Modifier.height(ProjectTheme.space.space2))
 
-                    ProjectTextField.OutlinedTextField(
-                        value = roomIdValue,
-                        onValueChange = { onRoomIdValueChange(it) },
-                        modifier = Modifier.focusRequester(focusRequester = focusRequester),
-                        textCenter = true,
-                        visualTransformation = RoomIdTransformationUseCase()
-                    )
+                        ProjectTextField.OutlinedTextField(
+                            value = roomIdValue,
+                            onValueChange = { onRoomIdValueChange(it) },
+                            modifier = Modifier.focusRequester(focusRequester = focusRequester),
+                            textCenter = true,
+                            visualTransformation = RoomIdTransformationUseCase()
+                        )
 
-                    Spacer(modifier = Modifier.height(ProjectTheme.space.space4))
+                        Spacer(modifier = Modifier.height(ProjectTheme.space.space4))
 
-                    ProjectButton.Primary.Small(
-                        text = stringResource(R.string.component_enter),
-                        onClick = {
-
-                        },
-                        enabled = nicknameValue.length in 1..20 && roomIdValue.length == 12
-                    )
+                        ProjectButton.Primary.Small(
+                            text = stringResource(R.string.component_enter),
+                            onClick = onJoinRoomClick,
+                            enabled = nicknameValue.length in 1..20 && roomIdValue.length == 12
+                        )
+                    }
                 }
             }
         }

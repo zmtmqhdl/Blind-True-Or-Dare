@@ -40,14 +40,13 @@ import com.example.core.component.ProjectScreen
 import com.example.core.component.ProjectTextField
 import com.example.core.theme.ProjectSpaces
 import com.example.core.theme.ProjectTheme
-import com.example.domain.usecase.RoomIdTransformationUseCase
 import com.example.presentation.R
 import com.example.presentation.util.permissionRequestLauncher
 import kotlinx.coroutines.launch
 
 @Composable
 fun MainRoute(
-    navigateToQrCodeScan: () -> Unit,
+    navigateToScanQrCode: () -> Unit,
     navigateToWaitingRoom: () -> Unit
 ) {
     // view model
@@ -59,12 +58,8 @@ fun MainRoute(
 
     // local state
     var nickname by remember { mutableStateOf("") }
-    var roomId by remember { mutableStateOf("") }
     val focusRequester = remember { FocusRequester() }
     var createWaitingRoomDialog by remember { mutableStateOf(false) }
-    var joinWaitingRoomViaEnterCodeDialog by remember { mutableStateOf(false) }
-    var joinWaitingRoomViaQrCodeDialog by remember { mutableStateOf(false) }
-    var enterNickNameDialog by remember { mutableStateOf(false) }
     val permissionRequestLauncher = permissionRequestLauncher()
     val context = LocalContext.current
     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
@@ -76,124 +71,55 @@ fun MainRoute(
     // dialog
     if (createWaitingRoomDialog) {
         PrimaryDialog(
-            title = stringResource(R.string.main_create_room),
-            content = {
-                Text(
-                    text = stringResource(R.string.main_dialog_input_nickname),
-                    style = ProjectTheme.typography.s.medium,
-                    color = ProjectTheme.color.primary.fontColor
-                )
-
-                Spacer(modifier = Modifier.height(ProjectTheme.space.space2))
-
-                ProjectTextField.OutlinedTextField(
-                    value = nickname,
-                    onValueChange = { nickname = it },
-                    modifier = Modifier.focusRequester(focusRequester = focusRequester),
-                    textCenter = true
-                )
-
-                Spacer(modifier = Modifier.height(ProjectTheme.space.space4))
-
-                Row {
-                    ProjectButton.Primary.Small(
-                        text = stringResource(R.string.component_cancel),
-                        onClick = {
-                            createWaitingRoomDialog = false
-                            nickname = ""
-                        },
-                        modifier = Modifier.weight(0.5f),
-                        enabled = nickname.isNotEmpty()
-                    )
-
-                    Spacer(modifier = Modifier.width(ProjectSpaces.Space4))
-
-                    ProjectButton.Primary.Small(
-                        text = stringResource(R.string.component_create),
-                        onClick = {
-                            mainViewModel.createRoom(
-                                nickname = nickname
-                            )
-                            createWaitingRoomDialog = false
-                        },
-                        modifier = Modifier.weight(0.5f),
-                        enabled = nickname.isNotEmpty()
-                    )
-                }
-
-            },
+            title = stringResource(R.string.component_join_room),
             onDismissRequest = {
                 nickname = ""
                 createWaitingRoomDialog = false
             }
-        )
-    }
+        ) {
+            Text(
+                text = stringResource(R.string.component_join_room),
+                style = ProjectTheme.typography.s.medium,
+                color = ProjectTheme.color.primary.fontColor
+            )
 
-    if (joinWaitingRoomViaEnterCodeDialog) {
-        PrimaryDialog(
-            title = stringResource(R.string.main_join_room),
-            content = {
-                Text(
-                    text = stringResource(R.string.main_dialog_input_nickname),
-                    style = ProjectTheme.typography.s.medium,
-                    color = ProjectTheme.color.primary.fontColor
-                )
+            Spacer(modifier = Modifier.height(ProjectTheme.space.space2))
 
-                Spacer(modifier = Modifier.height(ProjectTheme.space.space2))
+            ProjectTextField.OutlinedTextField(
+                value = nickname,
+                onValueChange = { nickname = it },
+                modifier = Modifier.focusRequester(focusRequester = focusRequester),
+                textCenter = true
+            )
 
-                ProjectTextField.OutlinedTextField(
-                    value = nickname,
-                    onValueChange = { nickname = it },
-                    modifier = Modifier.focusRequester(focusRequester = focusRequester),
-                    textCenter = true
-                )
+            Spacer(modifier = Modifier.height(ProjectTheme.space.space4))
 
-                Spacer(modifier = Modifier.height(ProjectTheme.space.space4))
-
-                Text(
-                    text = stringResource(R.string.main_dialog_input_room_id),
-                    style = ProjectTheme.typography.s.medium,
-                    color = ProjectTheme.color.primary.fontColor
-                )
-
-                Spacer(modifier = Modifier.height(ProjectTheme.space.space2))
-
-                ProjectTextField.OutlinedTextField(
-                    value = roomId,
-                    onValueChange = { roomId = it },
-                    modifier = Modifier.focusRequester(focusRequester = focusRequester),
-                    textCenter = true,
-                    visualTransformation = RoomIdTransformationUseCase()
-                )
-
-                Spacer(modifier = Modifier.height(ProjectTheme.space.space4))
-
+            Row {
                 ProjectButton.Primary.Small(
-                    text = stringResource(R.string.component_enter),
+                    text = stringResource(R.string.component_cancel),
                     onClick = {
-                        mainViewModel.joinRoom(
-                            nickname = nickname,
-                            roomId = roomId
-                        )
-                        joinWaitingRoomViaEnterCodeDialog = false
+                        createWaitingRoomDialog = false
+                        nickname = ""
                     },
+                    modifier = Modifier.weight(0.5f),
                     enabled = nickname.isNotEmpty()
                 )
-            },
-            onDismissRequest = {
-                nickname = ""
-                roomId = ""
-                joinWaitingRoomViaEnterCodeDialog = false
+
+                Spacer(modifier = Modifier.width(ProjectSpaces.Space4))
+
+                ProjectButton.Primary.Small(
+                    text = stringResource(R.string.component_create),
+                    onClick = {
+                        mainViewModel.createRoom(
+                            nickname = nickname
+                        )
+                        createWaitingRoomDialog = false
+                    },
+                    modifier = Modifier.weight(0.5f),
+                    enabled = nickname.length in 1..20
+                )
             }
-        )
-    }
-
-    if (joinWaitingRoomViaEnterCodeDialog) {
-
-    }
-
-    if (enterNickNameDialog) {
-
+        }
     }
 
     if (createRoomFailureDialog) {
@@ -231,8 +157,8 @@ fun MainRoute(
     }
 
     // side effect
-    LaunchedEffect(createWaitingRoomDialog, joinWaitingRoomViaEnterCodeDialog) {
-        if (createWaitingRoomDialog || joinWaitingRoomViaEnterCodeDialog) {
+    LaunchedEffect(createWaitingRoomDialog) {
+        if (createWaitingRoomDialog) {
             focusRequester.requestFocus()
         }
     }
@@ -251,7 +177,7 @@ fun MainRoute(
         onJoinClick = {
             permissionRequestLauncher(
                 listOf(Manifest.permission.CAMERA),
-                { navigateToQrCodeScan() },
+                { navigateToScanQrCode() },
                 {},
                 { permissionRequestDialog = true }
             )
@@ -361,7 +287,7 @@ fun MainScreen(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = stringResource(R.string.main_join_room),
+                    text = stringResource(R.string.component_join_room),
                     color = ProjectTheme.color.primary.fontColor,
                     fontSize = 40.sp,
                     style = ProjectTheme.typography.xl.medium

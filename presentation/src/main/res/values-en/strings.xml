@@ -7,7 +7,7 @@
     <string name="component_create">Create</string>
     <string name="component_enter">Enter</string>
     <string name="component_nickname">Nickname</string>
-    <string name="component_waiting_room_id">Waiting Room ID</string>
+    <string name="component_room_id">Room ID</string>
     <string name="component_next">Next</string>
     <string name="component_okay">OK</string>
     <string name="component_cancel">Cancel</string>
@@ -22,13 +22,14 @@
     <string name="component_no_answer">No Answer</string>
     <string name="component_input_room_id">Input Room ID</string>
     <string name="component_adjust_focus">Adjust Focus</string>
+    <string name="component_join_room">Join Room</string>
+    <string name="component_input_nickname">Input your nickname.</string>
+
 
 
     <!-- main -->
-    <string name="main_dialog_input_nickname">Input your nickname.</string>
     <string name="main_dialog_input_room_id">Input room ID.</string>
     <string name="main_create_room">Create Room</string>
-    <string name="main_join_room">Join Room</string>
     <string name="main_create_room_failure_dialog_title">Failed to Create Room</string>
     <string name="main_create_room_failure_dialog_text">Failed to create the room. Please try again later.</string>
     <string name="main_join_room_failure_dialog_title">Failed to Join Room</string>
@@ -38,7 +39,8 @@
 
     <!-- scan qr code -->
     <string name="scan_qr_code_scan_qr_code">Please scan the QR code.</string>
-    <string name="scan_qr_code_input_room_id">Please enter the waiting room ID and Nickname.</string>
+    <string name="scan_qr_code_input_room_id">Please enter the room ID and Nickname.</string>
+
 
 
     <!-- waiting room -->

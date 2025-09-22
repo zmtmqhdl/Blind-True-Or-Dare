@@ -9,7 +9,7 @@ sealed class Event {
 }
 
 sealed class WebSocketStatus {
-    class WebSocketConnectSuccess(val roomUrl: String) : WebSocketStatus()
+    class WebSocketConnectSuccess(val roomId: String) : WebSocketStatus()
     class WebSocketConnectFailure(val error: Throwable) : WebSocketStatus()
     object WebSocketDisconnect : WebSocketStatus()
 }

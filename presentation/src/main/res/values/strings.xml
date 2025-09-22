@@ -7,7 +7,7 @@
     <string name="component_create">생성</string>
     <string name="component_enter">입장</string>
     <string name="component_nickname">닉네임</string>
-    <string name="component_waiting_room_id">대기실 ID</string>
+    <string name="component_room_id">대기실 ID</string>
     <string name="component_next">다음</string>
     <string name="component_okay">확인</string>
     <string name="component_cancel">취소</string>
@@ -22,13 +22,14 @@
     <string name="component_re_join">대기실 재입장</string>
     <string name="component_input_room_id">대기실 ID 입력</string>
     <string name="component_adjust_focus">초점 맞추기</string>
+    <string name="component_join_room">대기실 입장</string>
+    <string name="component_input_nickname">닉네임을 입력해주세요.</string>
+
 
 
     <!-- main -->
-    <string name="main_dialog_input_nickname">닉네임을 입력해주세요.</string>
     <string name="main_dialog_input_room_id">대기실 ID를 입력해주세요.</string>
     <string name="main_create_room">대기실 생성</string>
-    <string name="main_join_room">대기실 입장</string>
     <string name="main_create_room_failure_dialog_title">대기실 생성 실패</string>
     <string name="main_create_room_failure_dialog_text">대기실 생성에 실패했습니다. 잠시 후 다시 시도해주세요.</string>
     <string name="main_join_room_failure_dialog_title">대기실 입장 실패</string>

@@ -1,5 +1,7 @@
 package com.example.presentation.content
 
+import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,6 +21,7 @@ import com.example.presentation.navigation.Route
 import com.example.presentation.navigation.popNavigate
 import kotlinx.coroutines.launch
 
+@SuppressLint("RestrictedApi")
 @Composable
 fun Content() {
     // view model
@@ -33,7 +36,7 @@ fun Content() {
     LaunchedEffect(Unit) {
         launch {
             contentViewModel.handleWebSocketConnect(
-                onDisconnect = { navController.popNavigate(Route.Main.route) }
+                onDisconnect = { navController.popBackStack() }
             )
         }
     }
