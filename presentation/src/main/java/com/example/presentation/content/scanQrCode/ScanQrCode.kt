@@ -1,7 +1,10 @@
 package com.example.presentation.content.scanQrCode
 
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory.decodeByteArray
+import android.graphics.ImageFormat
 import android.graphics.Rect
+import android.graphics.YuvImage
 import android.media.Image
 import android.util.Log
 import androidx.annotation.OptIn
@@ -33,6 +36,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
@@ -66,8 +71,7 @@ import java.util.concurrent.Executors
 
 @Composable
 fun ScanQrCodeRoute(
-    popBackStack: () -> Unit,
-    navigateToWaitingRoom: () -> Unit
+    popBackStack: () -> Unit, navigateToWaitingRoom: () -> Unit
 ) {
     // view model
     val viewModel: ScanQrCodeViewModel = hiltViewModel()
@@ -85,12 +89,10 @@ fun ScanQrCodeRoute(
     // dialog
     if (inputNameDialog) {
         PrimaryDialog(
-            title = stringResource(id = R.string.component_join_room),
-            onDismissRequest = {
+            title = stringResource(id = R.string.component_join_room), onDismissRequest = {
                 nickname = ""
                 inputNameDialog = false
-            }
-        ) {
+            }) {
             Text(
                 text = stringResource(R.string.component_input_nickname),
                 style = ProjectTheme.typography.s.medium,
@@ -110,28 +112,21 @@ fun ScanQrCodeRoute(
 
             Row {
                 ProjectButton.Primary.Small(
-                    text = stringResource(id = R.string.component_cancel),
-                    onClick = {
+                    text = stringResource(id = R.string.component_cancel), onClick = {
                         inputNameDialog = false
                         nickname = ""
-                    },
-                    modifier = Modifier.weight(0.5f),
-                    enabled = nickname.isNotEmpty()
+                    }, modifier = Modifier.weight(0.5f), enabled = nickname.isNotEmpty()
                 )
 
                 Spacer(modifier = Modifier.width(ProjectSpaces.Space4))
 
                 ProjectButton.Primary.Small(
-                    text = stringResource(id = R.string.component_enter),
-                    onClick = {
+                    text = stringResource(id = R.string.component_enter), onClick = {
                         viewModel.joinRoom(
-                            nickname = nickname,
-                            roomId = roomId
+                            nickname = nickname, roomId = roomId
                         )
                         inputNameDialog = false
-                    },
-                    modifier = Modifier.weight(0.5f),
-                    enabled = nickname.length in 1..20
+                    }, modifier = Modifier.weight(0.5f), enabled = nickname.length in 1..20
                 )
             }
         }
@@ -172,8 +167,7 @@ fun ScanQrCodeRoute(
         onAdjustFocusClick = {},
         onJoinRoomClick = {
             viewModel.joinRoom(
-                nickname = nickname,
-                roomId = roomId
+                nickname = nickname, roomId = roomId
             )
         },
         qrBoxLineLength = qrBoxLineLength
@@ -201,15 +195,17 @@ fun ScanQrCodeScreen(
 ) {
     var boxBounds by remember { mutableStateOf(Rect()) }
 
-    ProjectScreen.Screen(padding = false) {
+    ProjectScreen.Screen(
+        padding = false
+    ) {
         if (isQrScanMode) {
             AndroidView(
-                factory = { ctx ->
-                    val previewView = PreviewView(ctx).apply {
+                factory = { context ->
+                    val previewView = PreviewView(context).apply {
                         implementationMode = PreviewView.ImplementationMode.COMPATIBLE
                     }
 
-                    val cameraProviderFuture = ProcessCameraProvider.getInstance(ctx)
+                    val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
                     cameraProviderFuture.addListener({
                         val cameraProvider = cameraProviderFuture.get()
 
@@ -229,15 +225,23 @@ fun ScanQrCodeScreen(
                                         val scaleY = bitmap.height.toFloat() / previewView.height
 
                                         // 화면 좌표 -> 이미지 좌표 변환
-                                        val cropLeft = (boxBounds.left * scaleX).toInt().coerceIn(0, bitmap.width - 1)
-                                        val cropTop = (boxBounds.top * scaleY).toInt().coerceIn(0, bitmap.height - 1)
-                                        val cropRight = (boxBounds.right * scaleX).toInt().coerceIn(cropLeft + 1, bitmap.width)
-                                        val cropBottom = (boxBounds.bottom * scaleY).toInt().coerceIn(cropTop + 1, bitmap.height)
+                                        val cropLeft = (boxBounds.left * scaleX).toInt()
+                                            .coerceIn(0, bitmap.width - 1)
+                                        val cropTop = (boxBounds.top * scaleY).toInt()
+                                            .coerceIn(0, bitmap.height - 1)
+                                        val cropRight = (boxBounds.right * scaleX).toInt()
+                                            .coerceIn(cropLeft + 1, bitmap.width)
+                                        val cropBottom = (boxBounds.bottom * scaleY).toInt()
+                                            .coerceIn(cropTop + 1, bitmap.height)
                                         val cropWidth = cropRight - cropLeft
                                         val cropHeight = cropBottom - cropTop
 
-                                        val croppedBitmap = Bitmap.createBitmap(bitmap, cropLeft, cropTop, cropWidth, cropHeight)
-                                        val inputImage = InputImage.fromBitmap(croppedBitmap, imageProxy.imageInfo.rotationDegrees)
+                                        val croppedBitmap = Bitmap.createBitmap(
+                                            bitmap, cropLeft, cropTop, cropWidth, cropHeight
+                                        )
+                                        val inputImage = InputImage.fromBitmap(
+                                            croppedBitmap, imageProxy.imageInfo.rotationDegrees
+                                        )
 
                                         scanner.process(inputImage)
                                             .addOnSuccessListener { barcodes ->
@@ -246,8 +250,7 @@ fun ScanQrCodeScreen(
                                                         onQrScanned(value)
                                                     }
                                                 }
-                                            }
-                                            .addOnFailureListener { it.printStackTrace() }
+                                            }.addOnFailureListener { it.printStackTrace() }
                                             .addOnCompleteListener { imageProxy.close() }
                                     } else {
                                         imageProxy.close()
@@ -267,11 +270,45 @@ fun ScanQrCodeScreen(
                             Log.e("QrCodeScan", "Camera binding failed", exc)
                         }
 
-                    }, ContextCompat.getMainExecutor(ctx))
+                    }, ContextCompat.getMainExecutor(context))
 
                     previewView
-                },
-                modifier = Modifier.fillMaxSize()
+                }, modifier = Modifier.fillMaxSize()
+            )
+
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .drawBehind {
+                        val boxSize = 250.dp.toPx()
+                        val left = (size.width - boxSize) / 2
+                        val top = (size.height - boxSize) / 2
+                        val right = left + boxSize
+                        val bottom = top + boxSize
+
+                        val overlayColor = Color.Black.copy(alpha = 0.5f)
+
+                        drawRect(
+                            color = overlayColor,
+                            topLeft = Offset(0f, 0f),
+                            size = Size(size.width, top)
+                        )
+                        drawRect(
+                            color = overlayColor,
+                            topLeft = Offset(0f, bottom),
+                            size = Size(size.width, size.height - bottom)
+                        )
+                        drawRect(
+                            color = overlayColor,
+                            topLeft = Offset(0f, top),
+                            size = Size(left, boxSize)
+                        )
+                        drawRect(
+                            color = overlayColor,
+                            topLeft = Offset(right, top),
+                            size = Size(size.width - right, boxSize)
+                        )
+                    }
             )
         }
 
@@ -297,12 +334,10 @@ fun ScanQrCodeScreen(
                         color = ProjectTheme.color.primary.fontColor
                     )
                 }
-            },
-            containerColor = Color.Transparent
+            }, containerColor = Color.Transparent
         ) {
             Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
+                modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
             ) {
                 Column(
                     modifier = Modifier
@@ -348,45 +383,44 @@ fun ScanQrCodeScreen(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Box(
-                            modifier = Modifier
-                                .size(250.dp)
-                                .onGloballyPositioned { coords ->
-                                    val pos = coords.positionInRoot()
-                                    val size = coords.size
-                                    boxBounds = Rect(
-                                        pos.x.toInt(),
-                                        pos.y.toInt(),
-                                        (pos.x + size.width).toInt(),
-                                        (pos.y + size.height).toInt()
+                        Box(modifier = Modifier
+                            .size(250.dp)
+                            .onGloballyPositioned {
+                                val pos = it.positionInRoot()
+                                val size = it.size
+                                boxBounds = Rect(
+                                    pos.x.toInt(),
+                                    pos.y.toInt(),
+                                    (pos.x + size.width).toInt(),
+                                    (pos.y + size.height).toInt()
+                                )
+                            }
+                            .drawBehind {
+                                drawPath(
+                                    path = Path().apply {
+                                        moveTo(0f, qrBoxLineLength)
+                                        lineTo(0f, 0f)
+                                        lineTo(qrBoxLineLength, 0f)
+
+                                        moveTo(size.width - qrBoxLineLength, 0f)
+                                        lineTo(size.width, 0f)
+                                        lineTo(size.width, qrBoxLineLength)
+
+                                        moveTo(0f, size.height - qrBoxLineLength)
+                                        lineTo(0f, size.height)
+                                        lineTo(qrBoxLineLength, size.height)
+
+                                        moveTo(size.width, size.height - qrBoxLineLength)
+                                        lineTo(size.width, size.height)
+                                        lineTo(size.width - qrBoxLineLength, size.height)
+                                    },
+                                    color = Color.Green,
+                                    style = Stroke(
+                                        width = 5.dp.toPx(),
+                                        cap = StrokeCap.Round
                                     )
-                                }
-                                .drawBehind {
-                                    drawPath(
-                                        path = Path().apply {
-                                            moveTo(0f, qrBoxLineLength)
-                                            lineTo(0f, 0f)
-                                            lineTo(qrBoxLineLength, 0f)
-
-                                            moveTo(size.width - qrBoxLineLength, 0f)
-                                            lineTo(size.width, 0f)
-                                            lineTo(size.width, qrBoxLineLength)
-
-                                            moveTo(0f, size.height - qrBoxLineLength)
-                                            lineTo(0f, size.height)
-                                            lineTo(qrBoxLineLength, size.height)
-
-                                            moveTo(size.width, size.height - qrBoxLineLength)
-                                            lineTo(size.width, size.height)
-                                            lineTo(size.width - qrBoxLineLength, size.height)
-                                        },
-                                        color = Color.Green,
-                                        style = Stroke(
-                                            width = 5.dp.toPx(),
-                                            cap = StrokeCap.Round
-                                        )
-                                    )
-                                }
+                                )
+                            }
                         )
 
                         Spacer(modifier = Modifier.height(ProjectSpaces.Space2))
@@ -448,7 +482,6 @@ fun ScanQrCodeScreen(
     }
 }
 
-// Image -> Bitmap 변환 확장 함수
 fun Image.toBitmap(): Bitmap {
     val yBuffer = planes[0].buffer
     val uBuffer = planes[1].buffer
@@ -463,9 +496,9 @@ fun Image.toBitmap(): Bitmap {
     vBuffer.get(nv21, ySize, vSize)
     uBuffer.get(nv21, ySize + vSize, uSize)
 
-    val yuvImage = android.graphics.YuvImage(nv21, android.graphics.ImageFormat.NV21, width, height, null)
+    val yuvImage = YuvImage(nv21, ImageFormat.NV21, width, height, null)
     val out = ByteArrayOutputStream()
     yuvImage.compressToJpeg(Rect(0, 0, width, height), 100, out)
     val imageBytes = out.toByteArray()
-    return android.graphics.BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+    return decodeByteArray(imageBytes, 0, imageBytes.size)
 }
