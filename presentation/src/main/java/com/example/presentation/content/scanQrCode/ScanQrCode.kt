@@ -174,6 +174,7 @@ fun ScanQrCodeRoute(
     )
 }
 
+// todo - 뭔가 최적화가 필요하다.
 @OptIn(ExperimentalGetImage::class)
 @Composable
 fun ScanQrCodeScreen(

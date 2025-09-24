@@ -29,7 +29,18 @@ class WaitingRoomViewModel @Inject constructor(
     viewModelTag = "WaitingRoomViewModel"
 ) {
     val room = roomRepository.room
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Lazily,
+            initialValue = null
+        )
+
     val player = roomRepository.player
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Lazily,
+            initialValue = null
+        )
 
     private val _startFailureDialog = MutableStateFlow(false)
     val startFailureDialog: StateFlow<Boolean> = _startFailureDialog.asStateFlow()
