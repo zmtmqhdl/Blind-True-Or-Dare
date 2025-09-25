@@ -43,17 +43,8 @@ class GameRoomViewModel @Inject constructor(
     viewModelTag = "GameRoomViewModel"
 ) {
     val room = roomRepository.room
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Lazily,
-            initialValue = null
-        )
     val player = roomRepository.player
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Lazily,
-            initialValue = null
-        )
+
     var timeJob: Job? = null
 
     private val _time = MutableStateFlow(5L)
@@ -100,6 +91,7 @@ class GameRoomViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             webSocketHandlerUseCase(
+                viewModelScope = this,
                 onDisconnect = {
                     exitGameFunction()
                     onDisconnect()
@@ -153,6 +145,7 @@ class GameRoomViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             eventHandlerUseCase(
+                viewModelScope = this,
                 writeNextQuestion = writeNextQuestion,
                 answerNextQuestion = answerNextQuestion
             )

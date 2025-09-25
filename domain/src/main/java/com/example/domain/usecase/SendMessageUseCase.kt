@@ -3,6 +3,7 @@ package com.example.domain.usecase
 import com.example.domain.model.MessageType
 import com.example.domain.repository.RoomRepository
 import com.example.domain.repository.WebSocketRepository
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 class SendMessageUseCase @Inject constructor(

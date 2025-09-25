@@ -54,6 +54,7 @@ class ScanQrCodeViewModel @Inject constructor(
                     onConnect()
                 },
                 onConnectFailure = { logD("$it") },
+                viewModelScope = this,
             )
         }
     }

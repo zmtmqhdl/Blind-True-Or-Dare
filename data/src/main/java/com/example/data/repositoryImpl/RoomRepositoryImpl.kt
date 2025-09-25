@@ -16,6 +16,7 @@ import com.example.domain.model.Room
 import com.example.domain.repository.RoomRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -26,19 +27,19 @@ class RoomRepositoryImpl @Inject constructor(
 ) : RoomRepository {
 
     private val _room = MutableStateFlow<Room?>(null)
-    override val room: Flow<Room?> = _room
+    override val room: StateFlow<Room?> = _room
 
     private val _qrCode = MutableStateFlow<Bitmap?>(null)
-    override val qrCode: Flow<Bitmap?> = _qrCode
+    override val qrCode: StateFlow<Bitmap?> = _qrCode
 
     private val _player = MutableStateFlow<Player?>(null)
-    override val player: Flow<Player?> = _player
+    override val player: StateFlow<Player?> = _player
 
     private val _myQuestionList = MutableStateFlow<List<Question>>(emptyList())
-    override val myQuestionList: Flow<List<Question>> = _myQuestionList
+    override val myQuestionList: StateFlow<List<Question>> = _myQuestionList
 
     private val _myAnswerList = MutableStateFlow<List<Answer>>(emptyList())
-    override val myAnswerList: Flow<List<Answer>> = _myAnswerList
+    override val myAnswerList: StateFlow<List<Answer>> = _myAnswerList
 
     override suspend fun createRoom(player: Player): ApiResponse<CreateRoom> =
         request {

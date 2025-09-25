@@ -25,23 +25,9 @@ constructor(
     viewModelTag = "ResultRoomViewModel"
 ) {
     val room = roomRepository.room
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Lazily,
-            initialValue = null
-        )
     val myQuestionList = roomRepository.myQuestionList
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Lazily,
-            initialValue = null
-        )
     val myAnswerList = roomRepository.myAnswerList
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Lazily,
-            initialValue = null
-        )
+
 
     // 질문의 정렬? ox보여주고 내질문 및 답변에 대한건 따로 표기 (별표..?)
 
@@ -65,6 +51,7 @@ constructor(
     ) {
         viewModelScope.launch {
             eventHandlerUseCase(
+                viewModelScope = this,
                 webSocketRejoin = webSocketRejoin
             )
         }

@@ -21,14 +21,13 @@ class ContentViewModel @Inject constructor(
 ) {
     val loading = uiFlowRepository.loading
 
-    private var job: Job? = null
 
     fun handleWebSocketConnect(
         onDisconnect: () -> Unit
     ) {
-        if (job?.isActive == true) return
-        job = viewModelScope.launch {
+        viewModelScope.launch {
             webSocketHandlerUseCase(
+                viewModelScope = this,
                 onDisconnect = {
                     exitGameFunction()
                     onDisconnect()
