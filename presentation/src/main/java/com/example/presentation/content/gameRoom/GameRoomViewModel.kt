@@ -44,6 +44,11 @@ class GameRoomViewModel @Inject constructor(
 ) {
     val room = roomRepository.room
     val player = roomRepository.player
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = null
+        )
 
     var timeJob: Job? = null
 

@@ -11,7 +11,7 @@ class EventHandlerUseCase @Inject constructor(
     private val uiFlowRepository: UiFlowRepository
 ) {
     var job: Job? = null
-    suspend operator fun invoke(
+    operator fun invoke(
         viewModelScope: CoroutineScope,
         createRoomFailure: () -> Unit = {},
         writeNextQuestion: () -> Unit = {},
