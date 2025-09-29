@@ -26,7 +26,6 @@ object RetrofitModule {
     @Singleton
     @Provides
     fun provideRetrofit(): Retrofit {
-        val BASE_URL = "http://10.0.2.2:8080/"
 
         val loggingInterceptor = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
@@ -57,7 +56,7 @@ object RetrofitModule {
             .build()
 
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(API_URL)
             .client(client)
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
             .build()
