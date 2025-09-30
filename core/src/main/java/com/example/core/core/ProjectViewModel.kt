@@ -3,6 +3,8 @@ package com.example.core.core
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,5 +20,9 @@ abstract class ProjectViewModel(
 
     protected fun logD(message: String, tag: String = viewModelTag) {
         Log.d(tag, message)
+    }
+
+    protected fun launchIO(block: suspend CoroutineScope.() -> Unit) {
+        viewModelScope.launch(context = Dispatchers.IO, block = block)
     }
 }

@@ -1,5 +1,8 @@
 package com.example.data.repositoryImpl
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.util.Log
 import com.example.data.di.WEB_SOCKET_URL
 import com.example.data.model.AnswerDto
 import com.example.data.model.MessageDto
@@ -12,9 +15,13 @@ import com.example.domain.model.Message
 import com.example.domain.model.MessageType
 import com.example.domain.model.Player
 import com.example.domain.model.Question
+import com.example.domain.repository.NetworkRepository
+import com.example.domain.repository.RoomRepository
 import com.example.domain.repository.WebSocketRepository
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.delay
@@ -32,25 +39,29 @@ import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import java.net.URLEncoder
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Suppress("UNCHECKED_CAST")
 @Singleton
 class WebSocketRepositoryImpl @Inject constructor(
+    private val roomRepository: RoomRepository,
+    private val networkRepository: NetworkRepository
 ) : WebSocketRepository {
+    private val tag = "WebSocketRepositoryImpl"
+
+    private var reconnectJob: Job? = null
+
     private val _webSocketConnect = MutableSharedFlow<WebSocketStatus>()
     override val webSocketConnect: SharedFlow<WebSocketStatus> = _webSocketConnect.asSharedFlow()
 
-    private val client = OkHttpClient()
+    private val client = OkHttpClient.Builder()
+        .pingInterval(1, TimeUnit.SECONDS) // 15초마다 ping 전송
+        .build()
     private var webSocket: WebSocket? = null
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
-    private var reconnectAttempt = 0
-    private val maxReconnectAttempt = 5
-    private val reconnectDelay = 2000L
 
-    private val _isConnected = MutableStateFlow(false)
-    override val isConnected: StateFlow<Boolean> = _isConnected.asStateFlow()
 
 
     private val _message = MutableSharedFlow<Message?>(
@@ -77,8 +88,7 @@ class WebSocketRepositoryImpl @Inject constructor(
             request = request,
             object : WebSocketListener() {
                 override fun onOpen(webSocket: WebSocket, response: Response) {
-                    reconnectAttempt = 0
-                    _isConnected.value = true
+                    reconnectJob?.cancel()
                     scope.launch {
                         _webSocketConnect.emit(
                             value = WebSocketStatus.WebSocketConnectSuccess(
@@ -102,9 +112,12 @@ class WebSocketRepositoryImpl @Inject constructor(
 
                 override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
                     this@WebSocketRepositoryImpl.webSocket = null
-                    _isConnected.value = false
-                    scope.launch {
-                        _webSocketConnect.emit(value = WebSocketStatus.WebSocketDisconnect)
+                    if (code == 1000) {
+                        scope.launch {
+                            _webSocketConnect.emit(WebSocketStatus.WebSocketDisconnect)
+                        }
+                    } else {
+                        reconnect()
                     }
                 }
             })
@@ -163,22 +176,27 @@ class WebSocketRepositoryImpl @Inject constructor(
     override fun close() {
         webSocket?.close(1000, "Closing normally")
         webSocket = null
-        _isConnected.value = false
     }
 
-    override fun reconnect(
-        roomId: String,
-        player: Player
-    ) {
-        if (reconnectAttempt >= maxReconnectAttempt) return
-        reconnectAttempt++
+    override fun reconnect() {
+        if (reconnectJob?.isActive == true) return
 
-        scope.launch {
-            delay(reconnectDelay)
-            connect(
-                roomId = roomId,
-                player = player
-            )
+        var reconnectAttempt = 0
+        val maxReconnectAttempt = 5
+        val reconnectDelay = 2000L
+
+        val room = roomRepository.room.value
+        val player = roomRepository.player.value
+
+        if (room == null || player == null) return
+
+        reconnectJob = scope.launch {
+            while (reconnectAttempt < maxReconnectAttempt && webSocket == null) {
+                delay(reconnectDelay)
+                connect(roomId = room.roomId, player = player)
+                reconnectAttempt++
+                Log.d(tag, "Reconnect attempt: $reconnectAttempt")
+            }
         }
     }
 }

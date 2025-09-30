@@ -5,7 +5,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.example.core.theme.ProjectTheme
 import com.example.domain.repository.UiFlowRepository
 import com.example.domain.repository.RoomRepository
@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         installSplashScreen()
         setContent {
             val splashViewModel: SplashViewModel = hiltViewModel()
+
             ProjectTheme {
                 Content()
             }
@@ -41,14 +42,11 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    override fun onResume() {
-        super.onResume()
-        if (webSocketRepository.isConnected.value) {
-            webSocketRepository.reconnect(
-                roomId = roomDataRepository.room.value!!.roomId,
-                player = roomDataRepository.player.value!!
-            )
-        }
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        if (webSocketRepository.isConnected.value) {
+//            webSocketRepository.reconnect()
+//        }
+//    }
 }
 // todo - resume이랑 네트워크 연결 감지 -> 근데 roomId랑 player를 어디서 담아두지

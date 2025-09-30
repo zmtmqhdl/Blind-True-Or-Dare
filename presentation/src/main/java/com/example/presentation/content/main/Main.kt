@@ -32,7 +32,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.example.core.component.PrimaryDialog
 import com.example.core.component.ProjectButton
 import com.example.core.component.ProjectDialog
@@ -71,14 +71,14 @@ fun MainRoute(
     // dialog
     if (createWaitingRoomDialog) {
         PrimaryDialog(
-            title = stringResource(R.string.component_join_room),
+            title = stringResource(R.string.main_create_room),
             onDismissRequest = {
                 nickname = ""
                 createWaitingRoomDialog = false
             }
         ) {
             Text(
-                text = stringResource(R.string.component_join_room),
+                text = stringResource(id = R.string.component_nickname),
                 style = ProjectTheme.typography.s.medium,
                 color = ProjectTheme.color.primary.fontColor
             )
@@ -89,7 +89,8 @@ fun MainRoute(
                 value = nickname,
                 onValueChange = { nickname = it },
                 modifier = Modifier.focusRequester(focusRequester = focusRequester),
-                textCenter = true
+                textCenter = true,
+                placeholder = stringResource(id = R.string.main_dialog_create_room_dialog_placeholder)
             )
 
             Spacer(modifier = Modifier.height(ProjectTheme.space.space4))
@@ -102,7 +103,6 @@ fun MainRoute(
                         nickname = ""
                     },
                     modifier = Modifier.weight(0.5f),
-                    enabled = nickname.isNotEmpty()
                 )
 
                 Spacer(modifier = Modifier.width(ProjectSpaces.Space4))

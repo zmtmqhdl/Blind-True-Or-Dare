@@ -17,6 +17,18 @@ android {
         proguardFiles("proguard-rules.pro")
     }
 
+    flavorDimensions += "env"
+    productFlavors {
+        create("dev") {
+            dimension = "env"
+            buildConfigField("Boolean", "IS_DEV", "true")
+        }
+        create("prod") {
+            dimension = "env"
+            buildConfigField("Boolean", "IS_DEV", "false")
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -36,6 +48,7 @@ android {
         }
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 }

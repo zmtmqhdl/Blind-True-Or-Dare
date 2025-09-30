@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.StateFlow
 interface WebSocketRepository {
     val message: SharedFlow<Message?>
     val webSocketConnect: SharedFlow<WebSocketStatus>
-    val isConnected: StateFlow<Boolean>
 
 
     fun connect(
@@ -26,8 +25,5 @@ interface WebSocketRepository {
 
     fun close()
 
-    fun reconnect(
-        roomId: String,
-        player: Player
-    )
+    fun reconnect()
 }

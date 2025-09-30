@@ -56,7 +56,7 @@ fun NavGraphBuilder.main(navController: NavController) {
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.slideComposable(
     route: String,
-    duration: Int = 3000,
+    duration: Int = 1500,
     content: @Composable (AnimatedContentScope.(NavBackStackEntry) -> Unit)
 ) {
     composable(

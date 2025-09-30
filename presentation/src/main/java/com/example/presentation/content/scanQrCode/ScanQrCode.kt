@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -62,6 +63,7 @@ import com.example.core.theme.ProjectSpaces
 import com.example.core.theme.ProjectTheme
 import com.example.domain.usecase.RoomIdTransformationUseCase
 import com.example.presentation.R
+import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 import kotlinx.coroutines.launch
@@ -79,20 +81,34 @@ fun ScanQrCodeRoute(
     // local value
     val cameraExecutor = remember { Executors.newSingleThreadExecutor() }
     val lifecycleOwner = LocalContext.current as LifecycleOwner
+    var cameraProvider by remember { mutableStateOf<ProcessCameraProvider?>(null) }
+    var barcodeScanner by remember { mutableStateOf<BarcodeScanner?>(null) }
     var isQrScanMode by remember { mutableStateOf(true) }
     var nickname by remember { mutableStateOf("") }
     var roomId by remember { mutableStateOf("") }
     val focusRequester = remember { FocusRequester() }
     var inputNameDialog by remember { mutableStateOf(false) }
     val qrBoxLineLength = with(LocalDensity.current) { 50.dp.toPx() }
+    val nicknameEnable = nickname.length in 1..20
+    val roomIdEnable = roomId.length == 12
+
+    DisposableEffect(Unit) {
+        onDispose {
+            cameraProvider?.unbindAll()
+            cameraExecutor.shutdown()
+            barcodeScanner?.close()
+        }
+    }
 
     // dialog
     if (inputNameDialog) {
         PrimaryDialog(
-            title = stringResource(id = R.string.component_join_room), onDismissRequest = {
+            title = stringResource(id = R.string.component_join_room),
+            onDismissRequest = {
                 nickname = ""
                 inputNameDialog = false
-            }) {
+            }
+        ) {
             Text(
                 text = stringResource(R.string.component_input_nickname),
                 style = ProjectTheme.typography.s.medium,
@@ -112,21 +128,28 @@ fun ScanQrCodeRoute(
 
             Row {
                 ProjectButton.Primary.Small(
-                    text = stringResource(id = R.string.component_cancel), onClick = {
+                    text = stringResource(id = R.string.component_cancel),
+                    onClick = {
                         inputNameDialog = false
                         nickname = ""
-                    }, modifier = Modifier.weight(0.5f), enabled = nickname.isNotEmpty()
+                    },
+                    modifier = Modifier.weight(0.5f),
+                    enabled = nickname.isNotEmpty()
                 )
 
                 Spacer(modifier = Modifier.width(ProjectSpaces.Space4))
 
                 ProjectButton.Primary.Small(
-                    text = stringResource(id = R.string.component_enter), onClick = {
+                    text = stringResource(id = R.string.component_enter),
+                    onClick = {
                         viewModel.joinRoom(
-                            nickname = nickname, roomId = roomId
+                            nickname = nickname,
+                            roomId = roomId
                         )
                         inputNameDialog = false
-                    }, modifier = Modifier.weight(0.5f), enabled = nickname.length in 1..20
+                    },
+                    modifier = Modifier.weight(0.5f),
+                    enabled = nicknameEnable
                 )
             }
         }
@@ -145,6 +168,13 @@ fun ScanQrCodeRoute(
         if (!isQrScanMode) {
             roomId = ""
             focusRequester.requestFocus()
+        }
+    }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            cameraProvider?.unbindAll()
+            barcodeScanner?.close()
         }
     }
 
@@ -167,10 +197,14 @@ fun ScanQrCodeRoute(
         onAdjustFocusClick = {},
         onJoinRoomClick = {
             viewModel.joinRoom(
-                nickname = nickname, roomId = roomId
+                nickname = nickname,
+                roomId = roomId
             )
         },
-        qrBoxLineLength = qrBoxLineLength
+        qrBoxLineLength = qrBoxLineLength,
+        onCameraProviderReady = { cameraProvider = it },
+        onBarcodeScannerReady = { barcodeScanner = it },
+        isEnable = nicknameEnable && roomIdEnable
     )
 }
 
@@ -192,7 +226,10 @@ fun ScanQrCodeScreen(
     onRoomIdValueChange: (String) -> Unit,
     onAdjustFocusClick: () -> Unit,
     onJoinRoomClick: () -> Unit,
-    qrBoxLineLength: Float
+    qrBoxLineLength: Float,
+    onCameraProviderReady: (ProcessCameraProvider) -> Unit,
+    onBarcodeScannerReady: (BarcodeScanner) -> Unit,
+    isEnable: Boolean
 ) {
     var boxBounds by remember { mutableStateOf(Rect()) }
 
@@ -209,6 +246,7 @@ fun ScanQrCodeScreen(
                     val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
                     cameraProviderFuture.addListener({
                         val cameraProvider = cameraProviderFuture.get()
+                        onCameraProviderReady(cameraProvider)
 
                         val preview = Preview.Builder().build().also {
                             it.surfaceProvider = previewView.surfaceProvider
@@ -218,6 +256,7 @@ fun ScanQrCodeScreen(
                             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                             .build().also { analysis ->
                                 val scanner = BarcodeScanning.getClient()
+                                onBarcodeScannerReady(scanner)
                                 analysis.setAnalyzer(cameraExecutor) { imageProxy ->
                                     val mediaImage = imageProxy.image
                                     if (mediaImage != null && boxBounds.width() > 0 && boxBounds.height() > 0) {
@@ -374,7 +413,7 @@ fun ScanQrCodeScreen(
                         ProjectButton.Primary.Xlarge(
                             text = stringResource(R.string.component_input_room_id),
                             modifier = Modifier.weight(0.5f),
-                            onClick = onInputRoomIdModeClick
+                            onClick = onInputRoomIdModeClick,
                         )
                     }
                 }
@@ -384,44 +423,45 @@ fun ScanQrCodeScreen(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Box(modifier = Modifier
-                            .size(250.dp)
-                            .onGloballyPositioned {
-                                val pos = it.positionInRoot()
-                                val size = it.size
-                                boxBounds = Rect(
-                                    pos.x.toInt(),
-                                    pos.y.toInt(),
-                                    (pos.x + size.width).toInt(),
-                                    (pos.y + size.height).toInt()
-                                )
-                            }
-                            .drawBehind {
-                                drawPath(
-                                    path = Path().apply {
-                                        moveTo(0f, qrBoxLineLength)
-                                        lineTo(0f, 0f)
-                                        lineTo(qrBoxLineLength, 0f)
-
-                                        moveTo(size.width - qrBoxLineLength, 0f)
-                                        lineTo(size.width, 0f)
-                                        lineTo(size.width, qrBoxLineLength)
-
-                                        moveTo(0f, size.height - qrBoxLineLength)
-                                        lineTo(0f, size.height)
-                                        lineTo(qrBoxLineLength, size.height)
-
-                                        moveTo(size.width, size.height - qrBoxLineLength)
-                                        lineTo(size.width, size.height)
-                                        lineTo(size.width - qrBoxLineLength, size.height)
-                                    },
-                                    color = Color.Green,
-                                    style = Stroke(
-                                        width = 5.dp.toPx(),
-                                        cap = StrokeCap.Round
+                        Box(
+                            modifier = Modifier
+                                .size(250.dp)
+                                .onGloballyPositioned {
+                                    val pos = it.positionInRoot()
+                                    val size = it.size
+                                    boxBounds = Rect(
+                                        pos.x.toInt(),
+                                        pos.y.toInt(),
+                                        (pos.x + size.width).toInt(),
+                                        (pos.y + size.height).toInt()
                                     )
-                                )
-                            }
+                                }
+                                .drawBehind {
+                                    drawPath(
+                                        path = Path().apply {
+                                            moveTo(0f, qrBoxLineLength)
+                                            lineTo(0f, 0f)
+                                            lineTo(qrBoxLineLength, 0f)
+
+                                            moveTo(size.width - qrBoxLineLength, 0f)
+                                            lineTo(size.width, 0f)
+                                            lineTo(size.width, qrBoxLineLength)
+
+                                            moveTo(0f, size.height - qrBoxLineLength)
+                                            lineTo(0f, size.height)
+                                            lineTo(qrBoxLineLength, size.height)
+
+                                            moveTo(size.width, size.height - qrBoxLineLength)
+                                            lineTo(size.width, size.height)
+                                            lineTo(size.width - qrBoxLineLength, size.height)
+                                        },
+                                        color = Color.Green,
+                                        style = Stroke(
+                                            width = 5.dp.toPx(),
+                                            cap = StrokeCap.Round
+                                        )
+                                    )
+                                }
                         )
 
                         Spacer(modifier = Modifier.height(ProjectSpaces.Space2))
@@ -474,7 +514,7 @@ fun ScanQrCodeScreen(
                         ProjectButton.Primary.Small(
                             text = stringResource(R.string.component_enter),
                             onClick = onJoinRoomClick,
-                            enabled = nicknameValue.length in 1..20 && roomIdValue.length == 12
+                            enabled = isEnable
                         )
                     }
                 }

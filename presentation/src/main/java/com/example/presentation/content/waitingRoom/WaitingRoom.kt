@@ -35,7 +35,7 @@ import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.toClipEntry
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.example.core.Icon.Back
 import com.example.core.component.ProjectButton
 import com.example.core.component.ProjectDialog.Double.RowArrangement

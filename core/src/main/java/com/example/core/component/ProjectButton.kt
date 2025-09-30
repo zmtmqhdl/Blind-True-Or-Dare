@@ -54,7 +54,7 @@ fun PrimaryButton(
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
-                onClick = onClick
+                onClick = { if (enabled) onClick() }
             ),
         contentAlignment = Alignment.Center
     ) {

@@ -50,7 +50,7 @@ class MainViewModel @Inject constructor(
     fun createRoom(
         nickname: String
     ) {
-        viewModelScope.launch {
+        launchIO {
             createRoomFunction(
                 nickname = nickname
             )

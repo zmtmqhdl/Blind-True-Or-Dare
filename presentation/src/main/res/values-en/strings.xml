@@ -36,6 +36,7 @@
     <string name="main_join_room_failure_dialog_text">Failed to join the room. Please try again later.</string>
     <string name="main_permission_request_dialog_title">Permission Request</string>
     <string name="main_permission_request_dialog_message">Camera permission is required. Please allow camera access in Settings.</string>
+    <string name="main_dialog_create_room_dialog_placeholder">1–20 characters</string>
 
     <!-- scan qr code -->
     <string name="scan_qr_code_scan_qr_code">Please scan the QR code.</string>

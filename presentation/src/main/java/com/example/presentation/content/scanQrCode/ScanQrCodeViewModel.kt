@@ -63,7 +63,7 @@ class ScanQrCodeViewModel @Inject constructor(
         nickname: String,
         roomId: String
     ) {
-        viewModelScope.launch {
+        launchIO {
             joinRoomFunction(
                 nickname = nickname,
                 roomId = roomId
