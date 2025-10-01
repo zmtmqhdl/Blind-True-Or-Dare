@@ -28,6 +28,7 @@
 
 
     <!-- main -->
+    <string name="content_dialog_is_network_available_dialog_message">Reconnecting…%d</string>
     <string name="main_dialog_input_room_id">Input room ID.</string>
     <string name="main_create_room">Create Room</string>
     <string name="main_create_room_failure_dialog_title">Failed to Create Room</string>
@@ -65,7 +66,7 @@
     <!-- result room -->
     <string name="result_room_title">Q&amp;A Result</string>
     <string name="result_room_no_question">Oops…No one has written a question…</string>
-
+    <string name="component_network_error">Network Error</string>
 
 
 </resources>

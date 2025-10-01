@@ -78,7 +78,8 @@ object ProjectScreen {
             modifier = Modifier
                 .fillMaxSize()
                 .windowInsetsPadding(WindowInsets.systemBars)
-                .background(color = containerColor)) {
+                .background(color = containerColor)
+        ) {
             content()
 
             if (loading) {

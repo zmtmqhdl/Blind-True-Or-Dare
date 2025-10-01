@@ -24,7 +24,10 @@
     <string name="component_adjust_focus">초점 맞추기</string>
     <string name="component_join_room">대기실 입장</string>
     <string name="component_input_nickname">닉네임을 입력해주세요.</string>
+    <string name="component_network_error">네트워크 오류</string>
 
+    <!-- content -->
+    <string name="content_dialog_is_network_available_dialog_message">재연결 중…%d</string>
 
 
     <!-- main -->
