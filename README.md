@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/d1bebc40-25be-4332-8294-cddf0783b9b9" width="55%">
+  <img src="https://github.com/user-attachments/assets/d4382a73-b2af-42d7-8aa7-1e9891771cb8" width="55%">
 </p>
 
 ## 🖥️ BlindTrueOrDare
